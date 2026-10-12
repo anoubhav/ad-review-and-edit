@@ -1,0 +1,2280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--
+  No network at all. Scripts and styles are inline; the video and photos come from local files.
+  media-src allows file: so the example video next to this page plays when the page is opened from disk,
+  and blob: so a video or photo picked with the file chooser plays.
+-->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; media-src 'self' file: blob:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Scene by Scene review</title>
+<style>
+:root {
+  --bg: #f6f6f4;
+  --surface: #ffffff;
+  --surface-2: #f0f0ed;
+  --border: #dcdcd7;
+  --border-strong: #b9b9b2;
+  --text: #1d1f21;
+  --muted: #5d6166;
+  --judge: #2a78d6;
+  --judge-ink: #1d5fae;
+  --judge-soft: #e8f1fc;
+  --mine: #eb6834;
+  --mine-ink: #b2481d;
+  --mine-soft: #fdeee7;
+  --warn: #a4570a;
+  --ok: #2f7d4f;
+  --focus: #1d5fae;
+  --shadow: 0 1px 2px rgba(0,0,0,.05);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131517;
+    --surface: #1b1e21;
+    --surface-2: #23272b;
+    --border: #33383d;
+    --border-strong: #4a5057;
+    --text: #e6e8ea;
+    --muted: #a2a8ae;
+    --judge: #5b9cf0;
+    --judge-ink: #8cbaf6;
+    --judge-soft: #1a2a3d;
+    --mine: #f08257;
+    --mine-ink: #f6a483;
+    --mine-soft: #3a2219;
+    --warn: #e0a050;
+    --ok: #6cc08f;
+    --focus: #8cbaf6;
+    --shadow: none;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131517; --surface: #1b1e21; --surface-2: #23272b; --border: #33383d; --border-strong: #4a5057;
+  --text: #e6e8ea; --muted: #a2a8ae; --judge: #5b9cf0; --judge-ink: #8cbaf6; --judge-soft: #1a2a3d;
+  --mine: #f08257; --mine-ink: #f6a483; --mine-soft: #3a2219; --warn: #e0a050; --ok: #6cc08f; --focus: #8cbaf6;
+  --shadow: none; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+}
+h1, h2, h3 { line-height: 1.25; margin: 0; }
+h1 { font-size: 20px; font-weight: 650; }
+h2 { font-size: 16px; font-weight: 650; }
+h3 { font-size: 14px; font-weight: 650; }
+p { margin: 0 0 8px; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 16px; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+[hidden] { display: none !important; }
+svg.i { width: 16px; height: 16px; flex: none; vertical-align: -3px; }
+
+/* header */
+.top { border-bottom: 1px solid var(--border); background: var(--surface); }
+.top .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding-top: 12px; padding-bottom: 12px; }
+.badges { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; }
+.badges li { font-size: 12px; color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 1px 9px; }
+.about { max-width: 860px; margin: 12px 0 0; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; }
+.about summary { cursor: pointer; font-weight: 600; }
+.about p { margin: 8px 0 0; color: var(--muted); max-width: 75ch; }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border-strong); background: var(--surface); border-radius: 8px; padding: 6px 12px; min-height: 34px; }
+.btn:hover:not(:disabled) { background: var(--surface-2); }
+.btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); font-weight: 600; }
+.btn.primary:hover:not(:disabled) { background: var(--text); opacity: .9; }
+.btn:disabled, .btn.primary:disabled { background: var(--surface-2); color: var(--muted); border-color: var(--border); }
+.btn.small { min-height: 28px; padding: 3px 9px; font-size: 13px; }
+.btn.quiet { border-color: transparent; background: transparent; }
+.btn.quiet:hover:not(:disabled) { background: var(--surface-2); }
+.icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); padding: 0; }
+.icon-btn:hover:not(:disabled) { background: var(--surface-2); }
+.link { background: none; border: 0; padding: 0; color: var(--judge-ink); text-decoration: underline; }
+
+/* start screen */
+.start { padding: 16px 0 48px; }
+.start-grid { display: grid; gap: 16px; grid-template-columns: minmax(0,1fr); max-width: 860px; }
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; box-shadow: var(--shadow); }
+.panel h2 { margin-bottom: 8px; }
+.panel .hint { color: var(--muted); font-size: 13px; }
+.field { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.field input[type=text] { border: 1px solid var(--border-strong); border-radius: 8px; background: var(--surface); padding: 6px 10px; width: 110px; }
+.err { color: var(--warn); font-size: 13px; }
+.choice { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.choice label { display: flex; gap: 10px; align-items: flex-start; border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; cursor: pointer; }
+.choice label:has(input:checked) { border-color: var(--text); }
+.choice label:has(input:disabled) { cursor: not-allowed; opacity: .75; }
+.choice input { margin-top: 4px; }
+.choice b { display: block; }
+.choice span span { color: var(--muted); font-size: 13px; }
+.adlist { list-style: none; padding: 0; margin: 10px 0 0; display: grid; gap: 6px; }
+.adlist li { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-size: 14px; }
+.adlist code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; }
+.msgs { margin: 8px 0 0; padding-left: 18px; font-size: 13px; }
+.msgs li.bad { color: var(--warn); }
+.row-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+
+/* review screen bar */
+.bar { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--border); }
+.bar .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding-top: 8px; padding-bottom: 8px; }
+.who { font-size: 13px; color: var(--muted); }
+.who b { color: var(--text); font-weight: 600; }
+.queue { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.queue select { border: 1px solid var(--border-strong); border-radius: 8px; background: var(--surface); padding: 4px 6px; max-width: 100%; font-size: 13px; }
+.spacer { flex: 1 1 auto; }
+.confirm { display: inline-flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 13px; }
+
+/* review layout */
+.layout { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); padding-top: 16px; padding-bottom: 64px; }
+@media (min-width: 900px) {
+  .layout { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; }
+  .media { position: sticky; top: 64px; }
+}
+.media { display: grid; gap: 10px; min-width: 0; }
+.media video { width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 10px; display: block; }
+.strip { position: relative; display: flex; gap: 3px; }
+.seg { position: relative; flex: 1 1 0; min-width: 0; border: 1px solid var(--border); background: var(--surface); border-radius: 6px; padding: 4px 6px 10px; text-align: left; font-size: 12px; line-height: 1.2; overflow: hidden; }
+.seg b { display: block; font-size: 13px; }
+.seg span { color: var(--muted); white-space: nowrap; }
+.seg.on { border-color: var(--text); background: var(--surface-2); }
+.seg .mk { position: absolute; bottom: 3px; width: 6px; height: 6px; background: var(--judge); border-radius: 1px; transform: translateX(-3px); }
+.playhead { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--text); pointer-events: none; border-radius: 1px; }
+.meter { font-size: 13px; color: var(--muted); }
+.meter .track { height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden; margin-top: 4px; border: 1px solid var(--border); }
+.meter .fill { height: 100%; background: var(--text); width: 0; }
+.meter.done .fill { background: var(--ok); }
+.media-msg { font-size: 13px; color: var(--warn); }
+.adfacts { font-size: 13px; color: var(--muted); }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--muted); }
+.sq { display: inline-block; width: 9px; height: 9px; background: var(--judge); border-radius: 1px; margin-right: 5px; vertical-align: 0; }
+.plus { color: var(--mine-ink); font-weight: 700; margin-right: 4px; }
+
+/* question cards */
+.rail { display: grid; gap: 12px; min-width: 0; }
+.rail > * { min-width: 0; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; box-shadow: var(--shadow); min-width: 0; }
+.card-h { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.card-h h2 { display: flex; align-items: center; gap: 8px; }
+.num { display: inline-flex; width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border-strong); align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--muted); }
+.pill { font-size: 12px; border-radius: 999px; padding: 1px 8px; color: var(--judge-ink); background: var(--judge-soft); }
+.req { font-size: 12px; color: var(--muted); }
+.todo { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--warn); }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--warn); display: inline-block; }
+.card-h .help-btn { margin-left: auto; }
+.card-toggle { display: inline-flex; align-items: center; gap: 8px; background: none; border: 0; padding: 2px 6px 2px 2px; margin: -2px 0 -2px -2px; border-radius: 8px; font-weight: inherit; text-align: left; }
+.card-toggle:hover { background: var(--surface-2); }
+.chev { transition: transform .15s ease; color: var(--muted); }
+.card-toggle[aria-expanded="false"] .chev, .f-more[aria-expanded="false"] .chev { transform: rotate(-90deg); }
+@media (prefers-reduced-motion: reduce) { .chev { transition: none; } }
+.card-sum { margin: 4px 0 0 56px; font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card.collapsed { padding-top: 12px; padding-bottom: 12px; }
+@media (max-width: 520px) { .card-sum { margin-left: 26px; white-space: normal; overflow-wrap: anywhere; } }
+.help { margin-top: 8px; font-size: 13px; color: var(--muted); background: var(--surface-2); border-radius: 8px; padding: 8px 10px; }
+.part { border-top: 1px solid var(--border); margin-top: 12px; padding-top: 12px; }
+.part-h { color: var(--muted); font-size: 13px; margin-bottom: 6px; }
+.part-h b { color: var(--text); }
+.answers { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.ans { border: 1px solid var(--border-strong); background: var(--surface); border-radius: 999px; padding: 5px 14px; min-height: 34px; display: inline-flex; align-items: center; gap: 6px; }
+.ans:hover:not(:disabled) { background: var(--surface-2); }
+.ans[aria-checked="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+.ans .tick { display: none; }
+.ans[aria-checked="true"] .tick { display: inline; }
+.note { font-size: 13px; color: var(--mine-ink); margin-top: 8px; }
+.units { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 8px; }
+.unit { border: 1px solid var(--border); border-radius: 10px; padding: 10px; min-width: 0; }
+.unit.marked { box-shadow: inset 3px 0 0 var(--mine); }
+.unit-h { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; font-size: 13px; }
+.sid { font-weight: 650; font-size: 14px; }
+.range { color: var(--muted); }
+.line, .cap { font-size: 14px; margin: 6px 0 0; overflow-wrap: anywhere; }
+.line::before { content: "Line: "; color: var(--muted); font-size: 12px; }
+.cap::before { content: "Caption: "; color: var(--muted); font-size: 12px; }
+.badge { font-size: 12px; border-radius: 999px; padding: 1px 8px; background: var(--surface-2); color: var(--muted); }
+.unit-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; align-items: center; }
+.pick { border: 1px dashed var(--border-strong); background: var(--surface); border-radius: 8px; padding: 4px 10px; min-height: 32px; display: inline-flex; align-items: center; gap: 6px; }
+.pick[aria-pressed="true"] { border-style: solid; border-color: var(--mine); background: var(--mine-soft); color: var(--mine-ink); font-weight: 600; }
+.opts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.opts .lbl { width: 100%; font-size: 12px; color: var(--muted); }
+.chip { border: 1px solid var(--border-strong); background: var(--surface); border-radius: 999px; padding: 3px 10px; font-size: 13px; min-height: 30px; display: inline-flex; align-items: center; gap: 5px; }
+.chip:hover:not(:disabled) { background: var(--surface-2); }
+.chip[aria-pressed="true"] { border-color: var(--mine); background: var(--mine-soft); color: var(--mine-ink); }
+.chip .tick { display: none; }
+.chip[aria-pressed="true"] .tick { display: inline; }
+.grid3 { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.grid3 .ans { min-height: 30px; padding: 3px 12px; font-size: 14px; }
+.grid3 .ans[data-mark="swap"][aria-checked="true"] { background: var(--mine-soft); color: var(--mine-ink); border-color: var(--mine); }
+.grid3 .ans.prefilled[aria-checked="true"] { background: var(--surface); color: var(--mine-ink); border: 1px dashed var(--mine); }
+.autonote { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.word { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 13px; }
+.word input { border: 1px solid var(--border-strong); border-radius: 8px; background: var(--surface); padding: 4px 8px; width: min(260px, 100%); }
+
+/* findings */
+.findings { display: grid; gap: 6px; margin-top: 8px; }
+.finding { border: 1px solid var(--border); border-left: 3px solid var(--judge); border-radius: 8px; padding: 6px 8px; background: var(--surface); min-width: 0; }
+.f-h { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; font-size: 13px; }
+.by { font-weight: 650; color: var(--judge-ink); display: inline-flex; align-items: center; gap: 4px; }
+.kind { font-size: 12px; border: 1px solid var(--border); border-radius: 999px; padding: 0 7px; color: var(--muted); }
+.f-all { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin-top: 10px; font-size: 13px; color: var(--muted); }
+.f-allbtn[aria-expanded="false"] .chev { transform: rotate(-90deg); }
+.goto { display: inline-flex; align-items: center; gap: 4px; border: 1px solid var(--border); background: var(--surface); border-radius: 999px; padding: 0 8px; min-height: 26px; font-size: 12px; color: var(--muted); }
+.goto:hover { background: var(--surface-2); color: var(--text); }
+.f-more { display: inline-flex; align-items: center; gap: 3px; border: 0; background: none; border-radius: 6px; padding: 2px 4px; min-height: 26px; font-size: 13px; color: var(--judge-ink); }
+.f-more:hover { background: var(--surface-2); }
+.f-h { align-items: flex-start; gap: 6px 8px; }
+.f-info { flex: 1 1 260px; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; min-height: 30px; }
+.f-h .thumbs { margin-left: auto; flex: none; }
+.f-h .thumb { padding: 3px 8px; gap: 4px; }
+.f-body { margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--border); }
+.desc { margin: 6px 0 4px; font-size: 14px; overflow-wrap: anywhere; }
+.meta { font-size: 12px; color: var(--muted); margin: 0 0 2px; overflow-wrap: anywhere; }
+.f-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 6px; }
+.thumbs { display: inline-flex; gap: 6px; margin-left: auto; }
+.thumb { display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--border-strong); background: var(--surface); border-radius: 8px; padding: 3px 10px; min-height: 30px; font-size: 13px; }
+.thumb:hover:not(:disabled) { background: var(--surface-2); }
+.thumb[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+.owe-thumb { font-size: 12px; color: var(--warn); }
+.refimg { display: block; max-width: 120px; max-height: 90px; border-radius: 6px; border: 1px solid var(--border); margin-top: 4px; }
+.refs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.refs figure { margin: 0; font-size: 12px; color: var(--muted); }
+
+/* submit and decision */
+.submit-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; }
+.owed { margin: 8px 0 12px; padding-left: 18px; }
+.owed li { margin: 2px 0; }
+.owed .link { text-align: left; }
+.left { font-size: 13px; }
+.left .link { font-size: 13px; }
+.decision, .card, .submit-box, .media video { scroll-margin-top: 64px; }
+.decision h2:focus { outline: none; }
+.judge-text { font-size: 11px; color: var(--muted); margin: 0; }
+.scroll-hint { display: none; }
+@media (max-width: 600px) { .scroll-hint { display: block; font-size: 13px; color: var(--muted); margin: 0 0 6px; } }
+.allset { color: var(--ok); }
+.decision { border: 1px solid var(--border-strong); border-radius: 12px; padding: 14px; background: var(--surface); }
+.band { display: inline-block; font-size: 18px; font-weight: 700; margin: 4px 0 8px; }
+.decision ul { margin: 6px 0 10px; padding-left: 18px; }
+.caveat { font-size: 13px; color: var(--muted); }
+.sumwrap { overflow-x: auto; max-width: 100%; position: relative; }
+table.sum { border-collapse: collapse; font-size: 12px; width: 100%; min-width: 520px; }
+table.sum th, table.sum td { border-top: 1px solid var(--border); padding: 6px; text-align: left; vertical-align: top; }
+table.sum th[scope=row] { white-space: nowrap; font-weight: 600; }
+table.sum td div { margin: 1px 0; }
+.downloads { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.storage-note { font-size: 13px; color: var(--warn); margin: 8px 0 0; }
+fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+@media (max-width: 899px) { .bar { position: static; } }
+@media (max-width: 520px) {
+  .seg { padding: 3px 4px 9px; }
+  .seg span { display: none; }
+  .thumbs, .f-h .thumbs { margin-left: 0; }
+  h1 { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <h1>Scene by Scene: review template</h1>
+    <ul class="badges" aria-label="What this page is">
+      <li>Template</li><li>No judges run here</li><li>No edit tools</li>
+    </ul>
+  </div>
+</header>
+
+<main id="start-screen" class="start">
+  <div class="wrap">
+    <details class="about" data-testid="about" id="about" open>
+      <summary>About this page</summary>
+      <p id="honesty"></p>
+      <p>The questions, options and decision rules sit in the RUBRIC constant at the top of this file's script. The release's docs/REVIEW_PAGE.md explains the ad package format and the downloads.</p>
+    </details>
+    <div class="start-grid" style="margin-top:16px">
+      <section class="panel" aria-labelledby="h-rev">
+        <h2 id="h-rev">1. Reviewer code</h2>
+        <div class="field">
+          <label for="reviewer">Code</label>
+          <input id="reviewer" data-testid="reviewer" type="text" autocomplete="off" spellcheck="false" maxlength="4" value="R1">
+          <span class="hint">A pseudonym such as R1. Do not type a name. The release uses R1 to R5 for the round's reviewers.</span>
+        </div>
+        <p class="err" id="reviewer-err" hidden>Use R followed by one to three digits, such as R6.</p>
+      </section>
+      <section class="panel" aria-labelledby="h-mode">
+        <h2 id="h-mode">2. Judge findings</h2>
+        <fieldset>
+          <legend class="sr-only">Judge findings</legend>
+          <div class="choice">
+            <label><input type="radio" name="mode" value="shown" data-testid="mode-shown" checked>
+              <span><b>Findings shown</b><span>The judges' findings sit inside each question and you give each one a thumb up (Agree) or down (Disagree). Thumbs up means the finding is correct, and it writes the finding into your answers. This is the condition of the paper's 120-ad round.</span></span></label>
+            <label><input type="radio" name="mode" value="hidden" data-testid="mode-hidden">
+              <span><b>Findings hidden</b><span>You see only the questions and the video. No judge output is shown on screen, as in the paper's judges-hidden pass. That pass differed in two ways: sound was optional, with a blank answer counted as no issue, and marking a product wrong did not pre-fill Swap out. Here both work as in the round.</span></span></label>
+          </div>
+        </fieldset>
+        <p class="hint" id="lock-note" hidden>The code and this choice are fixed once you have answered anything. Clear all reviews below to change them.</p>
+      </section>
+      <section class="panel" aria-labelledby="h-ads">
+        <h2 id="h-ads">3. Ads to review</h2>
+        <label class="field"><input type="checkbox" id="use-demo" data-testid="use-demo" checked> The example ad from the paper's Figure 2 (5 scenes, 15 s)</label>
+        <div class="row-actions">
+          <button class="btn" type="button" id="load-btn" data-testid="load-package-btn">Load ad packages</button>
+          <input type="file" id="load-input" data-testid="load-package" multiple hidden accept=".json,.jsonl,video/*,image/*">
+          <button class="btn" type="button" id="import-btn" data-testid="import-review-btn">Import a previous export</button>
+          <input type="file" id="import-input" data-testid="import-review" multiple hidden accept=".json">
+        </div>
+        <p class="hint" style="margin-top:8px">Choose one or more package files (.json), their videos and any reference photos together. Files are matched by name. A findings.jsonl file adds its findings to the packages with the same ad_id.</p>
+        <ul class="msgs" id="load-msgs" aria-live="polite"></ul>
+        <ul class="adlist" id="adlist" aria-label="Ads in the queue"></ul>
+      </section>
+      <div class="row-actions">
+        <button class="btn primary" type="button" id="start-btn" data-testid="start">Start reviewing</button>
+        <button class="btn" type="button" id="clear-all" data-testid="clear-all">Clear all reviews</button>
+        <span class="confirm" id="clear-all-confirm" hidden>Clear every review in this browser?
+          <button class="btn small" type="button" id="clear-all-yes" data-testid="clear-all-yes">Clear</button>
+          <button class="btn small" type="button" id="clear-all-no">Keep</button></span>
+      </div>
+      <p class="storage-note" id="storage-note" hidden>This browser does not let the page store anything. Your review lives only in this tab: download it before you close the page.</p>
+    </div>
+  </div>
+</main>
+
+<div id="review-screen" hidden>
+  <div class="bar">
+    <div class="wrap">
+      <button class="btn small" type="button" id="back-btn" data-testid="back-to-start">Setup</button>
+      <span class="who" data-testid="mode-badge" id="who"></span>
+      <nav class="queue" aria-label="Ad queue">
+        <button class="icon-btn" type="button" id="prev-btn" data-testid="queue-prev" aria-label="Previous ad"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <label class="sr-only" for="queue-select">Ad</label>
+        <select id="queue-select" data-testid="queue-select"></select>
+        <button class="icon-btn" type="button" id="next-btn" data-testid="queue-next" aria-label="Next ad"><svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </nav>
+      <span class="spacer"></span>
+      <button class="btn small" type="button" id="draft-btn" data-testid="download-draft">Save draft</button>
+      <button class="btn small" type="button" id="over-btn" data-testid="start-over">Start over</button>
+      <span class="confirm" id="over-confirm" hidden>Clear this review?
+        <button class="btn small" type="button" id="over-yes" data-testid="start-over-yes">Clear</button>
+        <button class="btn small" type="button" id="over-no">Keep</button></span>
+    </div>
+  </div>
+  <div class="wrap layout">
+    <section class="media" aria-label="Video">
+      <video id="video" data-testid="video" controls playsinline preload="metadata"></video>
+      <div class="strip" id="strip" data-testid="scene-strip" role="group" aria-label="Scenes"></div>
+      <div class="meter" id="meter" data-testid="watch-meter"></div>
+      <p class="left" id="left" data-testid="left-status"></p>
+      <p class="sr-only" id="sr-status" role="status" aria-live="polite"></p>
+      <p class="media-msg" id="media-msg" data-testid="media-error" hidden></p>
+      <div class="row-actions" style="margin-top:0">
+        <button class="btn small" type="button" id="video-btn">Choose the video file</button>
+        <input type="file" id="video-input" data-testid="load-video" accept="video/*" hidden>
+      </div>
+      <p class="adfacts" id="adfacts"></p>
+      <div class="legend" id="legend"></div>
+    </section>
+    <section class="rail" aria-label="Questions">
+      <div id="cards" class="rail"></div>
+      <section class="submit-box" aria-labelledby="h-owed">
+        <h2 id="h-owed">Still to do</h2>
+        <ul class="owed" id="owed" data-testid="owed-list"></ul>
+        <button class="btn primary" type="button" id="submit-btn" data-testid="submit" disabled>Submit review</button>
+      </section>
+      <div id="after"></div>
+      <section class="submit-box" aria-labelledby="h-all">
+        <h2 id="h-all">All submitted reviews in this browser</h2>
+        <p class="hint" id="all-count"></p>
+        <div class="downloads">
+          <button class="btn small" type="button" id="all-marks" data-testid="download-all-marks">marks.csv</button>
+          <button class="btn small" type="button" id="all-admarks" data-testid="download-all-ad-marks">ad_marks.csv</button>
+          <button class="btn small" type="button" id="all-thumbs" data-testid="download-all-thumbs">thumbs.csv</button>
+        </div>
+      </section>
+    </section>
+  </div>
+</div>
+
+<script>
+'use strict';
+/* =====================================================================================
+   RUBRIC: the review protocol of the paper's Sec. 3, as data. Edit this to change the page.
+
+   questions   the six questions in the order of the paper's round (Table 1 and the appendix
+               rubric table): product, scene, pronunciation, sound, script, overlay text. The
+               cards and the "Still to do" list follow this order; entries that share a card
+               sit on one card. The current portal asks script before pronunciation and moves
+               a flagged middle question first. Captions are one card with two parts
+               (caption_placement and caption_relevance), so there are seven entries.
+               Labels, hints, help, options, required flags and the order can be edited here.
+               Adding or removing a question needs changes to the code below.
+     axis        the release key, used in marks.csv and ad_marks.csv
+     portal_key  the key in the review JSON's payload (the production portal's names)
+     grain       scene, line, caption or ad: what a negative answer points to
+     answers     the top answers; the one with negative: true opens the unit rows
+     options     secondary options offered on a marked unit (keys as in marks.csv)
+     grades      product only: Low and High grade "Product text not intact"; one at most
+     required    round: required in the paper's round (every question);
+                 default: required in the portal's default setup;
+                 flag: a judge's finding on this ad makes it required (default preset only)
+   preset      'round' (the page's default, as in the round) or 'default'
+   rules       the decision rule shown after Submit (rules.py and engine.py in the portal)
+   ===================================================================================== */
+const RUBRIC = {
+  version: 'sbs-rubric/1.0.0',
+  preset: 'round',
+  watch_gate: 0.90,            // share of the ad that must have played before Submit opens
+  product_auto_swap: true,     // product wrong on a scene pre-fills Swap out on that scene
+  option_order: ['wrong_product', 'wrong_form', 'product_ai', 'product_text_broken', 'text_low', 'text_high',
+    'ai_look', 'underwhelming', 'background_change', 'impossible_motion', 'weak_ending',
+    'unsupported_claim', 'awkward_phrasing'],
+  questions: [
+    {
+      axis: 'product', portal_key: 'product_fidelity', card: 'product', title: 'The product', grain: 'scene',
+      answers: [{ value: 'ok', label: 'Product looks right' }, { value: 'wrong', label: 'Product wrong', negative: true }],
+      options: [
+        { key: 'wrong_product', label: 'Wrong product', hint: 'A different product from the one in the reference photos.' },
+        { key: 'wrong_form', label: 'Shape, colour, logo or markings wrong', hint: "The shape, colour, logo or markings differ from the product's own photos." },
+        { key: 'product_ai', label: 'AI issue', hint: 'The product itself looks AI-made: melted detail, a strap that goes nowhere, text painted on. An AI issue elsewhere in the scene belongs to Scene quality.' },
+        { key: 'product_text_broken', label: 'Product text not intact', hint: 'Words printed on the product are garbled, misspelt or changed.' }
+      ],
+      grades: { parent: 'product_text_broken', label: 'How bad is the text? (optional)', options: [
+        { key: 'text_low', label: 'Low: still readable', hint: 'You can still read it and the words are the right words. The letters are only soft, thin or slightly bent.' },
+        { key: 'text_high', label: 'High: gibberish', hint: 'You cannot read it, or you can read it and the words are wrong: letters replaced, words misspelt, text the pack does not carry.' }
+      ] },
+      required: { round: true, default: true, flag: true },
+      help: 'Judge the product itself: its shape, colour, logo and markings, and the words printed on it. Words printed on the product belong here. The room, the person, the motion and the framing belong to Scene quality. The line between an AI issue on the product and impossible motion is still unsettled.'
+    },
+    {
+      axis: 'scene', portal_key: 'scene_sort', card: 'scene', title: 'Scene quality', grain: 'scene',
+      // Scene quality has no top answer: every scene gets one of these three marks.
+      answers: [{ value: 'none', label: 'No opinion' }, { value: 'keep', label: 'Keep' }, { value: 'swap', label: 'Swap out', negative: true }],
+      options: [
+        { key: 'ai_look', label: 'AI issue', hint: 'Something looks wrong the way AI goes wrong: faces or hands off, melted detail, gibberish text painted into the scene.' },
+        { key: 'underwhelming', label: 'Repetitive, dull or crowded scene', hint: 'You have already seen this scene, nothing happens in it, or it is too busy to read the product.' },
+        { key: 'background_change', label: 'World or continuity breaks', hint: 'Something that should stay the same changes between scenes: the brand, the character, the setting, or an object that was not there before.' },
+        { key: 'impossible_motion', label: 'Something moves impossibly', hint: 'Floating, clipping, liquids behaving wrong.' },
+        { key: 'weak_ending', label: 'Weak ending', last_scene_only: true, hint: 'The closing scene does not land: no hero shot of the product, or it does not end on the product.' }
+      ],
+      required: { round: true, default: true, flag: true },
+      help: "Scene quality covers everything in the shot except the product itself: the setting, the people, the motion and the framing. Judge each shot: does it earn its place? A scene where nothing happens is worth swapping too. Text painted into the background is an AI issue of the scene. Marking a scene's product wrong also marks the scene for a swap, because the shot has to be remade either way. Change that mark if the shot itself is fine."
+    },
+    {
+      axis: 'pronunciation', portal_key: 'audio_quality', card: 'pronunciation', title: 'Pronunciation', grain: 'line',
+      answers: [{ value: 'ok', label: 'Sounds right' }, { value: 'issues', label: 'Mispronounced', negative: true }],
+      options: [],
+      word: { label: 'Which word came out wrong? (optional)', max_chars: 40 },
+      required: { round: true, default: false, flag: true },
+      help: 'A single word said wrong belongs here. Mark the line and name the word. The voice or the music as a whole is Sound quality.'
+    },
+    {
+      axis: 'sound', portal_key: 'voice_quality', card: 'sound', title: 'Sound quality', grain: 'ad',
+      answers: [{ value: 'ok', label: 'Sounds right' }, { value: 'issues', label: 'Issues', negative: true }],
+      options: [],
+      // The labels renamed after the round. The round asked "Which part?": The voice, The music.
+      tags: { label: 'What is off?', options: [{ key: 'voice', label: 'Whole voice off' }, { key: 'music', label: 'Music off' }] },
+      required: { round: true, default: false, flag: false },
+      help: 'The voice and the music of the whole ad. A single word said wrong is Pronunciation.'
+    },
+    {
+      axis: 'script', portal_key: 'script_quality', card: 'script', title: 'Script quality', grain: 'line',
+      answers: [{ value: 'ok', label: 'Good' }, { value: 'bad', label: 'Bad', negative: true }],
+      options: [
+        { key: 'unsupported_claim', label: 'Factually incorrect', hint: 'The line states a figure, material, component, certification or guarantee that the product information does not carry. Adjectives nobody can measure do not count.' },
+        { key: 'awkward_phrasing', label: 'Awkward or unnatural phrasing', hint: 'Read it aloud in your head. Nobody would say it, or it does not follow from the line before it.' }
+      ],
+      required: { round: true, default: false, flag: true },
+      help: 'Read each line against what you know of the product. Mark a claim someone could check that the product information does not carry, such as a figure, a material, a certification or a guarantee, and a line nobody would say aloud. The brand name, a call to action and an adjective nobody can measure are fine. The product listing is not part of this release.'
+    },
+    {
+      axis: 'caption_placement', portal_key: 'text_placement', card: 'caption', title: 'Overlay text', part: 'Placement', grain: 'caption',
+      part_hint: 'Could any caption sit better? Mark it if it covers a face, the product or text already in the frame, runs off the edge, or would read better somewhere else.',
+      answers: [{ value: 'ok', label: 'Correct' }, { value: 'issues', label: 'Can be better', negative: true }],
+      options: [],
+      required: { round: true, default: false, flag: false },
+      help: 'Only the captions laid over the picture. Words printed on the product belong to The product, and text painted into the scene is an AI issue under Scene quality. Placement asks where a caption sits. Relevance asks whether it fits the scene under it and the line spoken over it.'
+    },
+    {
+      axis: 'caption_relevance', portal_key: 'text_relevance', card: 'caption', title: 'Overlay text', part: 'Relevance', grain: 'caption',
+      part_hint: 'Does each caption fit the scene it sits on and the line spoken over it?',
+      answers: [{ value: 'ok', label: 'Correct' }, { value: 'issues', label: 'Issues', negative: true }],
+      options: [],
+      required: { round: true, default: false, flag: false }
+    }
+  ],
+  // Unit rows: the button that marks a unit with no finding on it.
+  pick_labels: { off: 'Add a problem', on: 'Problem marked' },
+  rules: {
+    severity_rank: { minor: 1, moderate: 2, severe: 3 },
+    floor: 'moderate',          // a flag counts toward a category from this severity up
+    // Answers that raise a flag. Scene quality raises one minor flag for the ad when any scene is Swap out.
+    answer_flags: [
+      { axis: 'product', answer: 'wrong', category: 'product_inconsistency', severity: 'severe' },
+      { axis: 'scene', answer: 'swap', category: 'shot_quality', severity: 'minor' },
+      { axis: 'script', answer: 'bad', category: 'script_coherence', severity: 'moderate' },
+      { axis: 'pronunciation', answer: 'issues', category: 'audio_quality', severity: 'moderate' },
+      { axis: 'sound', answer: 'issues', category: 'audio_quality', severity: 'moderate' },
+      { axis: 'caption_placement', answer: 'issues', category: 'text_quality', severity: 'moderate' },
+      { axis: 'caption_relevance', answer: 'issues', category: 'text_quality', severity: 'moderate' }
+    ],
+    // Secondary options that raise a flag. ai_look, underwhelming and weak_ending raise none.
+    option_flags: [
+      { axis: 'product', option: 'wrong_product', category: 'product_inconsistency', severity: 'severe' },
+      { axis: 'product', option: 'wrong_form', category: 'product_inconsistency', severity: 'severe' },
+      { axis: 'product', option: 'product_ai', category: 'product_inconsistency', severity: 'moderate' },
+      { axis: 'product', option: 'product_text_broken', category: 'product_inconsistency', severity: 'severe' },
+      { axis: 'product', option: 'text_low', category: 'product_inconsistency', severity: 'minor' },
+      { axis: 'product', option: 'text_high', category: 'product_inconsistency', severity: 'severe' },
+      { axis: 'scene', option: 'background_change', category: 'physics', severity: 'moderate' },
+      { axis: 'scene', option: 'impossible_motion', category: 'physics', severity: 'moderate' },
+      { axis: 'script', option: 'unsupported_claim', category: 'script_coherence', severity: 'severe' },
+      { axis: 'script', option: 'awkward_phrasing', category: 'script_coherence', severity: 'moderate' }
+    ],
+    category_order: ['product_inconsistency', 'shot_quality', 'physics', 'script_coherence', 'audio_quality', 'text_quality'],
+    category_labels: { product_inconsistency: 'product inconsistency', shot_quality: 'shot quality', physics: 'physics',
+      script_coherence: 'script', audio_quality: 'audio', text_quality: 'overlay text' },
+    hard_fail: { axis: 'product', answer: 'wrong' },   // product wrong on any scene rejects the ad
+    reject_categories: 2,      // this many fired categories reject the ad
+    reject_bad_scenes: 2,      // this many scenes to replace reject the ad
+    band_labels: { reject: 'Reject', needs_edit: 'Send for editing', clean_with_notes: 'Approve', clean: 'Approve' },
+    caveat: 'These thresholds are policy choices and have not been validated. In the portal a person can overrule the verdict.'
+  }
+};
+
+/* =====================================================================================
+   DEMO: the ad package of the example ad (paper Figure 2), format sbs-ad-package/1.
+   Scenes and findings come from data/round (findings without their votes). Brand words in
+   the line of scene 5 and in four judge descriptions are replaced with [brand] or
+   [brand tagline], and the listing text quoted in the script finding is replaced with
+   [listing claim] and [listing footnote]; text_edits lists each replacement. Otherwise judge
+   descriptions are model output, printed as the judges wrote them.
+   ===================================================================================== */
+const DEMO = {
+  "format": "sbs-ad-package/1",
+  "ad_id": "ad-2438b25fb3",
+  "product_id": "prod-17d3176194",
+  "video": "../example/ad-2438b25fb3.mp4",
+  "video_facts": {
+    "container_duration_s": 15.018,
+    "video_stream_s": 15.0,
+    "size": "640x360",
+    "codecs": "H.264 + AAC",
+    "sha256": "4cb01d2060a0dda07d6c0f24cb1a25b43a49d4d19b5cd512b8be6abb8e0a4e96"
+  },
+  "duration_s": 15.0,
+  "judged_axes": [
+    "product",
+    "scene",
+    "script",
+    "sound"
+  ],
+  "sound_judge_status": "pass",
+  "axis_notes": {
+    "pronunciation": "The round's pronunciation findings are not in this release."
+  },
+  "scenes": [
+    {
+      "scene_id": "ad-2438b25fb3-s1",
+      "scene_index": 1,
+      "position": "first",
+      "start_s": 0.0,
+      "duration_s": 4.128,
+      "has_caption": 0
+    },
+    {
+      "scene_id": "ad-2438b25fb3-s2",
+      "scene_index": 2,
+      "position": "middle",
+      "start_s": 4.128,
+      "duration_s": 3.36,
+      "has_caption": 1
+    },
+    {
+      "scene_id": "ad-2438b25fb3-s3",
+      "scene_index": 3,
+      "position": "middle",
+      "start_s": 7.488,
+      "duration_s": 2.112,
+      "has_caption": 1
+    },
+    {
+      "scene_id": "ad-2438b25fb3-s4",
+      "scene_index": 4,
+      "position": "middle",
+      "start_s": 9.6,
+      "duration_s": 2.592,
+      "has_caption": 1
+    },
+    {
+      "scene_id": "ad-2438b25fb3-s5",
+      "scene_index": 5,
+      "position": "last",
+      "start_s": 12.192,
+      "duration_s": 2.808,
+      "has_caption": 1
+    }
+  ],
+  "lines": [
+    {
+      "scene_id": "ad-2438b25fb3-s1",
+      "text": "Treat acne marks with a targeted, dermatologist-backed formula."
+    },
+    {
+      "scene_id": "ad-2438b25fb3-s2",
+      "text": "Nanotechnology drives active niacinamide deeper."
+    },
+    {
+      "scene_id": "ad-2438b25fb3-s3",
+      "text": "Zinc regulates excess sebum."
+    },
+    {
+      "scene_id": "ad-2438b25fb3-s4",
+      "text": "Ninety-one percent saw faded marks."
+    },
+    {
+      "scene_id": "ad-2438b25fb3-s5",
+      "text": "Achieve clarity with [brand]."
+    }
+  ],
+  "captions": [
+    {
+      "scene_id": "ad-2438b25fb3-s2",
+      "text": "Actively reduces dark spots"
+    },
+    {
+      "scene_id": "ad-2438b25fb3-s3",
+      "text": "Controls excess sebum"
+    },
+    {
+      "scene_id": "ad-2438b25fb3-s4",
+      "text": "91% saw faded marks"
+    },
+    {
+      "scene_id": "ad-2438b25fb3-s5",
+      "text": "Shop Now"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "f-5deef114d233",
+      "ad_id": "ad-2438b25fb3",
+      "scene_id": "ad-2438b25fb3-s1",
+      "axis": "product",
+      "judge": "product_clip_judge",
+      "kind": [
+        "wrong_form"
+      ],
+      "description": "Brand logo incorrectly renders '[brand]' without the proper white lettering inside the solid teal cross emblem.",
+      "location": "lower section of box and bottle label",
+      "time_s": 0.0,
+      "span_start_s": 0.0,
+      "span_end_s": 4.1,
+      "evidence_ref": "hero",
+      "evidence_photo_sha256": "ceea6c8afeb5543b2c6f35cf840f85aabd345e4ab38f027f60738213f81228e3"
+    },
+    {
+      "finding_id": "f-697eadf2b55a",
+      "ad_id": "ad-2438b25fb3",
+      "scene_id": "ad-2438b25fb3-s1",
+      "axis": "product",
+      "judge": "product_clip_judge",
+      "kind": [
+        "product_text_broken"
+      ],
+      "description": "Tagline '[brand tagline]' and secondary ingredient details on the bottle are warped into garbled pseudo-lettering.",
+      "location": "tagline below logo and bottle ingredient text",
+      "time_s": 0.0,
+      "span_start_s": 0.0,
+      "span_end_s": 4.1,
+      "evidence_ref": "gallery-1",
+      "evidence_photo_sha256": "7260d6a09e346f3b55804cc0b6945d2be6017e223a670f8a70c2e6ec5f089445"
+    },
+    {
+      "finding_id": "f-873b937548ab",
+      "ad_id": "ad-2438b25fb3",
+      "scene_id": "ad-2438b25fb3-s2",
+      "axis": "product",
+      "judge": "product_clip_judge",
+      "kind": [
+        "product_text_broken"
+      ],
+      "description": "Tagline beneath the brand logo is illegible and garbled instead of clearly reading '[brand tagline]'.",
+      "location": "bottom white band beneath brand logo",
+      "time_s": 4.128,
+      "span_start_s": 0.0,
+      "span_end_s": 0.8,
+      "evidence_ref": "gallery-1",
+      "evidence_photo_sha256": "7260d6a09e346f3b55804cc0b6945d2be6017e223a670f8a70c2e6ec5f089445"
+    },
+    {
+      "finding_id": "f-d56d6c14ed3a",
+      "ad_id": "ad-2438b25fb3",
+      "scene_id": "ad-2438b25fb3-s2",
+      "axis": "product",
+      "judge": "product_clip_judge",
+      "kind": [
+        "wrong_form"
+      ],
+      "description": "Bottle label incorrectly incorporates outer carton elements, including the day/night icon and circular test badges not found on the authentic bottl",
+      "location": "front label of the serum bottle",
+      "time_s": 4.128,
+      "span_start_s": 0.0,
+      "span_end_s": 0.8,
+      "evidence_ref": "gallery-1",
+      "evidence_photo_sha256": "7260d6a09e346f3b55804cc0b6945d2be6017e223a670f8a70c2e6ec5f089445"
+    },
+    {
+      "finding_id": "f-e5b8f2ce1bd1",
+      "ad_id": "ad-2438b25fb3",
+      "scene_id": "ad-2438b25fb3-s3",
+      "axis": "product",
+      "judge": "product_clip_judge",
+      "kind": [
+        "product_text_broken",
+        "text_low"
+      ],
+      "description": "The net volume is printed as '10 mL' with an uppercase 'L', whereas the reference product displays lowercase '10 ml'.",
+      "location": "top-left text on front label above the product title",
+      "time_s": 7.488,
+      "span_start_s": 0.0,
+      "span_end_s": 1.5,
+      "evidence_ref": "hero",
+      "evidence_photo_sha256": "ceea6c8afeb5543b2c6f35cf840f85aabd345e4ab38f027f60738213f81228e3"
+    },
+    {
+      "finding_id": "f-a71f3bdc4eaa",
+      "ad_id": "ad-2438b25fb3",
+      "scene_id": "ad-2438b25fb3-s4",
+      "axis": "product",
+      "judge": "product_clip_judge",
+      "kind": [
+        "product_text_broken"
+      ],
+      "description": "The label has typographical errors including 'niacinaaide', an added 'day + night' line, and garbled '[brand tagline]' subtext.",
+      "location": "front bottle label text",
+      "time_s": 9.6,
+      "span_start_s": 0.0,
+      "span_end_s": 2.6,
+      "evidence_ref": "gallery-1",
+      "evidence_photo_sha256": "7260d6a09e346f3b55804cc0b6945d2be6017e223a670f8a70c2e6ec5f089445"
+    },
+    {
+      "finding_id": "f-eb1418524d03",
+      "ad_id": "ad-2438b25fb3",
+      "scene_id": "ad-2438b25fb3-s4",
+      "axis": "script",
+      "judge": "script_judge",
+      "kind": [
+        "unsupported_claim"
+      ],
+      "description": "Step 4/5 failed: image text I29-I35 states '[listing claim]' with footnote '[listing footnote]', a self-reported survey outcome, but the script states it as an observed fact ('saw faded marks') dropping the survey/self-report hedge and the regular-use qualifier.",
+      "time_s": null,
+      "span_start_s": null,
+      "span_end_s": null,
+      "evidence_ref": null,
+      "evidence_photo_sha256": null
+    },
+    {
+      "finding_id": "f-c7995fa60f86",
+      "ad_id": "ad-2438b25fb3",
+      "scene_id": "ad-2438b25fb3-s5",
+      "axis": "product",
+      "judge": "product_clip_judge",
+      "kind": [
+        "product_text_broken"
+      ],
+      "description": "Ingredient bullet points and subtext beneath the brand logo show garbled, deformed characters rather than clean typography.",
+      "location": "bottle front label text lines",
+      "time_s": 12.192,
+      "span_start_s": 0.0,
+      "span_end_s": 2.8,
+      "evidence_ref": "gallery-1",
+      "evidence_photo_sha256": "7260d6a09e346f3b55804cc0b6945d2be6017e223a670f8a70c2e6ec5f089445"
+    },
+    {
+      "finding_id": "f-43878e100a4a",
+      "ad_id": "ad-2438b25fb3",
+      "scene_id": "ad-2438b25fb3-s5",
+      "axis": "scene",
+      "judge": "scene_clip_judge",
+      "kind": [
+        "underwhelming"
+      ],
+      "description": "Repeats the exact packshot framing and product setup from the opening scene.",
+      "time_s": 12.192,
+      "span_start_s": null,
+      "span_end_s": null,
+      "evidence_ref": null,
+      "evidence_photo_sha256": null
+    },
+    {
+      "finding_id": "f-bf67db78f90d",
+      "ad_id": "ad-2438b25fb3",
+      "scene_id": "ad-2438b25fb3-s5",
+      "axis": "scene",
+      "judge": "scene_frames_judge",
+      "kind": [
+        "underwhelming"
+      ],
+      "description": "The closing product-and-box push-in substantially repeats the opening scene's composition and motion.",
+      "time_s": 12.192,
+      "span_start_s": null,
+      "span_end_s": null,
+      "evidence_ref": null,
+      "evidence_photo_sha256": null
+    }
+  ],
+  "reference_photos": [],
+  "text_edits": [
+    {
+      "where": "lines[ad-2438b25fb3-s5].text",
+      "replaced": [
+        "brand name -> [brand] (as printed in Figure 2)"
+      ]
+    },
+    {
+      "where": "findings[f-5deef114d233].description",
+      "replaced": [
+        "quoted two-letter fragment of the brand wordmark -> '[brand]'"
+      ]
+    },
+    {
+      "where": "findings[f-697eadf2b55a].description",
+      "replaced": [
+        "quoted three-word all-caps brand tagline -> '[brand tagline]'"
+      ]
+    },
+    {
+      "where": "findings[f-873b937548ab].description",
+      "replaced": [
+        "quoted three-word all-caps brand tagline -> '[brand tagline]'"
+      ]
+    },
+    {
+      "where": "findings[f-a71f3bdc4eaa].description",
+      "replaced": [
+        "quoted three-word all-caps brand tagline -> '[brand tagline]'"
+      ]
+    },
+    {
+      "where": "findings[f-eb1418524d03].description",
+      "replaced": [
+        "quoted claim from the listing photos -> '[listing claim]'",
+        "quoted footnote from the listing photos -> '[listing footnote]'"
+      ]
+    }
+  ]
+};
+
+/* ===================================================================================== */
+(function () {
+  // The script removes its own element from the page once it has run, so the finding text in
+  // DEMO is not part of the page's DOM when findings are hidden.
+  if (document.currentScript) document.currentScript.remove();
+
+  const PAGE_VERSION = '1.0.0';
+  const HONESTY = "This page is a template of the review protocol in the paper Scene by Scene. You watch one ad, answer six questions scene by scene, and accept or reject the judge findings that come with the ad. The page does not run any judge: the findings are read from the ad package, and for the example ad they are the ten findings this release holds for it. It has no edit tools. It is not the production review portal. Your answers stay in this browser until you download them.";
+  const KEY_PREFIX = 'sbs-review/1:';
+  const SETTINGS_KEY = KEY_PREFIX + 'settings';
+  const SEEK_JUMP_S = 2.0;
+
+  const Q = {};
+  RUBRIC.questions.forEach(q => { Q[q.axis] = q; });
+  const AXES = RUBRIC.questions.map(q => q.axis);
+  // The row order of marks.csv, fixed to the release's order whatever the order of the questions.
+  const MARK_AXES = ['product', 'scene', 'script', 'pronunciation', 'caption_placement', 'caption_relevance'];
+  const ORDER = {};
+  RUBRIC.option_order.forEach((k, i) => { ORDER[k] = i; });
+  const neg = ax => (Q[ax].answers.find(a => a.negative) || {}).value;
+  const ansLabel = (ax, v) => ((Q[ax].answers.find(a => a.value === v) || {}).label) || v;
+  const qName = ax => Q[ax].part ? Q[ax].title + ' · ' + Q[ax].part : Q[ax].title;
+  const sortOpts = keys => keys.slice().sort((a, b) => (ORDER[a] ?? 99) - (ORDER[b] ?? 99));
+
+  /* ---------------- small helpers ---------------- */
+  const $ = id => document.getElementById(id);
+  function h(tag, attrs, ...kids) {
+    const e = document.createElement(tag);
+    if (attrs) for (const k in attrs) {
+      const v = attrs[k];
+      if (v === null || v === undefined || v === false) continue;
+      if (k === 'class') e.className = v;
+      else if (k === 'text') e.textContent = v;
+      else if (k === 'html') e.innerHTML = v;
+      else if (k.startsWith('on')) e.addEventListener(k.slice(2), v);
+      else e.setAttribute(k, v === true ? '' : String(v));
+    }
+    return add(e, kids);
+  }
+  // Append children, flattening lists and skipping empty ones.
+  function add(e, ...kids) {
+    for (const c of kids.flat(Infinity)) if (c !== null && c !== undefined && c !== false) e.append(c.nodeType ? c : document.createTextNode(String(c)));
+    return e;
+  }
+  const svg = (paths, cls) => {
+    const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    s.setAttribute('viewBox', '0 0 16 16'); s.setAttribute('class', cls || 'i'); s.setAttribute('aria-hidden', 'true');
+    s.innerHTML = paths; return s;
+  };
+  const ICON = {
+    agent: () => svg('<rect x="2.5" y="4.5" width="11" height="8.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 2v2.5" stroke="currentColor" stroke-width="1.4"/><circle cx="6" cy="8.5" r="1.1" fill="currentColor"/><circle cx="10" cy="8.5" r="1.1" fill="currentColor"/>'),
+    up: () => svg('<path d="M5 7.2 7.6 2.5c.9 0 1.6.8 1.4 1.7L8.6 6.5h3.6c.9 0 1.5.8 1.3 1.7l-1 4.5c-.2.7-.8 1.3-1.6 1.3H5z M2.5 7.2H5V14H2.5z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>'),
+    down: () => svg('<path d="M11 8.8 8.4 13.5c-.9 0-1.6-.8-1.4-1.7l.4-2.3H3.8c-.9 0-1.5-.8-1.3-1.7l1-4.5C3.7 2.6 4.3 2 5.1 2H11z M13.5 8.8H11V2h2.5z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>'),
+    play: () => svg('<path d="M5 3.2v9.6L12.5 8z" fill="currentColor"/>'),
+    jump: () => svg('<circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 5v3.2l2.2 1.4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>'),
+    help: () => svg('<circle cx="8" cy="8" r="6.2" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M6.3 6.3c0-1 .8-1.7 1.8-1.7s1.8.7 1.8 1.6c0 1.3-1.8 1.4-1.8 2.7" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8.1" cy="11.3" r=".8" fill="currentColor"/>'),
+    chev: () => svg('<path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>', 'i chev'),
+    tick: () => svg('<path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>', 'i tick'),
+    person: () => svg('<circle cx="6" cy="5.5" r="2.4" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M1.8 13.5c.4-2.4 2.1-3.8 4.2-3.8s3.8 1.4 4.2 3.8" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M12.5 4.5v5M10 7h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>')
+  };
+  const nowIso = () => new Date().toISOString();
+  const clone = o => JSON.parse(JSON.stringify(o));
+  const mmss = s => { s = Math.max(0, Math.floor((+s || 0) + 1e-6)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
+  const fix1 = x => (Math.round(x * 10) / 10).toFixed(1);
+  const listNums = ns => ns.length < 2 ? ns.join('') : ns.slice(0, -1).join(', ') + ' and ' + ns[ns.length - 1];
+  const scenesText = ns => (ns.length === 1 ? 'scene ' : 'scenes ') + listNums(ns);
+  const ofScenes = (what, ns) => ns.length === 1 ? 'the ' + what + ' of scene ' + ns[0] : 'the ' + what + 's of scenes ' + listNums(ns);
+  const fmtT = x => { x = Math.max(0, +x || 0); const m = Math.floor(x / 60); return m + ':' + (x - m * 60).toFixed(1).padStart(4, '0'); };
+  const plural = (n, one, many) => n + ' ' + (n === 1 ? one : many);
+  const sanitizeWord = w => String(w || '').replace(/[^\p{L}\p{N}' -]/gu, '').slice(0, 40);
+
+  /* ---------------- storage: every access guarded; the page works without it ---------------- */
+  const store = {
+    ok: true,
+    get(k) { try { const v = window.localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch (e) { this.ok = false; return null; } },
+    set(k, v) { try { window.localStorage.setItem(k, JSON.stringify(v)); } catch (e) { this.ok = false; } },
+    del(k) { try { window.localStorage.removeItem(k); } catch (e) { this.ok = false; } },
+    keys() { try { const out = []; for (let i = 0; i < window.localStorage.length; i++) out.push(window.localStorage.key(i)); return out; } catch (e) { this.ok = false; return []; } }
+  };
+
+  /* ---------------- ad packages ---------------- */
+  function validatePackage(p) {
+    const errs = [];
+    if (!p || typeof p !== 'object') return ['not a JSON object'];
+    if (p.format !== 'sbs-ad-package/1') errs.push('format must be "sbs-ad-package/1"');
+    if (!/^(g1)?ad-[0-9a-f]{10}$/.test(p.ad_id || '')) errs.push('ad_id must look like ad-0123456789');
+    if (!Array.isArray(p.scenes) || !p.scenes.length) { errs.push('scenes is missing or empty'); return errs; }
+    let t = 0;
+    p.scenes.forEach((s, i) => {
+      if (s.scene_index !== i + 1) errs.push('scenes must be numbered from 1 in play order (scene ' + (i + 1) + ')');
+      if (s.scene_id !== p.ad_id + '-s' + (i + 1)) errs.push('scene ' + (i + 1) + ': scene_id must be ' + p.ad_id + '-s' + (i + 1));
+      if (!(+s.duration_s > 0)) errs.push('scene ' + (i + 1) + ': duration_s must be a positive number');
+      if (Math.abs((+s.start_s) - t) > 0.01) errs.push('scene ' + (i + 1) + ': start_s must equal the sum of earlier durations (' + t.toFixed(3) + ')');
+      t += +s.duration_s;
+    });
+    const ids = new Set(p.scenes.map(s => s.scene_id));
+    const judged = new Set(p.judged_axes || []);
+    (p.findings || []).forEach(f => {
+      if (!ids.has(f.scene_id)) errs.push('finding ' + f.finding_id + ': scene_id is not a scene of this ad');
+      if (!['product', 'scene', 'script', 'pronunciation'].includes(f.axis)) errs.push('finding ' + f.finding_id + ': axis must be product, scene, script or pronunciation');
+      else if (!judged.has(f.axis)) errs.push('finding ' + f.finding_id + ': axis ' + f.axis + ' is not in judged_axes');
+      if (!Array.isArray(f.kind)) errs.push('finding ' + f.finding_id + ': kind must be a list');
+    });
+    (p.lines || []).forEach(l => { if (!ids.has(l.scene_id)) errs.push('a line points to an unknown scene ' + l.scene_id); });
+    (p.captions || []).forEach(c => { if (!ids.has(c.scene_id)) errs.push('a caption points to an unknown scene ' + c.scene_id); });
+    return errs;
+  }
+  function normalizePackage(p) {
+    p = clone(p);
+    p.lines = p.lines || []; p.captions = p.captions || []; p.findings = (p.findings || []).map(f => { const g = Object.assign({}, f); delete g.thumbs; return g; });
+    p.judged_axes = p.judged_axes || []; p.reference_photos = p.reference_photos || [];
+    p.axis_notes = (p.axis_notes && typeof p.axis_notes === 'object') ? p.axis_notes : {};
+    p.text_edits = Array.isArray(p.text_edits) ? p.text_edits : [];
+    p.duration_s = +p.duration_s || p.scenes.reduce((a, s) => a + +s.duration_s, 0);
+    return p;
+  }
+  const baseName = s => String(s || '').split(/[\\/]/).pop();
+
+  /* ---------------- session ---------------- */
+  const S = {
+    screen: 'start', reviewer: 'R1', mode: 'shown', useDemo: true,
+    loaded: [],            // [{pkg, videoUrl, videoName, photos: {label: url}}] from the file chooser
+    queue: [], cur: 0,     // the active queue: entries from loaded, plus the demo
+    reviews: {},           // ad_id -> review state
+    aboutSeen: false,
+    ui: {},                // ad_id -> {collapsed: {card: true}}: which cards are folded, kept in storage per ad
+    openF: {}              // finding_id -> true: findings whose details are open (this tab only)
+  };
+  const demoEntry = () => ({ pkg: normalizePackage(DEMO), videoUrl: DEMO.video, videoName: baseName(DEMO.video), photos: {}, demo: true });
+  function buildQueue() {
+    const q = [];
+    if (S.useDemo) q.push(S.demoEntry || (S.demoEntry = demoEntry()));
+    S.loaded.forEach(e => { if (!q.some(x => x.pkg.ad_id === e.pkg.ad_id)) q.push(e); });
+    const curId = S.queue[S.cur] && S.queue[S.cur].pkg.ad_id;
+    S.queue = q;
+    const i = q.findIndex(e => e.pkg.ad_id === curId);
+    S.cur = i >= 0 ? i : 0;
+  }
+  const entry = () => S.queue[S.cur];
+  const pkg = () => entry().pkg;
+
+  function newReview(adId) {
+    return {
+      format: 'sbs-review-state/1', ad_id: adId, reviewer: null, mode: null, preset: RUBRIC.preset,
+      rubric_version: RUBRIC.version, started: false, submitted: false,
+      answers: {}, units: {}, grid: {}, soundTags: {}, thumbs: {}, notes: {},
+      times: { opened: nowIso(), first_answer: null, submitted: null, q: {} },
+      watch: { intervals: [], duration_s: null, media_error: false },
+      decision: null
+    };
+  }
+  function rv() {
+    const id = pkg().ad_id;
+    if (!S.reviews[id]) {
+      const saved = store.get(KEY_PREFIX + id);
+      S.reviews[id] = (saved && saved.format === 'sbs-review-state/1' && saved.ad_id === id) ? saved : newReview(id);
+    }
+    return S.reviews[id];
+  }
+  const anyStarted = () => Object.values(S.reviews).some(r => r.started);
+  const modeOf = r => (r.started ? r.mode : S.mode);
+  const shown = r => modeOf(r) === 'shown';
+  function save(r) { store.set(KEY_PREFIX + r.ad_id, r); }
+  // Folded cards are a view setting: kept under their own key, never in the review or its exports.
+  const uiKey = adId => KEY_PREFIX + 'ui:' + adId;
+  function uiOf(adId) {
+    if (!S.ui[adId]) {
+      const saved = store.get(uiKey(adId));
+      const c = saved && saved.collapsed && typeof saved.collapsed === 'object' ? saved.collapsed : {};
+      S.ui[adId] = { collapsed: Object.assign({}, c) };
+    }
+    return S.ui[adId];
+  }
+  const isCollapsed = card => !!uiOf(pkg().ad_id).collapsed[card];
+  function setCollapsed(card, on) {
+    const ui = uiOf(pkg().ad_id);
+    if (!!ui.collapsed[card] === on) return false;
+    if (on) ui.collapsed[card] = true; else delete ui.collapsed[card];
+    store.set(uiKey(pkg().ad_id), { collapsed: ui.collapsed });
+    return true;
+  }
+  function saveSettings() { store.set(SETTINGS_KEY, { reviewer: S.reviewer, mode: S.mode, useDemo: S.useDemo, aboutSeen: S.aboutSeen }); }
+
+  /* ---------------- units and findings ---------------- */
+  function sceneOf(p, n) { return p.scenes[n - 1]; }
+  function idxOf(p, sceneId) { const s = p.scenes.find(x => x.scene_id === sceneId); return s ? s.scene_index : null; }
+  function lineOf(p, n) { const s = sceneOf(p, n); const l = p.lines.find(x => x.scene_id === s.scene_id); return l ? l.text : null; }
+  function captionOf(p, n) { const s = sceneOf(p, n); const c = p.captions.find(x => x.scene_id === s.scene_id); return c ? c.text : null; }
+  function unitScenes(ax, p) {
+    const all = p.scenes.map(s => s.scene_index);
+    if (ax === 'product' || ax === 'scene') return all;
+    if (ax === 'script' || ax === 'pronunciation') {
+      if (!p.lines.length) return all;   // a package without lines asks every scene
+      const has = new Set(p.lines.map(l => l.scene_id));
+      return p.scenes.filter(s => has.has(s.scene_id)).map(s => s.scene_index);
+    }
+    if (ax === 'caption_placement' || ax === 'caption_relevance') return p.scenes.filter(s => +s.has_caption === 1).map(s => s.scene_index);
+    return [];
+  }
+  const asked = (ax, p) => ax === 'sound' || unitScenes(ax, p).length > 0;
+  function findingsOf(p, ax, n) {
+    return p.findings.filter(f => f.axis === ax && (n === undefined || idxOf(p, f.scene_id) === n));
+  }
+  function validKinds(f, p) {
+    const q = Q[f.axis]; if (!q) return [];
+    const keys = new Set(q.options.map(o => o.key).concat(q.grades ? q.grades.options.map(o => o.key) : []));
+    const n = idxOf(p, f.scene_id);
+    return (f.kind || []).filter(k => keys.has(k) && !(k === 'weak_ending' && n !== p.scenes.length));
+  }
+  function optLabel(ax, k) {
+    const q = Q[ax]; if (!q) return k;
+    const o = q.options.find(x => x.key === k) || (q.grades && q.grades.options.find(x => x.key === k));
+    return o ? o.label : k;
+  }
+  function isRequired(r, ax, p) {
+    const q = Q[ax];
+    if (r.preset === 'round') return !!q.required.round;
+    if (q.required.default) return true;
+    return !!(q.required.flag && shown(r) && findingsOf(p, ax).length);
+  }
+
+  /* ---------------- answer document operations ---------------- */
+  // r.answers[axis] = top answer; r.units[axis][n] = {opts:{key:true}, word}; r.grid[n] = {mark, auto, over, opts};
+  // r.soundTags = {voice, music}. A grid row with auto = true is a Swap out pre-filled by a product-wrong scene.
+  function U(r, ax) { return r.units[ax] || (r.units[ax] = {}); }
+  function prefill(r, n) {
+    if (!RUBRIC.product_auto_swap) return;
+    const g = r.grid[n];
+    if (!g) r.grid[n] = { mark: 'swap', auto: true, opts: {} };
+    else if (g.mark === 'none') r.grid[n] = { mark: 'swap', auto: true, over: 'none', opts: {} };
+  }
+  function unprefill(r, n) {
+    const g = r.grid[n];
+    if (g && g.auto) { if (g.over) r.grid[n] = { mark: g.over, opts: {} }; else delete r.grid[n]; }
+  }
+  function addUnit(r, ax, n) {
+    if (U(r, ax)[n]) return;
+    U(r, ax)[n] = { opts: {} };
+    if (ax === 'product') prefill(r, n);
+  }
+  function removeUnit(r, ax, n) {
+    if (!U(r, ax)[n]) return;
+    delete U(r, ax)[n];
+    if (ax === 'product') unprefill(r, n);
+  }
+  function setAnswer(r, ax, v) {
+    if (ax !== 'sound' && v !== neg(ax)) Object.keys(U(r, ax)).forEach(n => removeUnit(r, ax, +n));
+    if (ax === 'sound' && v !== 'issues') r.soundTags = {};
+    if (v === null || v === undefined) delete r.answers[ax]; else r.answers[ax] = v;
+  }
+  function setOpt(r, ax, n, k, on) {
+    const u = U(r, ax)[n]; if (!u) return;
+    const gr = Q[ax].grades;
+    if (gr && gr.options.some(o => o.key === k)) {
+      if (on) { gr.options.forEach(o => { delete u.opts[o.key]; }); u.opts[gr.parent] = true; u.opts[k] = true; }
+      else delete u.opts[k];
+      return;
+    }
+    if (on) u.opts[k] = true;
+    else { delete u.opts[k]; if (gr && k === gr.parent) gr.options.forEach(o => { delete u.opts[o.key]; }); }
+  }
+  function setGrid(r, n, mark) {
+    const g = r.grid[n];
+    const keep = g && g.mark === 'swap' && mark === 'swap' ? g.opts : {};
+    if (mark === null) delete r.grid[n]; else r.grid[n] = { mark, opts: Object.assign({}, keep) };
+  }
+  function setGridOpt(r, n, k, on) {
+    const g = r.grid[n]; if (!g || g.mark !== 'swap') return;
+    if (g.auto) { delete g.auto; delete g.over; }    // ticking an option touches a pre-filled Swap
+    if (on) g.opts[k] = true; else delete g.opts[k];
+  }
+
+  /* ---------------- accepting a finding writes it into the answers ---------------- */
+  // As in the portal, a withdraw or a flip to thumbs down never removes an answer: the reviewer
+  // may have refined it since. A mis-click is taken back with the Undo in the "Answered for you"
+  // note, which reverses only what that accept wrote, and only if none of it changed since.
+  function snapshot(r) { return clone({ answers: r.answers, units: r.units, grid: r.grid }); }
+  function applyFinding(r, p, f) {
+    const n = idxOf(p, f.scene_id), ax = f.axis, kinds = validKinds(f, p);
+    if (ax === 'scene') {
+      const g = r.grid[n];
+      if (!g || g.mark !== 'swap' || g.auto) r.grid[n] = { mark: 'swap', opts: (g && g.mark === 'swap') ? Object.assign({}, g.opts) : {} };
+      kinds.forEach(k => setGridOpt(r, n, k, true));
+      return;
+    }
+    if (r.answers[ax] !== neg(ax)) setAnswer(r, ax, neg(ax));
+    addUnit(r, ax, n);
+    kinds.forEach(k => setOpt(r, ax, n, k, true));
+    if (ax === 'pronunciation' && f.word && !U(r, ax)[n].word) U(r, ax)[n].word = sanitizeWord(f.word);
+  }
+  // The parts of the answer document: the answer and the unit rows of each axis, and each grid row.
+  function partGet(doc, pt) {
+    if (pt[0] === 'grid') return doc.grid[pt[1]] === undefined ? null : clone(doc.grid[pt[1]]);
+    if (pt[0] === 'units') { const u = doc.units[pt[1]]; return u && Object.keys(u).length ? clone(u) : null; }
+    return doc.answers[pt[1]] === undefined ? null : doc.answers[pt[1]];
+  }
+  function partSet(r, pt, v) {
+    const box = pt[0] === 'grid' ? r.grid : pt[0] === 'units' ? r.units : r.answers;
+    if (v === null) delete box[pt[1]]; else box[pt[1]] = clone(v);
+  }
+  const same = (x, y) => JSON.stringify(x) === JSON.stringify(y);
+  function changedParts(a, b) {
+    const parts = [];
+    AXES.forEach(ax => {
+      if (!same(partGet(a, ['answers', ax]), partGet(b, ['answers', ax]))) parts.push(['answers', ax]);
+      if (!same(partGet(a, ['units', ax]), partGet(b, ['units', ax]))) parts.push(['units', ax]);
+    });
+    Array.from(new Set(Object.keys(a.grid).concat(Object.keys(b.grid)))).forEach(n => {
+      if (!same(partGet(a, ['grid', n]), partGet(b, ['grid', n]))) parts.push(['grid', n]);
+    });
+    return parts;
+  }
+
+  /* ---------------- times ---------------- */
+  function begin(r) {
+    if (r.started) return;
+    r.started = true; r.reviewer = S.reviewer; r.mode = S.mode; r.preset = RUBRIC.preset;
+  }
+  function stamp(r, ax) {
+    const t = nowIso();
+    if (!r.times.first_answer) r.times.first_answer = t;
+    const q = r.times.q[ax] || (r.times.q[ax] = { first_answer_at: t, last_answer_at: t });
+    q.last_answer_at = t;
+  }
+
+  /* ---------------- actions by hand ---------------- */
+  function act(fn) {
+    const r = rv(); if (r.submitted) return;
+    begin(r); fn(r, pkg()); save(r); render();
+  }
+  const heldUp = (r, f) => !!(r.thumbs[f.finding_id] && r.thumbs[f.finding_id].verdict === 'up');
+  const A = {
+    answer: (ax, v) => act((r, p) => {
+      const was = r.answers[ax];
+      delete r.notes[ax];
+      if (was === v) return;
+      const had = Object.keys(U(r, ax)).map(Number);
+      setAnswer(r, ax, v); stamp(r, ax);
+      // A positive answer clears the rows that accepted findings wrote; their thumbs stay up.
+      if (ax !== 'sound' && v !== neg(ax) && shown(r)) {
+        const held = p.findings.filter(f => f.axis === ax && heldUp(r, f) && had.includes(idxOf(p, f.scene_id)));
+        if (held.length) r.notes[ax] = 'This removed the marks of ' + plural(held.length, 'accepted finding', 'accepted findings') + '. Their thumbs stay up; change them if you now disagree.';
+      }
+    }),
+    unit: (ax, n) => act(r => {
+      if (U(r, ax)[n]) removeUnit(r, ax, n); else addUnit(r, ax, n);
+      stamp(r, ax);
+    }),
+    opt: (ax, n, k) => act(r => {
+      const u = U(r, ax)[n]; if (!u) return;
+      setOpt(r, ax, n, k, !u.opts[k]); stamp(r, ax);
+    }),
+    grid: (n, mark) => act((r, p) => {
+      delete r.notes.scene;
+      setGrid(r, n, mark); stamp(r, 'scene');
+      if (mark !== 'swap' && shown(r)) {
+        const held = findingsOf(p, 'scene', n).filter(f => heldUp(r, f));
+        if (held.length) r.notes.scene = 'Scene ' + n + ' has ' + plural(held.length, 'accepted finding', 'accepted findings') + '. The thumbs stay up; change them if you now disagree.';
+      }
+    }),
+    gridOpt: (n, k) => act(r => {
+      const g = r.grid[n]; if (!g) return;
+      setGridOpt(r, n, k, !g.opts[k]); stamp(r, 'scene');
+    }),
+    soundTag: k => act(r => {
+      r.soundTags[k] = !r.soundTags[k]; if (!r.soundTags[k]) delete r.soundTags[k];
+      stamp(r, 'sound');
+    }),
+    thumb: (fid, verdict) => act((r, p) => {
+      if (!shown(r)) return;
+      const f = p.findings.find(x => x.finding_id === fid); if (!f) return;
+      const cur = r.thumbs[fid], t = nowIso();
+      if (r.lastApply && r.lastApply.fid === fid) delete r.lastApply;
+      if (cur && cur.verdict === verdict) {          // clicking the held thumb withdraws it; answers stay
+        delete r.thumbs[fid]; delete r.notes[f.axis];
+        return;
+      }
+      // applied_to_rubric stays with the thumb through a flip, until the thumb is withdrawn.
+      const rec = { verdict, applied: !!(cur && cur.applied), first_at: cur ? cur.first_at : t, last_at: t };
+      delete r.notes[f.axis];
+      if (verdict === 'up') {
+        const before = snapshot(r);
+        applyFinding(r, p, f);
+        const after = snapshot(r), parts = changedParts(before, after);
+        const n = idxOf(p, f.scene_id);
+        if (parts.length) {
+          rec.applied = true;
+          stamp(r, f.axis);
+          const note = 'Answered for you: ' + (f.axis === 'scene' ? 'Swap out' : ansLabel(f.axis, neg(f.axis))) + ', scene ' + n + '.';
+          r.notes[f.axis] = note;
+          r.lastApply = { fid, axis: f.axis, note, parts, before: parts.map(pt => partGet(before, pt)), after: parts.map(pt => partGet(after, pt)) };
+        } else r.notes[f.axis] = 'Nothing new to write: scene ' + n + ' already has this answer.';
+      }
+      r.thumbs[fid] = rec;
+    }),
+    // Undo the last accept: put back what it changed, and withdraw its thumb, as the portal's Undo does.
+    undo: ax => act(r => {
+      const la = r.lastApply; if (!la || la.axis !== ax) return;
+      delete r.lastApply;
+      const now = snapshot(r);
+      if (!la.parts.every((pt, i) => same(partGet(now, pt), la.after[i]))) {
+        r.notes[ax] = 'Undo is no longer possible: these answers changed after the accept. Change them by hand.';
+        return;
+      }
+      la.parts.forEach((pt, i) => partSet(r, pt, la.before[i]));
+      delete r.thumbs[la.fid]; delete r.notes[ax];
+      stamp(r, ax);
+    })
+  };
+  function setWord(n, w) {
+    const r = rv(); if (r.submitted) return;
+    const u = U(r, 'pronunciation')[n]; if (!u) return;
+    begin(r);
+    u.word = sanitizeWord(w); stamp(r, 'pronunciation'); save(r); renderStatus();
+  }
+
+  /* ---------------- what is still owed ---------------- */
+  function owed(r, p) {
+    const out = [];
+    const sh = shown(r);
+    const flagsOwed = ax => sh ? findingsOf(p, ax).filter(f => !r.thumbs[f.finding_id]).length : 0;
+    const flagLine = (ax, c) => { if (c) out.push({ ax, text: qName(ax) + ': ' + (c === 1 ? '1 finding needs a thumb' : c + ' findings need a thumb') }); };
+    AXES.forEach(ax => {
+      if (!asked(ax, p)) return;
+      const req = isRequired(r, ax, p);
+      if (ax === 'scene') {
+        const miss = p.scenes.map(s => s.scene_index).filter(n => !r.grid[n]);
+        if (req && miss.length) out.push({ ax, text: 'Scene quality: mark ' + scenesText(miss) });
+        flagLine(ax, flagsOwed(ax));
+        return;
+      }
+      const a = r.answers[ax];
+      if (a === undefined) { if (req) out.push({ ax, text: qName(ax) + ': answer this' }); }
+      else if (ax === 'sound') { if (a === 'issues' && !Object.keys(r.soundTags).length) out.push({ ax, text: 'Sound quality: What is off?' }); }
+      else if (a === neg(ax) && !Object.keys(U(r, ax)).length) out.push({ ax, text: qName(ax) + ': mark every scene where it happens' });
+      flagLine(ax, flagsOwed(ax));
+    });
+    return out;
+  }
+
+  /* ---------------- watching ---------------- */
+  const W = { span: null, live: null };
+  function mergeInto(list, a, b) {
+    if (!(b > a)) return list;
+    const all = list.concat([[a, b]]).sort((x, y) => x[0] - y[0]);
+    const out = [];
+    all.forEach(iv => { const last = out[out.length - 1]; if (last && iv[0] <= last[1] + 1e-6) last[1] = Math.max(last[1], iv[1]); else out.push([iv[0], iv[1]]); });
+    return out.map(iv => [Math.round(iv[0] * 1000) / 1000, Math.round(iv[1] * 1000) / 1000]);
+  }
+  function videoDuration() {
+    const v = $('video');
+    return (v && isFinite(v.duration) && v.duration > 0) ? v.duration : (rv().watch.duration_s || pkg().duration_s);
+  }
+  function watchedFraction(r) {
+    let ivs = r.watch.intervals;
+    if (W.span && W.span.ad === r.ad_id) ivs = mergeInto(ivs, W.span.start, W.span.last);
+    const d = videoDuration();
+    const sum = ivs.reduce((a, iv) => a + Math.max(0, Math.min(iv[1], d) - Math.max(0, iv[0])), 0);
+    return d > 0 ? Math.min(1, sum / d) : 0;
+  }
+  const gateOpen = r => r.watch.media_error || watchedFraction(r) >= RUBRIC.watch_gate - 1e-9;
+  function closeSpan(extendTo) {
+    const sp = W.span; W.span = null;
+    if (!sp) return;
+    if (extendTo !== undefined && extendTo >= sp.last && extendTo - sp.last <= SEEK_JUMP_S) sp.last = extendTo;
+    const r = S.reviews[sp.ad];
+    if (r && !r.submitted && sp.last > sp.start) { r.watch.intervals = mergeInto(r.watch.intervals, sp.start, sp.last); save(r); }
+  }
+  // Coverage counts only time that played. As in the portal, a jump of more than 2 s between two
+  // time updates is a seek: the running span closes at the last position and a new one starts.
+  // So fast playback (above about 4x) counts little or nothing.
+  function startSpan() {
+    const v = $('video');
+    if (!v || v.paused || v.seeking || !entry()) return;
+    W.span = { ad: pkg().ad_id, start: v.currentTime, last: v.currentTime };
+  }
+  function onTimeUpdate() {
+    const v = $('video');
+    if (!v.paused && !v.seeking && entry()) {
+      if (!W.span || W.span.ad !== pkg().ad_id) startSpan();
+      else {
+        const t = v.currentTime, dt = t - W.span.last;
+        if (dt < 0 || dt > SEEK_JUMP_S) { closeSpan(); startSpan(); }
+        else W.span.last = t;
+      }
+    }
+    if (W.stopAt !== undefined && v.currentTime >= W.stopAt) { W.stopAt = undefined; v.pause(); }
+    renderVideoState();
+  }
+
+  /* ---------------- decision ---------------- */
+  function decide(r, p) {
+    const R = RUBRIC.rules, rank = R.severity_rank, floor = rank[R.floor];
+    const flags = [];
+    const gridSwaps = Object.keys(r.grid).map(Number).filter(n => r.grid[n].mark === 'swap').sort((a, b) => a - b);
+    const unitsOf = ax => Object.keys(U(r, ax)).map(Number).sort((a, b) => a - b);
+    R.answer_flags.forEach(af => {
+      if (!asked(af.axis, p)) return;
+      if (af.axis === 'scene') { if (gridSwaps.length) flags.push({ category: af.category, severity: af.severity, axis: 'scene', scenes: gridSwaps }); return; }
+      if (r.answers[af.axis] === af.answer) flags.push({ category: af.category, severity: af.severity, axis: af.axis, scenes: af.axis === 'sound' ? [] : unitsOf(af.axis) });
+    });
+    R.option_flags.forEach(of => {
+      let rows = [];
+      if (of.axis === 'scene') rows = gridSwaps.filter(n => r.grid[n].opts && r.grid[n].opts[of.option]);
+      else if (r.answers[of.axis] === neg(of.axis)) rows = unitsOf(of.axis).filter(n => {
+        const o = U(r, of.axis)[n].opts;
+        if (of.option === 'text_low' && o.text_high) return false;   // Low and High on one row keep High
+        return !!o[of.option];
+      });
+      if (rows.length) flags.push({ category: of.category, severity: of.severity, axis: of.axis, option: of.option, scenes: rows });
+    });
+    const counted = flags.filter(f => rank[f.severity] >= floor);
+    const fired = R.category_order.filter(c => counted.some(f => f.category === c)).map(c => {
+      const sev = counted.filter(f => f.category === c).reduce((m, f) => rank[f.severity] > rank[m] ? f.severity : m, 'minor');
+      return { category: c, max_severity: sev };
+    });
+    const productScenes = r.answers[R.hard_fail.axis] === R.hard_fail.answer ? unitsOf('product') : [];
+    const hard = r.answers[R.hard_fail.axis] === R.hard_fail.answer;
+    const bad = Array.from(new Set(gridSwaps.concat(productScenes))).sort((a, b) => a - b);
+    const last = p.scenes.length;
+    const weak = gridSwaps.includes(last) && !!(r.grid[last].opts && r.grid[last].opts.weak_ending);
+    let band, why;
+    if (hard) { band = 'reject'; why = 'The product is marked wrong, which rejects the ad on its own.'; }
+    else if (fired.length >= R.reject_categories) { band = 'reject'; why = fired.length + ' categories count toward the decision.'; }
+    else if (bad.length >= R.reject_bad_scenes) { band = 'reject'; why = bad.length + ' scenes need replacing.'; }
+    else if (fired.length === 1) { band = 'needs_edit'; why = 'One category counts toward the decision.'; }
+    else if (bad.length === 1) { band = 'needs_edit'; why = 'One scene needs replacing.'; }
+    else if (weak) { band = 'needs_edit'; why = 'The last scene is swapped for a weak ending.'; }
+    else if (flags.length) { band = 'clean_with_notes'; why = 'Only minor notes.'; }
+    else { band = 'clean'; why = 'Nothing marked.'; }
+    const sid = n => p.scenes[n - 1].scene_id;
+    const reasons = [why];
+    if (hard) reasons.push('Product marked wrong on ' + scenesText(productScenes) + '.');
+    fired.forEach(fc => {
+      const where = Array.from(new Set(counted.filter(f => f.category === fc.category).flatMap(f => f.scenes))).sort((a, b) => a - b);
+      const ax = counted.filter(f => f.category === fc.category).map(f => f.axis);
+      const lines = ax.every(a => a === 'script' || a === 'pronunciation');
+      const label = R.category_labels[fc.category];
+      reasons.push(label.charAt(0).toUpperCase() + label.slice(1) + ' (' + fc.max_severity + ') counts toward the decision: ' +
+        (where.length ? (lines ? ofScenes('line', where) : scenesText(where)) : 'the whole ad') + '.');
+    });
+    if (bad.length) reasons.push(plural(bad.length, 'scene', 'scenes') + ' to replace: ' + listNums(bad) + '.');
+    const fix = [];
+    if (productScenes.length) fix.push('Product: re-render or swap ' + scenesText(productScenes));
+    if (gridSwaps.length) fix.push('Scene quality: swap ' + scenesText(gridSwaps));
+    ['script', 'pronunciation'].forEach(ax => { if (r.answers[ax] === neg(ax) && unitsOf(ax).length) fix.push(Q[ax].title + ': ' + ofScenes('line', unitsOf(ax))); });
+    if (r.answers.sound === 'issues') fix.push('Sound quality: ' + (Object.keys(r.soundTags).map(k => Q.sound.tags.options.find(o => o.key === k).label.toLowerCase()).join(' and ') || 'the mix'));
+    ['caption_placement', 'caption_relevance'].forEach(ax => { if (r.answers[ax] === 'issues' && unitsOf(ax).length) fix.push(qName(ax) + ': ' + ofScenes('caption', unitsOf(ax))); });
+    return {
+      band, label: R.band_labels[band], hard_fail: hard, fired_categories: fired,
+      bad_scenes: bad.map(sid), reasons, to_fix: fix,
+      flags: flags.map(f => ({ category: f.category, severity: f.severity, axis: f.axis, option: f.option || null, scenes: f.scenes.map(sid), counted: rank[f.severity] >= floor }))
+    };
+  }
+
+  /* ---------------- exports ---------------- */
+  const MARKS_HEADER = ['reviewer', 'ad_id', 'scene_id', 'axis', 'marked', 'secondary_options', 'judge_flagged', 'thumbs_up', 'thumbs_down', 'mark_from_accepted_finding', 'scene_grid_every_scene'];
+  const AD_MARKS_HEADER = ['reviewer', 'ad_id', 'axis', 'answer', 'marked'];
+  const THUMBS_HEADER = ['reviewer', 'ad_id', 'scene_id', 'finding_id', 'axis', 'verdict', 'applied_to_rubric'];
+  const csv = (header, rows) => [header.join(',')].concat(rows.map(rw => header.map(k => String(rw[k] ?? '')).join(','))).join('\n') + '\n';
+  const reviewerOf = r => r.reviewer || S.reviewer;
+  function marksRows(r, p) {
+    const rows = [];
+    const sh = shown(r);
+    MARK_AXES.forEach(ax => {
+      unitScenes(ax, p).forEach(n => {
+        const s = sceneOf(p, n);
+        let marked = 0, opts = '';
+        if (ax === 'scene') {
+          const g = r.grid[n];
+          if (g && g.mark === 'swap' && !g.auto) { marked = 1; opts = sortOpts(Object.keys(g.opts || {})).join(';'); }
+        } else if (r.answers[ax] === neg(ax) && U(r, ax)[n]) {
+          marked = 1;
+          if (ax === 'pronunciation') opts = sanitizeWord(U(r, ax)[n].word);
+          else if (ax === 'product' || ax === 'script') opts = sortOpts(Object.keys(U(r, ax)[n].opts)).join(';');
+        }
+        const cap = ax.startsWith('caption_');
+        const fs = findingsOf(p, ax, n);
+        const jf = (cap || !p.judged_axes.includes(ax)) ? '' : (fs.length ? 1 : 0);
+        let up = 0, down = 0;
+        if (sh && !cap) fs.forEach(f => { const t = r.thumbs[f.finding_id]; if (t && t.verdict === 'up') up++; if (t && t.verdict === 'down') down++; });
+        rows.push({ reviewer: reviewerOf(r), ad_id: p.ad_id, scene_id: s.scene_id, axis: ax, marked, secondary_options: opts,
+          judge_flagged: jf, thumbs_up: up, thumbs_down: down, mark_from_accepted_finding: (marked === 1 && jf === 1 && up >= 1) ? 1 : 0,
+          scene_grid_every_scene: 1 });
+      });
+    });
+    return rows;
+  }
+  function adMarksRows(r, p) {
+    const a = r.answers.sound;
+    return [{ reviewer: reviewerOf(r), ad_id: p.ad_id, axis: 'sound', answer: a || '', marked: a === 'issues' ? 1 : 0 }];
+  }
+  function thumbsRows(r, p) {
+    if (!shown(r)) return [];
+    return p.findings.filter(f => r.thumbs[f.finding_id]).map(f => ({ reviewer: reviewerOf(r), ad_id: p.ad_id, scene_id: f.scene_id,
+      finding_id: f.finding_id, axis: f.axis, verdict: r.thumbs[f.finding_id].verdict, applied_to_rubric: r.thumbs[f.finding_id].applied ? 1 : 0 }));
+  }
+  function payload(r, p) {
+    const out = {};
+    const occ = (ax, extra) => Object.keys(U(r, ax)).map(Number).sort((a, b) => a - b).map(n => Object.assign({ scene: n }, extra(U(r, ax)[n])));
+    const optsTrue = o => { const x = {}; sortOpts(Object.keys(o)).forEach(k => { x[k] = true; }); return x; };
+    const tags = list => sortOpts(Array.from(new Set(list.flatMap(o => Object.keys(o).filter(k => k !== 'scene' && k !== 'mark' && k !== 'auto_swap' && k !== 'auto_swap_over' && k !== 'word')))));
+    if (r.answers.product) { out.product_fidelity = r.answers.product; out.product_fidelity_occ = occ('product', u => optsTrue(u.opts)); out.product_fidelity_tags = tags(out.product_fidelity_occ); }
+    out.scene_sort_occ = Object.keys(r.grid).map(Number).sort((a, b) => a - b).map(n => {
+      const g = r.grid[n], o = { scene: n, mark: g.mark };
+      if (g.auto) o.auto_swap = true;
+      if (g.over) o.auto_swap_over = g.over;
+      return Object.assign(o, optsTrue(g.opts || {}));
+    });
+    out.scene_sort_tags = tags(out.scene_sort_occ);
+    if (r.answers.script) { out.script_quality = r.answers.script; out.script_quality_occ = occ('script', u => optsTrue(u.opts)); out.script_quality_tags = tags(out.script_quality_occ); }
+    if (r.answers.pronunciation) { out.audio_quality = r.answers.pronunciation; out.audio_quality_occ = occ('pronunciation', u => u.word ? { word: u.word } : {}); }
+    if (r.answers.sound) { out.voice_quality = r.answers.sound; out.voice_quality_tags = Object.keys(r.soundTags).sort(); }
+    if (r.answers.caption_placement) { out.text_placement = r.answers.caption_placement; out.text_placement_occ = occ('caption_placement', () => ({})); }
+    if (r.answers.caption_relevance) { out.text_relevance = r.answers.caption_relevance; out.text_relevance_occ = occ('caption_relevance', () => ({})); }
+    out.scene_grid = 'every_scene';
+    out.judges_shown = shown(r);
+    return out;
+  }
+  function reviewJson(r, p) {
+    const sh = shown(r);
+    const marks = marksRows(r, p), ad = adMarksRows(r, p);
+    const qs = {};
+    AXES.forEach(ax => {
+      if (!asked(ax, p)) return;
+      const tq = r.times.q[ax] || {};
+      qs[ax] = { answer: ax === 'scene' ? null : (r.answers[ax] ?? null), required: isRequired(r, ax, p),
+        flagged: sh && findingsOf(p, ax).length > 0, first_answer_at: tq.first_answer_at || null, last_answer_at: tq.last_answer_at || null };
+    });
+    const fa = r.times.first_answer, sub = r.times.submitted;
+    return {
+      format: 'sbs-review/1', page_version: PAGE_VERSION, rubric_version: RUBRIC.version, ad_id: p.ad_id, product_id: p.product_id || null,
+      reviewer: reviewerOf(r), mode: sh ? 'findings_shown' : 'findings_hidden', required_preset: r.preset,
+      scene_grid_every_scene: true, product_auto_swap: !!RUBRIC.product_auto_swap, submitted: !!r.submitted,
+      timestamps: { opened: r.times.opened, first_answer: fa, submitted: sub,
+        first_answer_to_submit_s: (fa && sub) ? Math.round((Date.parse(sub) - Date.parse(fa)) / 10) / 100 : null },
+      watch: { duration_s: Math.round(videoDurationFor(r, p) * 1000) / 1000, fraction: Math.round(fractionFor(r, p) * 10000) / 10000,
+        intervals: r.watch.intervals, media_error: !!r.watch.media_error },
+      questions: qs,
+      sound_tags: Object.keys(r.soundTags).sort(),
+      payload: payload(r, p),
+      thumbs: sh ? p.findings.filter(f => r.thumbs[f.finding_id]).map(f => {
+        const t = r.thumbs[f.finding_id];
+        return { finding_id: f.finding_id, scene_id: f.scene_id, axis: f.axis, judge: f.judge || null, verdict: t.verdict,
+          applied_to_rubric: !!t.applied, first_at: t.first_at, last_at: t.last_at };
+      }) : [],
+      decision: r.decision ? { band: r.decision.band, label: r.decision.label, hard_fail: r.decision.hard_fail,
+        fired_categories: r.decision.fired_categories, bad_scenes: r.decision.bad_scenes, reasons: r.decision.reasons, to_fix: r.decision.to_fix } : null,
+      marks, ad_marks: ad,
+      rubric: RUBRIC,
+      resume: r
+    };
+  }
+  function videoDurationFor(r, p) { return (r === rv() ? videoDuration() : (r.watch.duration_s || p.duration_s)); }
+  function fractionFor(r, p) {
+    if (r === rv()) return watchedFraction(r);
+    const d = r.watch.duration_s || p.duration_s;
+    return d ? Math.min(1, r.watch.intervals.reduce((a, iv) => a + (iv[1] - iv[0]), 0) / d) : 0;
+  }
+  function buildExports(r, p) {
+    r = r || rv(); p = p || pkg();
+    return {
+      marks_csv: csv(MARKS_HEADER, marksRows(r, p)),
+      ad_marks_csv: csv(AD_MARKS_HEADER, adMarksRows(r, p)),
+      thumbs_csv: csv(THUMBS_HEADER, thumbsRows(r, p)),
+      review_json: JSON.stringify(reviewJson(r, p), null, 2) + '\n'
+    };
+  }
+  function download(name, text, type) {
+    try {
+      const url = URL.createObjectURL(new Blob([text], { type }));
+      const a = h('a', { href: url, download: name });
+      document.body.append(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
+    } catch (e) { /* nothing else to do here */ }
+  }
+  function allSubmitted() {
+    return S.queue.map(e => ({ e, r: S.reviews[e.pkg.ad_id] || store.get(KEY_PREFIX + e.pkg.ad_id) })).filter(x => x.r && x.r.submitted);
+  }
+
+  /* ---------------- rendering: start screen ---------------- */
+  function renderStart() {
+    $('honesty').textContent = HONESTY;
+    $('reviewer').value = S.reviewer;
+    document.querySelectorAll('input[name=mode]').forEach(i => { i.checked = i.value === S.mode; });
+    const locked = anyStarted();
+    $('reviewer').disabled = locked;
+    document.querySelectorAll('input[name=mode]').forEach(i => { i.disabled = locked; });
+    $('lock-note').hidden = !locked;
+    $('use-demo').checked = S.useDemo;
+    const list = $('adlist'); list.textContent = '';
+    buildQueue();
+    S.queue.forEach(e => {
+      const r = S.reviews[e.pkg.ad_id] || store.get(KEY_PREFIX + e.pkg.ad_id);
+      list.append(h('li', null, h('code', { text: e.pkg.ad_id }),
+        h('span', { class: 'hint', text: plural(e.pkg.scenes.length, 'scene', 'scenes') + (e.demo ? ', example ad' : '') + (e.videoUrl ? '' : ', no video chosen yet') }),
+        h('span', { class: 'hint', text: statusOf(r, e.pkg) }),
+        e.demo ? null : h('button', { class: 'btn small quiet', type: 'button', 'aria-label': 'Remove ' + e.pkg.ad_id + ' from the queue', onclick: () => { S.loaded = S.loaded.filter(x => x !== e); renderStart(); } }, 'Remove')));
+    });
+    if (!S.queue.length) list.append(h('li', { class: 'hint', text: 'No ads yet. Tick the example ad or load a package.' }));
+    $('start-btn').textContent = Object.values(S.reviews).some(r => r.started) ? 'Continue reviewing' : 'Start reviewing';
+    $('start-btn').disabled = !S.queue.length;
+    $('storage-note').hidden = store.ok;
+  }
+  function statusOf(r, p) {
+    if (!r || !r.started) return 'Not started';
+    if (r.submitted) return 'Submitted';
+    return 'In progress';
+  }
+
+  /* ---------------- rendering: review screen ---------------- */
+  function render() {
+    if (S.screen !== 'review') { renderStart(); return; }
+    const r = rv(), p = pkg();
+    const focusId = document.activeElement && document.activeElement.getAttribute && document.activeElement.getAttribute('data-testid');
+    $('who').innerHTML = '';
+    $('who').append('Reviewer ', h('b', { text: reviewerOf(r) }), ' · ', h('b', { text: shown(r) ? 'Findings shown' : 'Findings hidden' }),
+      r.started ? ' (fixed for this review)' : '');
+    const sel = $('queue-select'); sel.textContent = '';
+    S.queue.forEach((e, i) => sel.append(h('option', { value: i, selected: i === S.cur }, 'Ad ' + (i + 1) + ' of ' + S.queue.length + ': ' + e.pkg.ad_id + ' (' + statusOf(S.reviews[e.pkg.ad_id] || store.get(KEY_PREFIX + e.pkg.ad_id), e.pkg) + ')')));
+    $('prev-btn').disabled = S.cur <= 0;
+    $('next-btn').disabled = S.cur >= S.queue.length - 1;
+    renderStrip();
+    renderCards(r, p);
+    renderStatus();
+    renderAfter(r, p);
+    if (focusId) { const el = document.querySelector('[data-testid="' + focusId + '"]'); if (el && el !== document.activeElement) el.focus({ preventScroll: true }); }
+  }
+  function renderStrip() {
+    const r = rv(), p = pkg(), strip = $('strip');
+    strip.textContent = '';
+    const sh = shown(r);
+    p.scenes.forEach(s => {
+      const seg = h('button', { class: 'seg', type: 'button', 'data-testid': 'scene-seg-' + s.scene_index, 'data-scene': s.scene_index,
+        style: 'flex-grow:' + (+s.duration_s), 'aria-label': 'Go to scene ' + s.scene_index + ', ' + fix1(+s.duration_s) + ' seconds',
+        onclick: () => seek(+s.start_s) }, h('b', { text: 'S' + s.scene_index }), h('span', { text: fix1(+s.duration_s) + ' s' }));
+      if (sh) {
+        p.findings.filter(f => f.scene_id === s.scene_id).forEach(f => {
+          const t = (f.time_s === null || f.time_s === undefined) ? +s.start_s : +f.time_s;
+          const left = Math.min(96, Math.max(4, ((t - s.start_s) / s.duration_s) * 100));
+          seg.append(h('i', { class: 'mk', 'data-testid': 'marker-' + f.finding_id, style: 'left:' + left + '%', 'aria-hidden': 'true' }));
+        });
+      }
+      strip.append(seg);
+    });
+    strip.append(h('i', { class: 'playhead', id: 'playhead', 'aria-hidden': 'true' }));
+    $('adfacts').textContent = p.ad_id + ' · ' + plural(p.scenes.length, 'scene', 'scenes') + ' · ' + fix1(p.duration_s) + ' s' +
+      (p.product_id ? ' · ' + p.product_id : '');
+    const lg = $('legend'); lg.textContent = '';
+    if (sh) lg.append(h('span', null, h('span', { class: 'sq' }), 'blue square: where a judge finding sits'));
+    renderVideoState();
+  }
+  function renderVideoState() {
+    if (S.screen !== 'review' || !entry()) return;
+    const r = rv(), p = pkg(), v = $('video');
+    const frac = watchedFraction(r);
+    const pct = Math.floor(frac * 100 + 1e-9);
+    const m = $('meter'); m.textContent = '';
+    m.classList.toggle('done', gateOpen(r));
+    m.append(h('span', { text: r.watch.media_error ? 'The video did not play. The watch rule is waived for this review.' :
+      'Watched ' + pct + '% of the ad. ' + Math.round(RUBRIC.watch_gate * 100) + '% unlocks Submit.' }),
+      h('div', { class: 'track' }, h('div', { class: 'fill', style: 'width:' + (frac * 100) + '%' })));
+    m.setAttribute('data-fraction', frac.toFixed(4));
+    const t = v.currentTime || 0, d = videoDuration();
+    const ph = $('playhead');
+    if (ph) ph.style.left = 'calc(' + Math.min(100, (t / (p.duration_s || d)) * 100) + '% - 1px)';
+    const cur = p.scenes.find(s => t >= s.start_s - 1e-3 && t < s.start_s + s.duration_s) || (t >= p.duration_s ? p.scenes[p.scenes.length - 1] : null);
+    document.querySelectorAll('#strip .seg').forEach(seg => {
+      const on = cur && +seg.getAttribute('data-scene') === cur.scene_index;
+      seg.classList.toggle('on', !!on);
+      if (on) seg.setAttribute('aria-current', 'true'); else seg.removeAttribute('aria-current');
+    });
+    if (S.lastGate !== gateOpen(r)) { S.lastGate = gateOpen(r); renderStatus(); }
+    else if (S.lastPct !== pct) {
+      const li = document.querySelector('[data-testid="watch-gate"] button');
+      if (li) li.textContent = watchLine(pct);
+    }
+    S.lastPct = pct;
+  }
+  const watchLine = pct => 'Watch this ad through to unlock Submit (' + pct + '% so far).';
+  // On a narrow screen the video is not sticky: bring it into view before it moves.
+  function showVideo() {
+    const v = $('video'), b = v.getBoundingClientRect();
+    if (b.bottom < 0 || b.top > window.innerHeight - 40) v.scrollIntoView({ block: 'nearest' });
+  }
+  function seek(t) {
+    const v = $('video');
+    W.stopAt = undefined;
+    showVideo();
+    try { v.currentTime = Math.max(0, t + 0.001); } catch (e) { /* no media yet */ }
+  }
+  function playScene(n) {
+    const s = sceneOf(pkg(), n), v = $('video');
+    seek(+s.start_s);
+    W.stopAt = +s.start_s + +s.duration_s - 0.02;
+    const pr = v.play(); if (pr && pr.catch) pr.catch(() => {});
+  }
+  function loadVideo() {
+    const e = entry(), v = $('video'), r = rv();
+    closeSpan();
+    $('media-msg').hidden = true;
+    v.removeAttribute('src');
+    if (e.videoUrl) { v.src = e.videoUrl; } else {
+      $('media-msg').hidden = false;
+      $('media-msg').textContent = 'No video for this ad yet. Choose the video file to watch it.';
+    }
+    try { v.load(); } catch (err) { /* nothing to load */ }
+    S.lastGate = undefined;
+    if (r.watch.media_error) showMediaError();
+  }
+  function showMediaError() {
+    $('media-msg').hidden = false;
+    $('media-msg').textContent = 'The video could not play here. Submit is unlocked, and your review records that the video did not play. You can also choose the video file.';
+  }
+
+  /* cards */
+  function helpToggle(ax, title) {
+    const id = 'help-text-' + ax;
+    const btn = h('button', { class: 'icon-btn help-btn', type: 'button', 'data-testid': 'help-' + ax, 'aria-expanded': S.openHelp === ax ? 'true' : 'false',
+      'aria-controls': id, 'aria-label': 'What counts for ' + title, onclick: () => { S.openHelp = S.openHelp === ax ? null : ax; render(); } }, ICON.help());
+    return btn;
+  }
+  // The header folds the card. Folded, it still shows the number, the title, Required or Optional,
+  // the To do dot and a one-line summary of the answer.
+  function cardHeader(num, card, ax, title, r, p, flaggedAxes, owedAxes) {
+    const flagged = shown(r) && flaggedAxes.some(a => findingsOf(p, a).length);
+    const req = flaggedAxes.some(a => isRequired(r, a, p));
+    const folded = isCollapsed(card);
+    const sumId = 'card-sum-' + card;
+    return [h('div', { class: 'card-h' },
+      h('h2', null, h('button', { class: 'card-toggle', type: 'button', 'data-testid': 'card-toggle-' + card, 'aria-expanded': folded ? 'false' : 'true',
+        'aria-controls': 'card-body-' + card, 'aria-describedby': folded ? sumId : null, title: folded ? 'Show this question' : 'Fold this question',
+        onclick: () => { setCollapsed(card, !isCollapsed(card)); render(); } },
+        ICON.chev(), h('span', { class: 'num', text: num }), h('span', { text: title }))),
+      flagged ? h('span', { class: 'pill', 'data-testid': 'pill-' + flaggedAxes[0] }, 'Auto-flagged') : null,
+      h('span', { class: 'req', text: req ? 'Required' : 'Optional' }),
+      owedAxes.length ? h('span', { class: 'todo', 'data-testid': 'todo-' + card }, h('span', { class: 'dot', 'aria-hidden': 'true' }), 'To do') : null,
+      helpToggle(flaggedAxes[0], title)),
+      folded ? h('p', { class: 'card-sum', id: sumId, 'data-testid': 'card-summary-' + card, text: cardSummary(flaggedAxes, r), title: cardSummary(flaggedAxes, r) }) : null];
+  }
+  // One line per card: what the reviewer has answered so far. Reads the review, never writes to it.
+  function cardSummary(axes, r) {
+    const p = pkg();
+    const one = (ax, inPart) => {
+      if (ax === 'scene') {
+        const ns = p.scenes.map(s => s.scene_index);
+        if (!ns.some(n => r.grid[n])) return 'Not answered';
+        const out = [];
+        ['swap', 'keep', 'none'].forEach(m => { const l = ns.filter(n => r.grid[n] && r.grid[n].mark === m); if (l.length) out.push(ansLabel('scene', m) + ': ' + scenesText(l)); });
+        const miss = ns.filter(n => !r.grid[n]); if (miss.length) out.push('not marked: ' + scenesText(miss));
+        return out.join('; ');
+      }
+      const a = r.answers[ax];
+      if (a === undefined) return 'Not answered';
+      if (ax === 'sound') {
+        if (a !== 'issues') return ansLabel(ax, a);
+        const tags = Q.sound.tags.options.filter(o => r.soundTags[o.key]).map(o => o.label.toLowerCase());
+        return ansLabel(ax, a) + ': ' + (tags.length ? tags.join(', ') : 'nothing picked yet');
+      }
+      if (a !== neg(ax)) return ansLabel(ax, a);
+      const ns = Object.keys(r.units[ax] || {}).map(Number).sort((x, y) => x - y);
+      const where = ns.length ? scenesText(ns) : 'no scene marked yet';
+      return inPart ? ansLabel(ax, a) + ' (' + where + ')' : ansLabel(ax, a) + ': ' + where;
+    };
+    if (axes.length === 1 && !Q[axes[0]].part) return one(axes[0], false);
+    return axes.map(ax => Q[ax].part + ': ' + one(ax, true)).join('; ');
+  }
+  // Radio groups: one tab stop (the chosen answer, or the first), arrow keys move and choose.
+  function radioGroup(attrs, cur, items) {
+    const pick = items.some(it => it.value === cur) ? cur : items[0].value;
+    const g = h('div', Object.assign({ role: 'radiogroup' }, attrs), items.map(it => {
+      it.btn.setAttribute('tabindex', it.value === pick ? '0' : '-1');
+      return it.btn;
+    }));
+    g.addEventListener('keydown', ev => {
+      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[ev.key];
+      if (!step) return;
+      const bs = Array.from(g.querySelectorAll('[role=radio]')).filter(b => !b.disabled);
+      const i = bs.indexOf(document.activeElement);
+      if (i < 0 || !bs.length) return;
+      ev.preventDefault();
+      const nb = bs[(i + step + bs.length) % bs.length];
+      nb.focus(); nb.click();
+    });
+    return g;
+  }
+  function answerButtons(ax, r, disabled) {
+    const q = Q[ax];
+    return radioGroup({ class: 'answers', 'aria-label': qName(ax) }, r.answers[ax],
+      q.answers.map(a => ({ value: a.value, btn: h('button', { class: 'ans', type: 'button', role: 'radio', 'aria-checked': r.answers[ax] === a.value ? 'true' : 'false',
+        'data-testid': 'answer-' + ax + '-' + a.value, disabled, onclick: () => A.answer(ax, a.value) }, ICON.tick(), a.label) })));
+  }
+  // A finding is one line: who, what, where, and the thumbs. Details opens the judge's text.
+  function findingEl(f, r, p, disabled) {
+    const t = r.thumbs[f.finding_id];
+    const n = idxOf(p, f.scene_id), s = sceneOf(p, n);
+    const kindText = (f.kind || []).map(k => optLabel(f.axis, k)).join(', ') || 'finding';
+    const kinds = (f.kind || []).map(k => h('span', { class: 'kind', text: optLabel(f.axis, k) }));
+    const edited = p.text_edits.some(e => String(e.where || '').includes(f.finding_id));
+    const meta = [];
+    if (f.location) meta.push(h('p', { class: 'meta', text: 'Where: ' + f.location }));
+    if (f.span_start_s !== null && f.span_start_s !== undefined && f.span_end_s !== null && f.span_end_s !== undefined)
+      meta.push(h('p', { class: 'meta', text: 'Span: ' + fmtT(+s.start_s + +f.span_start_s) + ' to ' + fmtT(+s.start_s + +f.span_end_s) + ' in the ad' }));
+    if (f.evidence_ref) {
+      const url = entry().photos[f.evidence_ref];
+      meta.push(h('p', { class: 'meta', text: 'Compared with photo ' + f.evidence_ref + '.' }));
+      if (url) meta.push(h('img', { class: 'refimg', src: url, alt: 'Reference photo ' + f.evidence_ref }));
+    }
+    if (f.word) meta.push(h('p', { class: 'meta', text: 'Word: ' + f.word }));
+    const noTime = f.time_s === null || f.time_s === undefined;
+    const time = noTime ? +s.start_s : +f.time_s;
+    const descId = 'desc-' + f.finding_id, bodyId = 'fd-' + f.finding_id;
+    const where = kindText + ', scene ' + n;
+    const open = !!S.openF[f.finding_id];
+    return h('article', { class: 'finding', 'data-testid': 'finding-' + f.finding_id, 'aria-label': 'Finding on scene ' + n + ': ' + kindText },
+      h('div', { class: 'f-h' }, h('div', { class: 'f-info' }, h('span', { class: 'by' }, ICON.agent(), 'Agent'), kinds,
+        h('button', { class: 'goto', type: 'button', 'data-testid': 'goto-' + f.finding_id, 'aria-label': 'Go to ' + mmss(time) + ', ' + where, title: 'Go to ' + mmss(time) + ' in the video',
+          onclick: () => seek(time) }, ICON.jump(), h('span', { text: noTime ? 'Scene ' + n : mmss(f.time_s) })),
+        t ? null : h('span', { class: 'owe-thumb', text: 'Needs your thumb' }),
+        h('button', { class: 'f-more', type: 'button', 'data-testid': 'details-' + f.finding_id, 'aria-expanded': open ? 'true' : 'false', 'aria-controls': bodyId,
+          'aria-label': 'Details: ' + where, onclick: () => { if (S.openF[f.finding_id]) delete S.openF[f.finding_id]; else S.openF[f.finding_id] = true; render(); } }, ICON.chev(), 'Details')),
+        h('span', { class: 'thumbs' },
+          h('button', { class: 'thumb', type: 'button', 'data-testid': 'thumb-up-' + f.finding_id, 'aria-pressed': t && t.verdict === 'up' ? 'true' : 'false',
+            'aria-label': 'Agree: ' + where, 'aria-describedby': descId, title: 'Agree: the finding is right', disabled, onclick: () => A.thumb(f.finding_id, 'up') }, ICON.up(), h('span', { text: 'Agree' })),
+          h('button', { class: 'thumb', type: 'button', 'data-testid': 'thumb-down-' + f.finding_id, 'aria-pressed': t && t.verdict === 'down' ? 'true' : 'false',
+            'aria-label': 'Disagree: ' + where, 'aria-describedby': descId, title: 'Disagree: the finding is wrong', disabled, onclick: () => A.thumb(f.finding_id, 'down') }, ICON.down(), h('span', { text: 'Disagree' })))),
+      h('div', { class: 'f-body', id: bodyId, 'data-testid': 'finding-details-' + f.finding_id, hidden: !open },
+        h('p', { class: 'judge-text', text: 'Judge text, as the model wrote it' + (edited ? ', with quoted words replaced' : '') }),
+        h('p', { class: 'desc', id: descId, text: f.description || '' }),
+        meta));
+  }
+  // One control per card: open or close the details of every finding on it.
+  function allDetailsEl(card, fs) {
+    if (!fs.length) return null;
+    const allOpen = fs.every(f => S.openF[f.finding_id]);
+    return h('div', { class: 'f-all' },
+      h('span', { text: plural(fs.length, 'agent finding', 'agent findings') + ' on this question.' }),
+      h('button', { class: 'btn small f-allbtn', type: 'button', 'data-testid': 'all-details-' + card, 'aria-expanded': allOpen ? 'true' : 'false',
+        'aria-controls': fs.map(f => 'fd-' + f.finding_id).join(' '),
+        onclick: () => { fs.forEach(f => { if (allOpen) delete S.openF[f.finding_id]; else S.openF[f.finding_id] = true; }); render(); } },
+        ICON.chev(), allOpen ? 'Hide all details' : 'Show all details'));
+  }
+  function unitHeader(p, n, ax) {
+    const s = sceneOf(p, n);
+    const kids = [h('span', { class: 'sid', text: 'Scene ' + n }),
+      h('span', { class: 'range', text: mmss(s.start_s) + ' to ' + mmss(+s.start_s + +s.duration_s) }),
+      h('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Play scene ' + n, 'data-testid': 'play-' + ax + '-' + n, onclick: () => playScene(n) }, ICON.play())];
+    return h('div', { class: 'unit-h' }, kids);
+  }
+  function chipsFor(ax, n, u, disabled, p) {
+    const q = Q[ax];
+    const wrap = h('div', { class: 'opts', role: 'group', 'aria-label': 'Kind of problem, scene ' + n });
+    if (!q.options.length) return null;
+    wrap.append(h('span', { class: 'lbl', text: 'Kind of problem (optional)' }));
+    q.options.forEach(o => {
+      if (o.last_scene_only && n !== p.scenes.length) return;
+      wrap.append(h('button', { class: 'chip', type: 'button', 'aria-pressed': u.opts[o.key] ? 'true' : 'false', title: o.hint,
+        'data-testid': 'opt-' + ax + '-' + n + '-' + o.key, disabled, onclick: () => ax === 'scene' ? A.gridOpt(n, o.key) : A.opt(ax, n, o.key) }, ICON.tick(), o.label));
+    });
+    const out = [wrap];
+    if (q.grades && u.opts[q.grades.parent]) {
+      out.push(h('div', { class: 'opts', role: 'group', 'aria-label': q.grades.label },
+        h('span', { class: 'lbl', text: q.grades.label }),
+        q.grades.options.map(o => h('button', { class: 'chip', type: 'button', 'aria-pressed': u.opts[o.key] ? 'true' : 'false', title: o.hint,
+          'data-testid': 'opt-' + ax + '-' + n + '-' + o.key, disabled, onclick: () => A.opt(ax, n, o.key) }, ICON.tick(), o.label))));
+    }
+    return out;
+  }
+  function unitRows(ax, r, p, disabled) {
+    const q = Q[ax], sh = shown(r);
+    const isNeg = r.answers[ax] === neg(ax);
+    const ns = unitScenes(ax, p).filter(n => isNeg || (sh && findingsOf(p, ax, n).length));
+    if (!ns.length) return null;
+    return h('ol', { class: 'units', 'aria-label': qName(ax) + ' by scene' }, ns.map(n => {
+      const u = U(r, ax)[n];
+      const kids = [unitHeader(p, n, ax)];
+      if (q.grain === 'line') kids.push(h('p', { class: 'line', text: lineOf(p, n) ?? 'Line text not in the package.' }));
+      if (q.grain === 'caption') {
+        kids.push(h('p', { class: 'cap', text: captionOf(p, n) ?? 'Caption text not in the package.' }));
+        const l = lineOf(p, n); if (l) kids.push(h('p', { class: 'line', text: l }));
+      }
+      if (sh) { const fs = findingsOf(p, ax, n); if (fs.length) kids.push(h('div', { class: 'findings' }, fs.map(f => findingEl(f, r, p, disabled)))); }
+      if (isNeg) {
+        kids.push(h('div', { class: 'unit-actions' },
+          h('button', { class: 'pick', type: 'button', 'aria-pressed': u ? 'true' : 'false', 'data-testid': 'pick-' + ax + '-' + n, disabled,
+            'aria-label': (u ? RUBRIC.pick_labels.on : RUBRIC.pick_labels.off) + ' on scene ' + n,
+            onclick: () => A.unit(ax, n) }, u ? ICON.tick() : null, u ? RUBRIC.pick_labels.on : RUBRIC.pick_labels.off)));
+        if (u) {
+          const c = chipsFor(ax, n, u, disabled, p); if (c) kids.push(c);
+          if (q.word) {
+            const inp = h('input', { type: 'text', id: 'word-' + n, 'data-testid': 'word-' + n, maxlength: q.word.max_chars, value: u.word || '', disabled,
+              autocomplete: 'off', spellcheck: 'false' });
+            inp.addEventListener('input', () => { const c2 = sanitizeWord(inp.value); if (c2 !== inp.value) inp.value = c2; setWord(n, inp.value); });
+            kids.push(h('div', { class: 'word' }, h('label', { for: 'word-' + n, text: q.word.label }), inp));
+          }
+        }
+      }
+      return h('li', { class: 'unit' + (u && isNeg ? ' marked' : ''), 'data-testid': 'unit-' + ax + '-' + n }, kids);
+    }));
+  }
+  function noteEl(ax, r) {
+    if (!r.notes[ax]) return null;
+    const la = r.lastApply, undo = la && la.axis === ax && la.note === r.notes[ax] && !r.submitted;
+    return h('p', { class: 'note' },
+      h('span', { 'data-testid': 'applied-note-' + ax, role: 'status', text: r.notes[ax] }),
+      undo ? [' ', h('button', { class: 'link', type: 'button', 'data-testid': 'undo-apply-' + ax, 'aria-label': 'Undo this accept', onclick: () => A.undo(ax) }, 'Undo')] : null);
+  }
+  function axisNoteEl(ax, r, p) {
+    const t = shown(r) && p.axis_notes[ax];
+    return t ? h('p', { class: 'part-h', style: 'margin-top:8px', 'data-testid': 'axis-note-' + ax, text: t }) : null;
+  }
+  function helpEl(ax) {
+    const q = Q[ax];
+    return h('div', { class: 'help', id: 'help-text-' + ax, hidden: S.openHelp !== ax }, q.help || '');
+  }
+  function renderCards(r, p) {
+    const box = $('cards'); box.textContent = '';
+    const dis = r.submitted;
+    const ow = owed(r, p);
+    const owing = ax => ow.filter(o => o.ax === ax);
+    // Cards in the order of RUBRIC.questions; entries that share a card sit on one card.
+    const cards = [];
+    RUBRIC.questions.forEach(q => {
+      const c = cards.find(x => x.card === q.card);
+      if (c) c.axes.push(q.axis); else cards.push({ card: q.card, axes: [q.axis] });
+    });
+    let num = 0;
+    cards.forEach(cd => {
+      const parts = cd.axes.filter(ax => asked(ax, p));
+      if (!parts.length) return;
+      num++;
+      const folded = isCollapsed(cd.card);
+      const body = h('div', { class: 'card-body', id: 'card-body-' + cd.card, 'data-testid': 'card-body-' + cd.card, hidden: folded });
+      const allF = shown(r) ? allDetailsEl(cd.card, parts.flatMap(ax => findingsOf(p, ax))) : null;
+      if (parts.length > 1 || Q[parts[0]].part) {
+        const title = Q[parts[0]].title;
+        const c = h('section', { class: 'card' + (folded ? ' collapsed' : ''), 'data-testid': 'q-' + cd.card, id: 'q-' + cd.card, 'aria-label': title, tabindex: '-1' },
+          cardHeader(num, cd.card, parts[0], title, r, p, parts, parts.flatMap(owing)), helpEl(parts[0]), body);
+        add(body, Q[parts[0]].grain === 'caption' ? h('p', { class: 'part-h', style: 'margin-top:6px', text: 'The captions laid over the picture. Only scenes with a caption are asked.' }) : null, allF);
+        parts.forEach(ax => {
+          body.append(h('div', { class: 'part', 'data-testid': 'q-' + ax },
+            h('p', { class: 'part-h' }, h('b', { text: Q[ax].part + '. ' }), Q[ax].part_hint),
+            axisNoteEl(ax, r, p), answerButtons(ax, r, dis), noteEl(ax, r), unitRows(ax, r, p, dis)));
+        });
+        box.append(c);
+        return;
+      }
+      const ax = parts[0], q = Q[ax];
+      const c = h('section', { class: 'card' + (folded ? ' collapsed' : ''), 'data-testid': 'q-' + ax, id: 'q-' + ax, 'aria-label': q.title, tabindex: '-1' },
+        cardHeader(num, cd.card, ax, q.title, r, p, [ax], owing(ax)), helpEl(ax), body);
+      add(body, axisNoteEl(ax, r, p));
+      if (ax === 'scene') add(body, allF, sceneGrid(r, p, dis));
+      else if (ax === 'sound') add(body, soundBody(r, p, dis));
+      else add(body, answerButtons(ax, r, dis), noteEl(ax, r), refNote(ax, r, p), allF, unitRows(ax, r, p, dis));
+      if (ax === 'product' && Object.keys(entry().photos).length) {
+        body.append(h('div', { class: 'refs' }, Object.keys(entry().photos).map(l => h('figure', null, h('img', { class: 'refimg', src: entry().photos[l], alt: 'Reference photo ' + l }), h('figcaption', { text: l })))));
+      }
+      box.append(c);
+    });
+  }
+  // Said once per card: the photos the findings were compared with are missing.
+  function refNote(ax, r, p) {
+    if (!shown(r)) return null;
+    const missing = findingsOf(p, ax).some(f => f.evidence_ref && !entry().photos[f.evidence_ref]);
+    if (!missing) return null;
+    return h('p', { class: 'part-h', style: 'margin-top:8px', 'data-testid': 'refs-missing-' + ax,
+      text: entry().demo ? 'Reference photos are not in this release. Each finding names the photo it was compared with.' : 'The reference photos named in the findings were not loaded.' });
+  }
+  function sceneGrid(r, p, dis) {
+    const sh = shown(r);
+    const frag = [h('p', { class: 'part-h', style: 'margin-top:8px', text: 'Mark every scene: keep it, swap it out, or no opinion.' }), noteEl('scene', r)];
+    frag.push(h('ol', { class: 'units', 'aria-label': 'Scene quality by scene' }, p.scenes.map(s => {
+      const n = s.scene_index, g = r.grid[n];
+      const kids = [unitHeader(p, n, 'scene')];
+      if (U(r, 'product')[n] && r.answers.product === 'wrong') kids[0].append(h('span', { class: 'badge', 'data-testid': 'product-wrong-badge-' + n, text: 'tagged: product wrong' }));
+      if (sh) { const fs = findingsOf(p, 'scene', n); if (fs.length) kids.push(h('div', { class: 'findings' }, fs.map(f => findingEl(f, r, p, dis)))); }
+      kids.push(radioGroup({ class: 'grid3', 'aria-label': 'Scene ' + n }, g ? g.mark : null,
+        Q.scene.answers.map(a => ({ value: a.value, btn: h('button', { class: 'ans' + (g && g.auto && a.value === 'swap' ? ' prefilled' : ''), type: 'button', role: 'radio', 'data-mark': a.value,
+          'aria-checked': g && g.mark === a.value ? 'true' : 'false', 'data-testid': 'grid-' + n + '-' + a.value, disabled: dis,
+          onclick: () => A.grid(n, a.value) }, ICON.tick(), a.label) }))));
+      if (g && g.auto) kids.push(h('p', { class: 'autonote', 'data-testid': 'auto-swap-note-' + n, text: 'Swap out was filled in because the product is wrong here. Change it if the shot itself is fine.' }));
+      if (g && g.mark === 'swap') { const c = chipsFor('scene', n, { opts: g.opts || {} }, dis, p); if (c) kids.push(c); }
+      const marked = g && g.mark === 'swap' && !g.auto;
+      return h('li', { class: 'unit' + (marked ? ' marked' : ''), 'data-testid': 'unit-scene-' + n }, kids);
+    })));
+    return frag;
+  }
+  function soundBody(r, p, dis) {
+    const out = [];
+    if (shown(r) && p.sound_judge_status) out.push(h('p', { class: 'part-h', style: 'margin-top:8px', 'data-testid': 'sound-judge',
+      text: 'Sound judge: ' + (p.sound_judge_status === 'pass' ? 'passed this ad, with no findings.' : 'flagged this ad.') }));
+    out.push(h('p', { class: 'part-h', style: 'margin-top:8px', text: 'Asked once for the whole ad.' }));
+    out.push(answerButtons('sound', r, dis));
+    if (r.answers.sound === 'issues') {
+      out.push(h('div', { class: 'opts', role: 'group', 'aria-label': Q.sound.tags.label }, h('span', { class: 'lbl', text: Q.sound.tags.label }),
+        Q.sound.tags.options.map(o => h('button', { class: 'chip', type: 'button', 'aria-pressed': r.soundTags[o.key] ? 'true' : 'false',
+          'data-testid': 'sound-tag-' + o.key, disabled: dis, onclick: () => A.soundTag(o.key) }, ICON.tick(), o.label))));
+    }
+    return out;
+  }
+  function focusEl(el) {
+    if (!el) return;
+    if (!el.hasAttribute('tabindex') && !/^(BUTTON|VIDEO|INPUT|SELECT|A)$/.test(el.tagName)) el.setAttribute('tabindex', '-1');
+    el.scrollIntoView({ block: 'start' });
+    el.focus({ preventScroll: true });
+  }
+  const cardOf = ax => $('q-' + Q[ax].card);
+  function renderStatus() {
+    if (S.screen !== 'review') return;
+    const r = rv(), p = pkg();
+    const ow = owed(r, p);
+    const list = $('owed'); list.textContent = '';
+    const gate = gateOpen(r);
+    const pct = Math.floor(watchedFraction(r) * 100 + 1e-9);
+    if (r.submitted) list.append(h('li', { class: 'allset', text: 'Submitted ' + new Date(r.times.submitted).toLocaleString() + '.' }));
+    else {
+      // A folded card opens before it takes the focus.
+      ow.forEach(o => list.append(h('li', null, h('button', { class: 'link', type: 'button', onclick: () => { if (setCollapsed(Q[o.ax].card, false)) render(); focusEl(cardOf(o.ax)); } }, o.text))));
+      if (!gate) list.append(h('li', { 'data-testid': 'watch-gate' }, h('button', { class: 'link', type: 'button', onclick: () => { showVideo(); $('video').focus(); } }, watchLine(pct))));
+      if (!ow.length && gate) list.append(h('li', { class: 'allset', text: 'Everything is answered. You can submit.' }));
+    }
+    $('submit-btn').disabled = r.submitted || ow.length > 0 || !gate;
+    $('submit-btn').textContent = r.submitted ? 'Submitted' : 'Submit review';
+    // The same count near the video, so the reason Submit is shut is visible from the top.
+    const left = ow.length + (gate ? 0 : 1);
+    const lb = $('left'); lb.textContent = '';
+    if (r.submitted) lb.append('Submitted.');
+    else if (left) lb.append(plural(left, 'thing', 'things') + ' left before Submit. ', h('button', { class: 'link', type: 'button', 'data-testid': 'left-link', onclick: () => focusEl($('h-owed')) }, 'See the list'));
+    else lb.append('Everything is done. You can submit.');
+    const key = r.ad_id + ':' + left + ':' + !!r.submitted;
+    if (S.lastLeft !== undefined && S.lastLeft !== key && !r.submitted) $('sr-status').textContent = left ? plural(left, 'thing', 'things') + ' left before Submit.' : 'Nothing left. You can submit.';
+    S.lastLeft = key;
+    const subs = allSubmitted();
+    $('all-count').textContent = subs.length ? plural(subs.length, 'submitted review', 'submitted reviews') + ' in the queue. Each file holds them all, in the release format.' : 'Nothing submitted yet. Downloads open after you submit.';
+    ['all-marks', 'all-admarks', 'all-thumbs'].forEach(id => { $(id).disabled = !subs.length; });
+  }
+  function renderAfter(r, p) {
+    const box = $('after'); box.textContent = '';
+    if (!r.submitted || !r.decision) return;
+    const d = r.decision;
+    const dec = h('section', { class: 'decision', 'data-testid': 'decision', 'aria-labelledby': 'h-dec' },
+      h('h2', { id: 'h-dec', tabindex: '-1', text: 'What the rules decide' }),
+      h('div', { class: 'band', 'data-testid': 'decision-band', 'data-band': d.band, text: d.label }),
+      h('ul', { 'data-testid': 'decision-reasons' }, d.reasons.map(x => h('li', { text: x }))),
+      d.to_fix.length ? h('div', null, h('h3', { text: 'Scenes and lines to fix' }), h('ul', { 'data-testid': 'decision-fix' }, d.to_fix.map(x => h('li', { text: x })))) : null,
+      h('p', { class: 'caveat', text: 'A category counts toward the decision when any answer or option in it is ' + floorText() + '. ' + RUBRIC.rules.caveat + ' The page shows the verdict only; it has no edit tools.' }));
+    box.append(dec, summaryGrid(r, p));
+    const base = p.ad_id + '.' + reviewerOf(r);
+    const ex = () => buildExports(r, p);
+    box.append(h('section', { class: 'submit-box', 'aria-labelledby': 'h-dl', style: 'margin-top:12px' }, h('h2', { id: 'h-dl', text: 'Download this review' }),
+      h('p', { class: 'hint', text: 'The CSV files have the same columns as data/round in the release. The review JSON holds everything, and you can import it here later.' }),
+      h('div', { class: 'downloads' },
+        h('button', { class: 'btn small', type: 'button', 'data-testid': 'download-marks', onclick: () => download(base + '.marks.csv', ex().marks_csv, 'text/csv') }, 'marks.csv'),
+        h('button', { class: 'btn small', type: 'button', 'data-testid': 'download-ad-marks', onclick: () => download(base + '.ad_marks.csv', ex().ad_marks_csv, 'text/csv') }, 'ad_marks.csv'),
+        h('button', { class: 'btn small', type: 'button', 'data-testid': 'download-thumbs', onclick: () => download(base + '.thumbs.csv', ex().thumbs_csv, 'text/csv') }, 'thumbs.csv'),
+        h('button', { class: 'btn small', type: 'button', 'data-testid': 'download-review', onclick: () => download(base + '.review.json', ex().review_json, 'application/json') }, 'review.json'))));
+  }
+  function floorText() {
+    const R = RUBRIC.rules, ks = Object.keys(R.severity_rank).filter(k => R.severity_rank[k] >= R.severity_rank[R.floor]);
+    return ks.length < 2 ? ks.join('') : ks.slice(0, -1).join(', ') + ' or ' + ks[ks.length - 1];
+  }
+  function summaryGrid(r, p) {
+    const sh = shown(r), marks = marksRows(r, p);
+    const head = h('tr', null, h('th', { scope: 'col', text: 'Question' }), p.scenes.map(s => h('th', { scope: 'col', text: 'S' + s.scene_index })));
+    const rows = [];
+    MARK_AXES.forEach(ax => {
+      if (!asked(ax, p)) return;
+      const tr = h('tr', null, h('th', { scope: 'row', text: qName(ax) }));
+      const ns = unitScenes(ax, p);
+      p.scenes.forEach(s => {
+        const n = s.scene_index, td = h('td');
+        if (!ns.includes(n)) { td.append(h('span', { class: 'hint', text: 'not asked' })); tr.append(td); return; }
+        if (sh) findingsOf(p, ax, n).forEach(f => {
+          const t = r.thumbs[f.finding_id];
+          td.append(h('div', null, h('span', { class: 'sq', 'aria-hidden': 'true' }), validKinds(f, p).map(k => optLabel(ax, k)).join(', ') || 'finding',
+            ' ', t ? (t.verdict === 'up' ? ICON.up() : ICON.down()) : null, h('span', { class: 'sr-only', text: t ? (t.verdict === 'up' ? ' accepted' : ' rejected') : '' })));
+        });
+        const m = marks.find(x => x.axis === ax && x.scene_id === s.scene_id);
+        if (m && m.marked === 1 && m.mark_from_accepted_finding === 0) td.append(h('div', null, h('span', { class: 'plus', 'aria-hidden': 'true', text: '+' }), 'you added' + (m.secondary_options ? ': ' + m.secondary_options.split(';').map(k => ax === 'pronunciation' ? k : optLabel(ax, k)).join(', ') : '')));
+        if (ax === 'scene' && r.grid[n] && r.grid[n].auto) td.append(h('div', { class: 'hint', text: 'Swap out pre-filled' }));
+        tr.append(td);
+      });
+      rows.push(tr);
+    });
+    const sa = r.answers.sound;
+    rows.push(h('tr', null, h('th', { scope: 'row', text: 'Sound quality' }), h('td', { colspan: p.scenes.length },
+      sa === 'issues' ? h('span', null, h('span', { class: 'plus', text: '+' }), 'whole ad: ' + (Object.keys(r.soundTags).map(k => Q.sound.tags.options.find(o => o.key === k).label.toLowerCase()).join(', '))) : 'whole ad: ' + (sa ? ansLabel('sound', sa).toLowerCase() : 'not answered'))));
+    return h('section', { class: 'submit-box', 'data-testid': 'summary-grid', 'aria-labelledby': 'h-sum', style: 'margin-top:12px' },
+      h('h2', { id: 'h-sum', text: 'Your review, scene by scene' }),
+      h('div', { class: 'legend', style: 'margin:6px 0' }, sh ? h('span', null, h('span', { class: 'sq' }), 'judge finding with your thumb') : null, h('span', null, h('span', { class: 'plus', text: '+' }), 'a problem you added')),
+      h('p', { class: 'hint scroll-hint', text: 'Scroll the table sideways to see every scene.' }),
+      h('div', { class: 'sumwrap' }, h('table', { class: 'sum' }, h('thead', null, head), h('tbody', null, rows))));
+  }
+
+  /* ---------------- submit ---------------- */
+  function submit() {
+    const r = rv(), p = pkg();
+    if (r.submitted || owed(r, p).length || !gateOpen(r)) return;
+    closeSpan($('video').currentTime);
+    begin(r);
+    r.watch.duration_s = videoDuration();
+    r.times.submitted = nowIso();
+    r.decision = decide(r, p);
+    r.submitted = true;
+    save(r); render();
+    const d = document.querySelector('[data-testid="decision"]'); if (d && d.scrollIntoView) d.scrollIntoView({ block: 'start' });
+    const hd = $('h-dec'); if (hd) hd.focus({ preventScroll: true });
+  }
+
+  /* ---------------- loading files ---------------- */
+  function readText(file) { return new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(String(fr.result)); fr.onerror = () => rej(fr.error); fr.readAsText(file); }); }
+  async function loadFiles(files) {
+    const msgs = [];
+    const videos = {}, images = {}, packages = [], jsonl = [];
+    for (const f of files) {
+      if (/^video\//.test(f.type) || /\.(mp4|webm|mov|m4v)$/i.test(f.name)) videos[f.name] = f;
+      else if (/^image\//.test(f.type)) images[f.name] = f;
+      else if (/\.jsonl$/i.test(f.name)) jsonl.push(f);
+      else if (/\.json$/i.test(f.name)) packages.push(f);
+      else msgs.push({ bad: true, text: f.name + ': not a package, video, photo or findings file, skipped.' });
+    }
+    const extra = [];
+    for (const f of jsonl) {
+      try { (await readText(f)).split('\n').filter(l => l.trim()).forEach(l => extra.push(JSON.parse(l))); }
+      catch (e) { msgs.push({ bad: true, text: f.name + ': could not read it as JSON lines.' }); }
+    }
+    for (const f of packages) {
+      let p;
+      try { p = JSON.parse(await readText(f)); } catch (e) { msgs.push({ bad: true, text: f.name + ': not valid JSON.' }); continue; }
+      if (p && p.format === 'sbs-review/1') { msgs.push({ bad: true, text: f.name + ': this is a review export. Use "Import a previous export".' }); continue; }
+      if (p && Array.isArray(p.findings)) {
+        const more = extra.filter(x => x.ad_id === p.ad_id && !p.findings.some(y => y.finding_id === x.finding_id));
+        p.findings = p.findings.concat(more);
+      } else if (p && typeof p === 'object') p.findings = extra.filter(x => x.ad_id === p.ad_id);
+      const errs = validatePackage(p);
+      if (errs.length) { msgs.push({ bad: true, text: f.name + ' was refused: ' + errs.slice(0, 4).join('; ') + (errs.length > 4 ? '; and ' + (errs.length - 4) + ' more' : '') + '.' }); continue; }
+      const np = normalizePackage(p);
+      const vname = baseName(np.video);
+      const vf = videos[vname] || (Object.keys(videos).length === 1 && packages.length === 1 ? Object.values(videos)[0] : null);
+      const photos = {};
+      (np.reference_photos || []).forEach(ph => { const im = images[baseName(ph.file || '')]; if (im && ph.label) photos[ph.label] = URL.createObjectURL(im); });
+      const e = { pkg: np, videoUrl: vf ? URL.createObjectURL(vf) : (np.video || ''), videoName: vf ? vf.name : vname, photos };
+      S.loaded = S.loaded.filter(x => x.pkg.ad_id !== np.ad_id).concat([e]);
+      if (S.demoEntry && np.ad_id === S.demoEntry.pkg.ad_id) S.useDemo = false;
+      msgs.push({ text: np.ad_id + ': loaded, ' + plural(np.scenes.length, 'scene', 'scenes') + ', ' + (S.mode === 'shown' ? plural(np.findings.length, 'finding', 'findings') : 'findings kept hidden') +
+        (vf ? ', video ' + vf.name : (np.video ? ', video from ' + np.video : ', no video yet')) + (Object.keys(photos).length ? ', ' + plural(Object.keys(photos).length, 'photo', 'photos') : '') + '.' });
+    }
+    if (!packages.length && Object.keys(videos).length) msgs.push({ bad: true, text: 'Choose the package files (.json) together with their videos.' });
+    showMsgs(msgs);
+    renderStart();
+  }
+  async function importReviews(files) {
+    const msgs = [];
+    for (const f of files) {
+      let j;
+      try { j = JSON.parse(await readText(f)); } catch (e) { msgs.push({ bad: true, text: f.name + ': not valid JSON.' }); continue; }
+      if (!j || j.format !== 'sbs-review/1' || !j.resume || j.resume.format !== 'sbs-review-state/1') { msgs.push({ bad: true, text: f.name + ': not a review exported by this page.' }); continue; }
+      buildQueue();
+      if (!S.queue.some(e => e.pkg.ad_id === j.ad_id)) {
+        if (S.demoEntry && j.ad_id === S.demoEntry.pkg.ad_id || j.ad_id === DEMO.ad_id) { S.useDemo = true; buildQueue(); }
+        else { msgs.push({ bad: true, text: f.name + ': load the package of ' + j.ad_id + ' first.' }); continue; }
+      }
+      const others = Object.values(S.reviews).filter(r => r.started && r.ad_id !== j.ad_id);
+      const res = j.resume;
+      const mine = S.reviews[j.ad_id] || store.get(KEY_PREFIX + j.ad_id);
+      if (mine && mine.started && !same(mine, res)) {
+        msgs.push({ bad: true, text: f.name + ': this browser already holds a review of ' + j.ad_id + ' (' + mine.reviewer + ', findings ' + mine.mode + ', ' + (mine.submitted ? 'submitted' : 'in progress') + '). Download it if you need it, then use Start over on that ad or Clear all reviews to import this file.' });
+        continue;
+      }
+      if (res.started && others.length && (res.mode !== S.mode || res.reviewer !== S.reviewer)) {
+        msgs.push({ bad: true, text: f.name + ': made as ' + res.reviewer + ' with findings ' + res.mode + '. This browser holds reviews by ' + S.reviewer + ' with findings ' + S.mode + '. Clear all reviews to import it.' });
+        continue;
+      }
+      if (res.started) { S.reviewer = res.reviewer; S.mode = res.mode; saveSettings(); }
+      S.reviews[j.ad_id] = res; save(res);
+      msgs.push({ text: j.ad_id + ': review imported (' + (res.submitted ? 'submitted' : 'in progress') + ').' });
+    }
+    showMsgs(msgs);
+    renderStart();
+  }
+  function showMsgs(msgs) {
+    const ul = $('load-msgs'); ul.textContent = '';
+    msgs.forEach(m => ul.append(h('li', { class: m.bad ? 'bad' : '', text: m.text })));
+  }
+
+  /* ---------------- screens ---------------- */
+  function go(screen) {
+    if (screen === 'review') {
+      buildQueue();
+      if (!S.queue.length) return;
+      S.screen = 'review';
+      $('start-screen').hidden = true; $('review-screen').hidden = false;
+      $('about').open = false; S.aboutSeen = true; saveSettings();
+      rv(); loadVideo(); render();
+      window.scrollTo(0, 0);
+    } else {
+      closeSpan($('video').currentTime);
+      try { $('video').pause(); } catch (e) { /* nothing playing */ }
+      S.screen = 'start';
+      $('review-screen').hidden = true; $('start-screen').hidden = false;
+      // The about box lives on the start screen; keep it reachable.
+      renderStart();
+    }
+  }
+  function switchAd(i) {
+    if (i < 0 || i >= S.queue.length || i === S.cur) return;
+    closeSpan($('video').currentTime);
+    try { $('video').pause(); } catch (e) { /* nothing playing */ }
+    S.cur = i; rv(); loadVideo(); render();
+  }
+
+  /* ---------------- wiring ---------------- */
+  function init() {
+    const st = store.get(SETTINGS_KEY);
+    if (st) {
+      if (/^R[0-9]{1,3}$/.test(st.reviewer || '')) S.reviewer = st.reviewer;
+      if (st.mode === 'shown' || st.mode === 'hidden') S.mode = st.mode;
+      if (typeof st.useDemo === 'boolean') S.useDemo = st.useDemo;
+      S.aboutSeen = !!st.aboutSeen;
+    }
+    // reviews kept from an earlier visit (only the ones whose package is in the queue are shown)
+    store.keys().filter(k => k && k.startsWith(KEY_PREFIX) && k !== SETTINGS_KEY).forEach(k => {
+      const r = store.get(k); if (r && r.format === 'sbs-review-state/1') S.reviews[r.ad_id] = r;
+    });
+    const started = Object.values(S.reviews).find(r => r.started);
+    if (started) { S.reviewer = started.reviewer || S.reviewer; S.mode = started.mode || S.mode; }
+    $('about').open = !S.aboutSeen;
+
+    $('reviewer').addEventListener('input', () => {
+      const v = $('reviewer').value.trim().toUpperCase();
+      const ok = /^R[0-9]{1,3}$/.test(v);
+      $('reviewer-err').hidden = ok;
+      if (ok) { S.reviewer = v; saveSettings(); }
+      $('start-btn').disabled = !ok || !S.queue.length;
+    });
+    document.querySelectorAll('input[name=mode]').forEach(i => i.addEventListener('change', () => { if (i.checked && !anyStarted()) { S.mode = i.value; saveSettings(); } }));
+    $('use-demo').addEventListener('change', () => { S.useDemo = $('use-demo').checked; saveSettings(); renderStart(); });
+    $('load-btn').addEventListener('click', () => $('load-input').click());
+    $('load-input').addEventListener('change', () => { const fs = Array.from($('load-input').files || []); $('load-input').value = ''; if (fs.length) loadFiles(fs); });
+    $('import-btn').addEventListener('click', () => $('import-input').click());
+    $('import-input').addEventListener('change', () => { const fs = Array.from($('import-input').files || []); $('import-input').value = ''; if (fs.length) importReviews(fs); });
+    $('start-btn').addEventListener('click', () => { if (/^R[0-9]{1,3}$/.test(S.reviewer)) go('review'); });
+    $('clear-all').addEventListener('click', () => { $('clear-all-confirm').hidden = false; $('clear-all-yes').focus(); });
+    $('clear-all-no').addEventListener('click', () => { $('clear-all-confirm').hidden = true; });
+    $('clear-all-yes').addEventListener('click', () => {
+      store.keys().filter(k => k && k.startsWith(KEY_PREFIX) && k !== SETTINGS_KEY).forEach(k => store.del(k));
+      S.reviews = {}; $('clear-all-confirm').hidden = true; renderStart();
+    });
+    $('back-btn').addEventListener('click', () => go('start'));
+    $('prev-btn').addEventListener('click', () => switchAd(S.cur - 1));
+    $('next-btn').addEventListener('click', () => switchAd(S.cur + 1));
+    $('queue-select').addEventListener('change', () => switchAd(+$('queue-select').value));
+    $('submit-btn').addEventListener('click', submit);
+    $('draft-btn').addEventListener('click', () => { const r = rv(); download(pkg().ad_id + '.' + reviewerOf(r) + '.review.json', buildExports().review_json, 'application/json'); });
+    $('over-btn').addEventListener('click', () => { $('over-confirm').hidden = false; $('over-yes').focus(); });
+    $('over-no').addEventListener('click', () => { $('over-confirm').hidden = true; });
+    $('over-yes').addEventListener('click', () => {
+      const id = pkg().ad_id;
+      W.span = null;
+      S.reviews[id] = newReview(id); store.del(KEY_PREFIX + id);
+      $('over-confirm').hidden = true; loadVideo(); render();
+    });
+    $('all-marks').addEventListener('click', () => { const s = allSubmitted(); download('reviews.marks.csv', csv(MARKS_HEADER, s.flatMap(x => marksRows(x.r, x.e.pkg))), 'text/csv'); });
+    $('all-admarks').addEventListener('click', () => { const s = allSubmitted(); download('reviews.ad_marks.csv', csv(AD_MARKS_HEADER, s.flatMap(x => adMarksRows(x.r, x.e.pkg))), 'text/csv'); });
+    $('all-thumbs').addEventListener('click', () => { const s = allSubmitted(); download('reviews.thumbs.csv', csv(THUMBS_HEADER, s.flatMap(x => thumbsRows(x.r, x.e.pkg))), 'text/csv'); });
+    $('video-btn').addEventListener('click', () => $('video-input').click());
+    $('video-input').addEventListener('change', () => {
+      const f = ($('video-input').files || [])[0]; $('video-input').value = '';
+      if (!f) return;
+      entry().videoUrl = URL.createObjectURL(f); entry().videoName = f.name;
+      loadVideo();
+    });
+
+    const v = $('video');
+    v.addEventListener('play', startSpan);
+    v.addEventListener('playing', () => { if (!W.span) startSpan(); });
+    v.addEventListener('timeupdate', onTimeUpdate);
+    v.addEventListener('seeking', () => { closeSpan(); renderVideoState(); });
+    v.addEventListener('pause', () => { closeSpan(v.currentTime); renderVideoState(); });
+    v.addEventListener('ended', () => { closeSpan(v.duration); renderVideoState(); });
+    v.addEventListener('loadedmetadata', () => { if (entry()) { const r = rv(); if (!r.submitted) { r.watch.duration_s = v.duration; save(r); } renderVideoState(); } });
+    v.addEventListener('error', () => {
+      if (!v.getAttribute('src') || S.screen !== 'review') return;
+      const r = rv(); if (!r.submitted) { r.watch.media_error = true; save(r); }
+      showMediaError(); renderVideoState(); renderStatus();
+    });
+    window.addEventListener('pagehide', () => { closeSpan(v.currentTime); });
+
+    // read-only hook for tests and for people checking the page; it has no setters
+    window.sbsReview = Object.freeze({
+      version: PAGE_VERSION,
+      rubricVersion: RUBRIC.version,
+      getState: () => clone({ screen: S.screen, reviewer: S.reviewer, mode: S.mode, queue: S.queue.map(e => e.pkg.ad_id), current: entry() ? pkg().ad_id : null,
+        review: entry() ? rv() : null, owed: entry() ? owed(rv(), pkg()) : [], watched: entry() ? watchedFraction(rv()) : 0,
+        gate_open: entry() ? gateOpen(rv()) : false, decision_preview: entry() ? decide(rv(), pkg()) : null, storage_ok: store.ok }),
+      buildExports: () => buildExports()
+    });
+    buildQueue();
+    renderStart();
+  }
+  init();
+})();
+</script>
+</body>
+</html>
