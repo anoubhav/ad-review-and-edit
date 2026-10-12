@@ -13,13 +13,13 @@ It holds three things: the data from the paper's 120-ad review round, a blind-la
 | Generic scores cannot judge product fidelity (Sec. 6) | [`data/blind_product_set/`](data/blind_product_set): 120 blind-labeled scenes from 35 ads, 29 with a defective product, with every baseline's and judge's score |
 | Each confirmed finding becomes a targeted edit (Sec. 5) | Not in this release |
 
-Also included: [`code/reproduce.py`](code/reproduce.py) and [`code/summarize_reviews.py`](code/summarize_reviews.py), the paper's [`supplementary.pdf`](supplementary.pdf), the list of all 802 videos in [`data/clips_manifest.csv`](data/clips_manifest.csv), and [`example/ad-2438b25fb3.mp4`](example/ad-2438b25fb3.mp4), the ad annotated in the paper's Figure 2. It is the only video in the repository.
+Also included: [`code/reproduce.py`](code/reproduce.py) and [`code/summarize_reviews.py`](code/summarize_reviews.py), the paper's [`supplementary.pdf`](supplementary.pdf), the list of all 802 videos in [`data/clips_manifest.csv`](data/clips_manifest.csv), and five example ads in [`example/`](example): the ad annotated in the paper's Figure 2 and four more from the round, re-encoded at 640x360. They are the only videos in the repository. [`code/make_ad_package.py`](code/make_ad_package.py) builds the review-page package of any of the 120 round ads.
 
 ## Read this first: two kinds of labels
 
 > **Round labels are assisted.** Reviewers saw the judges' findings while they marked, and accepting a finding could write it into their marks. Use the round to study the review process: coverage, what people add to the judges, and acceptance. Do not use it as blind ground truth for judge accuracy.
 >
-> **The blind product set is the part for measuring accuracy.** Its annotators never saw any judge output. Its labels still under-count wrong scenes, because the crowd caught only part of the subtle defects an expert finds.
+> **The blind product set is the part for measuring accuracy.** Its annotators never saw any judge output. Its labels likely under-count wrong scenes, because its four annotator accounts missed subtle defects.
 
 ## What the data shows
 
@@ -36,7 +36,7 @@ Also included: [`code/reproduce.py`](code/reproduce.py) and [`code/summarize_rev
 |---|---|---|---|---|
 | 0.84 | 0.69 | 0.73 | 0.57 | 0.48 |
 
-Generic video-quality scores stay near chance. The clip judge watches the clip with the catalog photos. Its prompt, inputs and model were chosen on these same labels, so its 0.84 is optimistic (see Sec. 6 of the paper and Table S3 of the supplementary). `scores.csv` holds more baselines, among them DINOv2, CLIP, OCR, VideoScore v1.1 and Qwen2.5-VL.
+Generic video-quality scores stay near chance. The clip judge watches the clip with the catalog photos. Its prompt, inputs and model were chosen on these same labels, so its 0.84 is optimistic (see Sec. 6 of the paper and Table S2 of the supplementary). `scores.csv` holds more baselines, among them DINOv2, CLIP, OCR, VideoScore v1.1 and Qwen2.5-VL.
 
 ## The review in four steps
 
@@ -49,10 +49,12 @@ The template covers Review and a preview of Decide. It shows the judge findings 
 
 ## Start here
 
-**Open the review template.** Open [`review/review.html`](review/review.html) from disk in a current browser. Keep `review/` and `example/` side by side so the example ad plays. There is nothing to install or build, and the page makes no network request. We tested it in Google Chrome; Firefox and Safari are untested.
+**Open the review template.** Open [`review/review.html`](review/review.html) from disk in a current browser. Keep `review/` and `example/` side by side so the five example ads play. There is nothing to install or build, and the page makes no network request. We tested it in Google Chrome; Firefox and Safari are untested.
 
 - **Reviewer code.** The release uses R1 to R5, so pick another code if you will pool your reviews with `data/round`.
 - **Findings shown or hidden.** Findings shown matches the 120-ad round. Findings hidden is close to the paper's judges-hidden pass.
+- **Questions.** Each of the six questions starts folded; open one by its title.
+- **More of the round.** `python3 code/make_ad_package.py <ad_id>` writes the package of any round ad. Load it with that ad's video from `data/clips_manifest.csv`.
 - **Your own ads.** The page runs no judge. Supply judge findings in the `findings.jsonl` format, inside an ad package or as a separate `findings.jsonl` file.
 - **After Submit.** The page shows Approve, Send for editing or Reject as a preview only. Its thresholds are policy choices; set your own. You then download the review in the formats of `data/round`.
 
@@ -82,7 +84,7 @@ They need Python 3 and its standard library only. `reproduce.py` recomputes the 
 - No text written by a person is included. The only free text is model output from the judges.
 - Pronunciation is released as flags and counts only, with no word, note or transcript.
 - In the data files, products appear as a pseudonym and the hashes of their reference images. The clips show the products themselves. No retailer, listing URL, catalog photo or listing text is included, except where a judge description quotes listing text.
-- The example ad is not blurred: it shows the product's packaging and a generated person.
+- The example ads are not blurred: they show the products, their packaging and, in some, generated people.
 
 The full statements are under [Privacy](docs/DATA.md#privacy) and [Exclusions](docs/DATA.md#exclusions).
 
@@ -91,7 +93,7 @@ The full statements are under [Privacy](docs/DATA.md#privacy) and [Exclusions](d
 - Code (`code/` and the review page `review/review.html`): MIT, see [`LICENSE`](LICENSE).
 - Data (`data/`), documentation (this README, the files in `docs/` and `supplementary.pdf`) and images and video (`example/`): [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
-The products shown in the clips and the example ad, the catalog photos behind the reference-photo hashes, and any listing text quoted in judge descriptions are third-party content that these licenses do not cover.
+The products shown in the clips and the example ads, the catalog photos behind the reference-photo hashes, and any listing text quoted in judge descriptions are third-party content that these licenses do not cover.
 
 ## Citation
 

@@ -16,11 +16,17 @@ README.md
 LICENSE: MIT text, for the code
 supplementary.pdf: the paper's supplementary material
 docs/DATA.md: this file
+docs/REVIEW_GUIDE.md: the reviewer guide (six questions and their boundaries)
 docs/REVIEW_PAGE.md: the review page manual
 code/reproduce.py
 code/summarize_reviews.py
+code/make_ad_package.py
 review/review.html
 example/ad-2438b25fb3.mp4
+example/ad-3eb518b6e3.mp4
+example/ad-b68fbb7151.mp4
+example/ad-fcb5d2fe86.mp4
+example/ad-76229af005.mp4
 data/round/ads.csv
 data/round/scenes.csv
 data/round/marks.csv
@@ -34,7 +40,7 @@ data/blind_product_set/reference_photos.csv
 data/clips_manifest.csv
 ```
 
-Video files are not in this repository (see [Clips](#clips) for where to get them), with one exception: `example/ad-2438b25fb3.mp4`, the ad annotated in the paper's Figure 2.
+Video files are not in this repository (see [Clips](#clips) for where to get them), with five exceptions in `example/`: the ad annotated in the paper's Figure 2 and four more ads of the round, the review page's examples.
 
 ## Identifiers
 
@@ -211,7 +217,7 @@ The 120 rendered round ads, the 562 round scene clips and the 120 blind-set clip
 - The clips were rated in a separate annotation round. Annotators never saw judge output.
 - Each scene's label is the majority of the annotator accounts that rated it. Ties ("splits", 26 scenes) were dropped, as were scenes that were not motion clips.
 - 5 of the 120 scenes rest on a single account's vote (see `n_votes`).
-- The paper's own caveat: the crowd caught only part of the subtle defects an expert finds, so these labels under-count wrong scenes.
+- The paper's caveat (Tab. S4): the four annotator accounts missed subtle defects, so these labels likely under-count wrong scenes.
 
 ## Secondary options
 
@@ -221,9 +227,11 @@ The 120 rendered round ads, the 562 round scene clips and the 120 blind-set clip
 
 Reviewers and judges choose from the same lists.
 
-## Example ad (Figure 2)
+## Example ads (Figure 2 and four more)
 
 [`example/ad-2438b25fb3.mp4`](../example/ad-2438b25fb3.mp4) (15 s, 640x360) is the ad the paper annotates scene by scene in Figure 2. Its rows in this release use the same id: `ads.csv`, `scenes.csv` (scenes `ad-2438b25fb3-s1` to `-s5`), `marks.csv` and `findings.jsonl` hold every reviewer mark and judge finding shown in the figure.
+
+Four more ads of the round, `ad-3eb518b6e3`, `ad-b68fbb7151`, `ad-fcb5d2fe86` and `ad-76229af005`, are the review page's other examples, re-encoded the same way (15 s, 640x360). Their rows use the same ids.
 
 ## Privacy
 
@@ -232,7 +240,7 @@ Reviewers and judges choose from the same lists.
 - **Free text.** No text written by a person is included: no reviewer notes, no reasons for thumbs-down votes, no comments. The only free text is model output (the judges' `description` and `location`). Pronunciation is released as flags and counts only, with no word, note or transcript.
 - **Internal data.** The clip links are the public addresses of the files on our CDN; their paths contain our internal asset ids, which carry no personal data. No other internal ids, private storage paths or signed links are included, and a scan run at build time checks the data files for them.
 - **Products.** In the data files they appear as a pseudonym and the SHA-256 of each reference image. The clips show the products themselves. No retailer, listing URL, catalog photo or listing text (titles, descriptions, features) is included, except where a judge description quotes listing text, as many script findings do. The review page replaces the quote in its one script finding with `[listing claim]` and `[listing footnote]`.
-- **Example ad.** `example/ad-2438b25fb3.mp4` is the one rendered ad shown in the paper's Figure 2, exactly as reviewers watched it. Unlike the figure, it is not blurred: it shows the product's packaging and a generated person.
+- **Example ads.** `example/ad-2438b25fb3.mp4` is the rendered ad shown in the paper's Figure 2, and the four other files in `example/` are ads of the round, each as reviewers watched it, re-encoded at 640x360. Unlike the figure, they are not blurred: they show the products, their packaging and, in some, generated people.
 
 ## Exclusions
 

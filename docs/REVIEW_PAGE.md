@@ -8,19 +8,19 @@ For the overview of the release, see the [README](../README.md). The data files 
 
 What it is not:
 
-- It runs no judge. Findings are read from the ad package; for the example ad they are the ten findings this release holds for it (the round's pronunciation findings are left out, as under [Exclusions](DATA.md#exclusions)).
+- It runs no judge. Findings are read from the ad package; for the five example ads they are the findings this release holds for them (the round's pronunciation findings are left out, as under [Exclusions](DATA.md#exclusions)).
 - It has no edit tools. The decision after Submit is a preview.
 - It is a template of the protocol. The production review portal is a different program, and the page reproduces only the parts of it the paper describes (see [Limits](#limits)).
 
 ## Open it
 
-Open `review/review.html` from disk in a current browser. There is nothing to install or build, and the page makes no network request: scripts and styles are inline, and a Content-Security-Policy blocks every other source. The example ad's video plays from [`example/ad-2438b25fb3.mp4`](../example/ad-2438b25fb3.mp4), so keep the two folders side by side. We tested the page in Google Chrome; Firefox and Safari are untested.
+Open `review/review.html` from disk in a current browser. There is nothing to install or build, and the page makes no network request: scripts and styles are inline, and a Content-Security-Policy blocks every other source. The example ads' videos play from [`example/`](../example), so keep the two folders side by side. We tested the page in Google Chrome; Firefox and Safari are untested.
 
 The start screen asks for three things:
 
 1. **Reviewer code.** A pseudonym of the form R followed by digits (default R1). The release uses R1 to R5, so pick another code if you will pool your reviews with `data/round`.
 2. **Findings shown or hidden** (see [The two modes](#the-two-modes)).
-3. **Ads.** The example ad, ad packages you load (see [Ad packages](#ad-packages)), or both. "Import a previous export" reopens a review saved from this page.
+3. **Ads.** The five example ads, ad packages you load (see [Ad packages](#ad-packages)), or both. "Import a previous export" reopens a review saved from this page.
 
 The reviewer code and the mode are fixed once you answer anything. "Clear all reviews" on the start screen unlocks them.
 
@@ -31,10 +31,11 @@ The reviewer code and the mode are fixed once you answer anything. "Clear all re
 | Findings shown | the 120-ad round (Sec. 4, "Judges and people together") | each question shows its findings at the scene or line they point to, signed "Agent", with kind, description, place on the product, span and a button that jumps the video to the finding. Each needs a thumb: Agree (thumbs up) means the finding is right, Disagree (thumbs down) means it is wrong. A question with findings carries an "Auto-flagged" pill. |
 | Findings hidden | close to the judges-hidden pass (Sec. 4 and Supp. B, "The same ads with judges hidden") | the questions and the video only. No finding, flag, marker or thumb is on screen. That pass differed in two ways: sound was optional, with a blank answer counted as no issue, and marking a product wrong did not pre-fill Swap out. The page keeps the round's rules for both. |
 
-For a real judges-hidden pass, give reviewers packages without findings: the example ad's findings sit in the page's source, where anyone who opens the file can read them.
+For a real judges-hidden pass, give reviewers packages without findings: the example ads' findings sit in the page's source, where anyone who opens the file can read them.
 
 ## How a review runs on the page
 
+- **Questions.** Each question starts folded; click its title to open it. Items in the "Still to do" list open their question. Folding is a view setting, kept per ad, and never part of the review.
 - **Answers.** Nothing is pre-selected. A negative answer ("Product wrong", "Bad", "Mispronounced", "Can be better", "Issues") opens a row for each scene, line or caption; "Add a problem" marks one, and its secondary options appear under it. Scene quality asks every scene: No opinion, Keep or Swap out. Overlay text asks only scenes with a caption, placement and relevance separately. Pronunciation takes the word that came out wrong. Sound is asked once for the whole ad.
 - **Thumbs.** A thumbs up writes the finding into your answers: the negative answer, the scene and the finding's kinds. A note says "Answered for you", with an Undo that takes back only that accept and its thumb, as long as you have not changed those answers since. A thumbs down changes no answer. As in the portal, withdrawing a thumb (click it again) or changing it to a thumbs down never removes an answer; change the answer by hand if you need to.
 - **Positive answers.** If you answer "Product looks right" (or another positive answer) after accepting findings on that question, their marks go and a note says so. Their thumbs stay up until you change them.
@@ -45,7 +46,7 @@ For a real judges-hidden pass, give reviewers packages without findings: the exa
 
 ## Ad packages
 
-An ad package is one JSON file per ad (`format: "sbs-ad-package/1"`). The example ad's package is the `DEMO` constant in the page's script; copy it as a starting point.
+An ad package is one JSON file per ad (`format: "sbs-ad-package/1"`). The example ads' packages are the `DEMO` and `EXTRA_EXAMPLES` constants in the page's script; copy one as a starting point. [`code/make_ad_package.py`](../code/make_ad_package.py) writes the package of any ad of the round (`python3 code/make_ad_package.py <ad_id> --out <folder>`).
 
 | field | meaning |
 |---|---|
@@ -62,7 +63,7 @@ An ad package is one JSON file per ad (`format: "sbs-ad-package/1"`). The exampl
 
 "Load ad packages" takes the package files, their videos, any reference photos and a `findings.jsonl` together, and matches them by file name (a `findings.jsonl` adds its findings to the packages with the same `ad_id`). A package that fails the checks (ids, contiguous scenes, findings on known scenes and judged axes) is refused with a message. The queue holds every loaded ad, with its status and previous and next buttons.
 
-The example package takes its scenes from `data/round/scenes.csv` and its findings from `data/round/findings.jsonl`, without votes. It also prints the narration lines and captions of this one ad, as Figure 2 does. In it, the brand name in the line of scene 5 and brand words quoted in four judge descriptions are replaced with `[brand]` and `[brand tagline]`, and the listing text quoted in the script finding with `[listing claim]` and `[listing footnote]`; `text_edits` lists each place. Every finding card says that its text is the model's, and says so again when words were replaced.
+The example package takes its scenes from `data/round/scenes.csv` and its findings from `data/round/findings.jsonl`, without votes. It also prints the narration lines and captions of this one ad, as Figure 2 does. In it, the brand name in the line of scene 5 and brand words quoted in four judge descriptions are replaced with `[brand]` and `[brand tagline]`, and the listing text quoted in the script finding with `[listing claim]` and `[listing footnote]`; `text_edits` lists each place. Every finding card says that its text is the model's, and says so again when words were replaced. The four other example ads (`ad-3eb518b6e3`, `ad-b68fbb7151`, `ad-fcb5d2fe86` and `ad-76229af005`) were built by `code/make_ad_package.py`: scenes and findings as in `data/round`, judge descriptions as the judges wrote them, and no narration lines or captions, so the page asks script and pronunciation on every scene of these ads.
 
 ## Downloads
 
@@ -122,7 +123,7 @@ Reload the page to see the change. Adding or removing a question needs changes t
 
 - No judge runs here. Findings for your own ads must be supplied in the `findings.jsonl` format, in the package or a `findings.jsonl` file.
 - No edit tools and no decide board (the portal screen where a person can overrule the verdict), so nobody can overrule the verdict on the page.
-- The example ad has no catalog photos: the release holds only their hashes. Product findings name the photo they were compared with.
+- The example ads have no catalog photos: the release holds only their hashes. Product findings name the photo they were compared with.
 - The page keeps the round's question order (Table 1 and the appendix rubric table). The current portal asks script before pronunciation and moves a flagged middle question first.
 - The round's free-text boxes are left out, as the release holds no reviewer text: the comment per product scene, the "another reason" and "why" boxes on scene quality, the notes on sound and script, and the note on a thumbs down.
 - Sound uses the labels renamed after the round ("What is off?": Whole voice off, Music off). The round asked "Which part?": The voice, The music.

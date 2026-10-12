@@ -324,7 +324,7 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
       </section>
       <section class="panel" aria-labelledby="h-ads">
         <h2 id="h-ads">3. Ads to review</h2>
-        <label class="field"><input type="checkbox" id="use-demo" data-testid="use-demo" checked> The example ad from the paper's Figure 2 (5 scenes, 15 s)</label>
+        <label class="field"><input type="checkbox" id="use-demo" data-testid="use-demo" checked> The five example ads: the ad of the paper's Figure 2 and four more from the round (15 s each)</label>
         <div class="row-actions">
           <button class="btn" type="button" id="load-btn" data-testid="load-package-btn">Load ad packages</button>
           <input type="file" id="load-input" data-testid="load-package" multiple hidden accept=".json,.jsonl,video/*,image/*">
@@ -873,6 +873,670 @@ const DEMO = {
   ]
 };
 
+/* =====================================================================================
+   EXTRA_EXAMPLES: four more ads of the round, built by code/make_ad_package.py from data/round
+   (scenes and findings without their votes; judge descriptions printed as in findings.jsonl).
+   Their videos are in example/, re-encoded like the Figure 2 ad. No narration lines or captions
+   are in the release for these ads, so script and pronunciation are asked on every scene.
+   ===================================================================================== */
+const EXTRA_EXAMPLES = [
+  {
+    "format": "sbs-ad-package/1",
+    "ad_id": "ad-3eb518b6e3",
+    "product_id": "prod-2a0e5f247b",
+    "video": "../example/ad-3eb518b6e3.mp4",
+    "video_facts": {
+      "container_duration_s": 15.033,
+      "video_stream_s": 15.033,
+      "size": "640x360",
+      "codecs": "H.264 + AAC",
+      "sha256": "21a45305e0ffb0acb7f0a79945e07d47c6300f917cf8e43a9407fd54be0ee022"
+    },
+    "duration_s": 15.0,
+    "judged_axes": [
+      "product",
+      "scene",
+      "script",
+      "sound"
+    ],
+    "sound_judge_status": "pass",
+    "axis_notes": {
+      "pronunciation": "The round's pronunciation findings are not in this release."
+    },
+    "scenes": [
+      {
+        "scene_id": "ad-3eb518b6e3-s1",
+        "scene_index": 1,
+        "position": "first",
+        "start_s": 0.0,
+        "duration_s": 3.0769,
+        "has_caption": 1
+      },
+      {
+        "scene_id": "ad-3eb518b6e3-s2",
+        "scene_index": 2,
+        "position": "middle",
+        "start_s": 3.0769,
+        "duration_s": 3.1731,
+        "has_caption": 1
+      },
+      {
+        "scene_id": "ad-3eb518b6e3-s3",
+        "scene_index": 3,
+        "position": "middle",
+        "start_s": 6.25,
+        "duration_s": 4.2308,
+        "has_caption": 1
+      },
+      {
+        "scene_id": "ad-3eb518b6e3-s4",
+        "scene_index": 4,
+        "position": "middle",
+        "start_s": 10.4808,
+        "duration_s": 2.4038,
+        "has_caption": 1
+      },
+      {
+        "scene_id": "ad-3eb518b6e3-s5",
+        "scene_index": 5,
+        "position": "last",
+        "start_s": 12.8846,
+        "duration_s": 2.1154,
+        "has_caption": 1
+      }
+    ],
+    "findings": [
+      {
+        "finding_id": "f-a2bfe445725a",
+        "ad_id": "ad-3eb518b6e3",
+        "scene_id": "ad-3eb518b6e3-s1",
+        "axis": "product",
+        "judge": "product_clip_judge",
+        "kind": [
+          "wrong_form"
+        ],
+        "description": "The top printed border terminates in a scalloped, wavy edge rather than a straight horizontal border band.",
+        "location": "lower edge of the top decorative border",
+        "time_s": 0.0,
+        "span_start_s": 0.0,
+        "span_end_s": 3.1,
+        "evidence_ref": "hero",
+        "evidence_photo_sha256": "52923b31c80d7958786e8aa3b77516a2ce3e1e6810ef939ad5ed336eba5e8df3"
+      },
+      {
+        "finding_id": "f-1af3e3ecdc74",
+        "ad_id": "ad-3eb518b6e3",
+        "scene_id": "ad-3eb518b6e3-s3",
+        "axis": "scene",
+        "judge": "scene_frames_judge",
+        "kind": [
+          "underwhelming"
+        ],
+        "description": "This repeats the same dark studio presentation and slow push-in already used in scene 2 without adding a meaningful demonstration of the curtain's length.",
+        "location": null,
+        "time_s": 6.25,
+        "span_start_s": null,
+        "span_end_s": null,
+        "evidence_ref": null,
+        "evidence_photo_sha256": null
+      },
+      {
+        "finding_id": "f-99e7517369d1",
+        "ad_id": "ad-3eb518b6e3",
+        "scene_id": "ad-3eb518b6e3-s3",
+        "axis": "scene",
+        "judge": "scene_clip_judge",
+        "kind": [
+          "underwhelming"
+        ],
+        "description": "Nearly identical studio framing and composition to the previous scene.",
+        "location": null,
+        "time_s": 6.25,
+        "span_start_s": null,
+        "span_end_s": null,
+        "evidence_ref": null,
+        "evidence_photo_sha256": null
+      }
+    ],
+    "reference_photos": [],
+    "text_edits": []
+  },
+  {
+    "format": "sbs-ad-package/1",
+    "ad_id": "ad-b68fbb7151",
+    "product_id": "prod-c8719ef0ae",
+    "video": "../example/ad-b68fbb7151.mp4",
+    "video_facts": {
+      "container_duration_s": 15.018,
+      "video_stream_s": 14.967,
+      "size": "640x360",
+      "codecs": "H.264 + AAC",
+      "sha256": "64356750f6e430a8f3f1255f240cad7abff7c366052ec24993002327479dbfd3"
+    },
+    "duration_s": 15.0,
+    "judged_axes": [
+      "product",
+      "scene",
+      "script",
+      "sound"
+    ],
+    "sound_judge_status": "pass",
+    "axis_notes": {
+      "pronunciation": "The round's pronunciation findings are not in this release."
+    },
+    "scenes": [
+      {
+        "scene_id": "ad-b68fbb7151-s1",
+        "scene_index": 1,
+        "position": "first",
+        "start_s": 0.0,
+        "duration_s": 4.3226,
+        "has_caption": 1
+      },
+      {
+        "scene_id": "ad-b68fbb7151-s2",
+        "scene_index": 2,
+        "position": "middle",
+        "start_s": 4.3226,
+        "duration_s": 4.2243,
+        "has_caption": 1
+      },
+      {
+        "scene_id": "ad-b68fbb7151-s3",
+        "scene_index": 3,
+        "position": "middle",
+        "start_s": 8.5469,
+        "duration_s": 3.0454,
+        "has_caption": 1
+      },
+      {
+        "scene_id": "ad-b68fbb7151-s4",
+        "scene_index": 4,
+        "position": "last",
+        "start_s": 11.5923,
+        "duration_s": 3.4077,
+        "has_caption": 1
+      }
+    ],
+    "findings": [
+      {
+        "finding_id": "f-000136e08c23",
+        "ad_id": "ad-b68fbb7151",
+        "scene_id": "ad-b68fbb7151-s1",
+        "axis": "product",
+        "judge": "product_clip_judge",
+        "kind": [
+          "wrong_form"
+        ],
+        "description": "PHILIPS logo lettering is rendered in white instead of the dark grey seen on the real product.",
+        "location": "lower front handle",
+        "time_s": 0.0,
+        "span_start_s": 0.0,
+        "span_end_s": 4.3,
+        "evidence_ref": "gallery-2",
+        "evidence_photo_sha256": "8adabd2e9a86211ac71ac0f400958bf45af75bde35a703c755b6c8bfed7858b7"
+      },
+      {
+        "finding_id": "f-28197a25c7e0",
+        "ad_id": "ad-b68fbb7151",
+        "scene_id": "ad-b68fbb7151-s2",
+        "axis": "product",
+        "judge": "product_clip_judge",
+        "kind": [
+          "wrong_form"
+        ],
+        "description": "The stainless steel blade teeth are irregularly shaped and unevenly spaced compared to the uniform, precision-machined teeth on the genuine product.",
+        "location": "cutting blade teeth",
+        "time_s": 4.323,
+        "span_start_s": 0.0,
+        "span_end_s": 4.2,
+        "evidence_ref": "gallery-4",
+        "evidence_photo_sha256": "53f03874e51aa4d95405361e78b5a7225b9532c5565c85cf3d9afd7645bad5e1"
+      },
+      {
+        "finding_id": "f-aa20c6f93e24",
+        "ad_id": "ad-b68fbb7151",
+        "scene_id": "ad-b68fbb7151-s2",
+        "axis": "script",
+        "judge": "script_judge",
+        "kind": [
+          "unsupported_claim"
+        ],
+        "description": "Step 4/5 overreach: the record says the technology 'lifts' low-lying hairs for an 'effortless and even trim,' not that it 'captures' hairs for 'flawless precision' — a stronger, unsupported verb and absolute-sounding descriptor.",
+        "location": null,
+        "time_s": null,
+        "span_start_s": null,
+        "span_end_s": null,
+        "evidence_ref": null,
+        "evidence_photo_sha256": null
+      },
+      {
+        "finding_id": "f-c1853ce8028e",
+        "ad_id": "ad-b68fbb7151",
+        "scene_id": "ad-b68fbb7151-s3",
+        "axis": "product",
+        "judge": "product_clip_judge",
+        "kind": [
+          "product_text_broken"
+        ],
+        "description": "Leftmost setting digit is misrendered as 0 instead of 6 in wide view before clarifying in close-up.",
+        "location": "length setting dial window",
+        "time_s": 8.547,
+        "span_start_s": 0.0,
+        "span_end_s": 1.5,
+        "evidence_ref": "hero",
+        "evidence_photo_sha256": "3997d14589fe1ae851da5f39181f9f00cd6523102d431775e20fc770b0a69f56"
+      },
+      {
+        "finding_id": "f-e411731ca89d",
+        "ad_id": "ad-b68fbb7151",
+        "scene_id": "ad-b68fbb7151-s4",
+        "axis": "product",
+        "judge": "product_clip_judge",
+        "kind": [
+          "wrong_form"
+        ],
+        "description": "Hexagonal honeycomb texture rendered instead of the authentic diamond crosshatch pattern.",
+        "location": "front rubber grip panel",
+        "time_s": 11.592,
+        "span_start_s": 0.0,
+        "span_end_s": 3.4,
+        "evidence_ref": "hero",
+        "evidence_photo_sha256": "3997d14589fe1ae851da5f39181f9f00cd6523102d431775e20fc770b0a69f56"
+      }
+    ],
+    "reference_photos": [],
+    "text_edits": []
+  },
+  {
+    "format": "sbs-ad-package/1",
+    "ad_id": "ad-fcb5d2fe86",
+    "product_id": "prod-5b6b31b81f",
+    "video": "../example/ad-fcb5d2fe86.mp4",
+    "video_facts": {
+      "container_duration_s": 15.033,
+      "video_stream_s": 15.033,
+      "size": "640x360",
+      "codecs": "H.264 + AAC",
+      "sha256": "21afaf19991ee03d42090e7803f255e71e043fd510cc016319b53ee826683768"
+    },
+    "duration_s": 15.0,
+    "judged_axes": [
+      "product",
+      "scene",
+      "script",
+      "sound"
+    ],
+    "sound_judge_status": "pass",
+    "axis_notes": {
+      "pronunciation": "The round's pronunciation findings are not in this release."
+    },
+    "scenes": [
+      {
+        "scene_id": "ad-fcb5d2fe86-s1",
+        "scene_index": 1,
+        "position": "first",
+        "start_s": 0.0,
+        "duration_s": 3.744,
+        "has_caption": 1
+      },
+      {
+        "scene_id": "ad-fcb5d2fe86-s2",
+        "scene_index": 2,
+        "position": "middle",
+        "start_s": 3.744,
+        "duration_s": 3.12,
+        "has_caption": 1
+      },
+      {
+        "scene_id": "ad-fcb5d2fe86-s3",
+        "scene_index": 3,
+        "position": "middle",
+        "start_s": 6.864,
+        "duration_s": 3.536,
+        "has_caption": 1
+      },
+      {
+        "scene_id": "ad-fcb5d2fe86-s4",
+        "scene_index": 4,
+        "position": "middle",
+        "start_s": 10.4,
+        "duration_s": 2.704,
+        "has_caption": 1
+      },
+      {
+        "scene_id": "ad-fcb5d2fe86-s5",
+        "scene_index": 5,
+        "position": "last",
+        "start_s": 13.104,
+        "duration_s": 1.896,
+        "has_caption": 1
+      }
+    ],
+    "findings": [
+      {
+        "finding_id": "f-4ebd3b284da7",
+        "ad_id": "ad-fcb5d2fe86",
+        "scene_id": "ad-fcb5d2fe86-s1",
+        "axis": "product",
+        "judge": "product_clip_judge",
+        "kind": [
+          "wrong_form"
+        ],
+        "description": "Brand emblem is rendered as a symmetrical upward-facing shape instead of the authentic asymmetric Fastrack logo.",
+        "location": "lower dial above 6 o'clock position",
+        "time_s": 0.0,
+        "span_start_s": 0.0,
+        "span_end_s": 3.7,
+        "evidence_ref": "gallery-1",
+        "evidence_photo_sha256": "97179449d924009f31bd6a5669db20154724612d88639fe556cf687c0e32cf19"
+      },
+      {
+        "finding_id": "f-18ed803758f9",
+        "ad_id": "ad-fcb5d2fe86",
+        "scene_id": "ad-fcb5d2fe86-s2",
+        "axis": "product",
+        "judge": "product_clip_judge",
+        "kind": [
+          "wrong_form"
+        ],
+        "description": "Fastrack emblem is inverted vertically, with prongs pointing upward toward dial center instead of downward.",
+        "location": "lower dial above 6 o'clock marker",
+        "time_s": 3.744,
+        "span_start_s": 0.0,
+        "span_end_s": 3.1,
+        "evidence_ref": "gallery-1",
+        "evidence_photo_sha256": "97179449d924009f31bd6a5669db20154724612d88639fe556cf687c0e32cf19"
+      },
+      {
+        "finding_id": "f-7c128c088aeb",
+        "ad_id": "ad-fcb5d2fe86",
+        "scene_id": "ad-fcb5d2fe86-s3",
+        "axis": "product",
+        "judge": "product_clip_judge",
+        "kind": [
+          "wrong_form"
+        ],
+        "description": "Crown is colored matte black/dark grey instead of contrasting silver/chrome.",
+        "location": "winding crown",
+        "time_s": 6.864,
+        "span_start_s": 0.0,
+        "span_end_s": 3.5,
+        "evidence_ref": "hero",
+        "evidence_photo_sha256": "59e853eb9bbf790f8df733283bb5b9b2bbffb670511e88cde40f07006ce00e8c"
+      },
+      {
+        "finding_id": "f-c395d06c3f3d",
+        "ad_id": "ad-fcb5d2fe86",
+        "scene_id": "ad-fcb5d2fe86-s3",
+        "axis": "product",
+        "judge": "product_clip_judge",
+        "kind": [
+          "product_ai"
+        ],
+        "description": "Dial markers and logo are rotated roughly 40 degrees off-axis from the strap and case lugs.",
+        "location": "dial face and case lugs",
+        "time_s": 6.864,
+        "span_start_s": 0.0,
+        "span_end_s": 3.5,
+        "evidence_ref": "gallery-1",
+        "evidence_photo_sha256": "97179449d924009f31bd6a5669db20154724612d88639fe556cf687c0e32cf19"
+      },
+      {
+        "finding_id": "f-685b0f05069d",
+        "ad_id": "ad-fcb5d2fe86",
+        "scene_id": "ad-fcb5d2fe86-s4",
+        "axis": "product",
+        "judge": "product_clip_judge",
+        "kind": [
+          "wrong_form"
+        ],
+        "description": "Fastrack emblem is oriented vertically with prongs pointing toward the center arbor instead of pointing horizontally to the right toward",
+        "location": "dial face above the 6 o'clock hour marker",
+        "time_s": 10.4,
+        "span_start_s": 0.0,
+        "span_end_s": 2.7,
+        "evidence_ref": "gallery-1",
+        "evidence_photo_sha256": "97179449d924009f31bd6a5669db20154724612d88639fe556cf687c0e32cf19"
+      },
+      {
+        "finding_id": "f-e613ee7ae378",
+        "ad_id": "ad-fcb5d2fe86",
+        "scene_id": "ad-fcb5d2fe86-s5",
+        "axis": "product",
+        "judge": "product_clip_judge",
+        "kind": [
+          "wrong_form"
+        ],
+        "description": "The Fastrack emblem is centered along the vertical 6 o'clock axis facing straight upward, whereas in gallery-1 it is positioned off-center at appr",
+        "location": "lower dial above 6 o'clock index",
+        "time_s": 13.104,
+        "span_start_s": 0.0,
+        "span_end_s": 1.9,
+        "evidence_ref": "gallery-1",
+        "evidence_photo_sha256": "97179449d924009f31bd6a5669db20154724612d88639fe556cf687c0e32cf19"
+      }
+    ],
+    "reference_photos": [],
+    "text_edits": []
+  },
+  {
+    "format": "sbs-ad-package/1",
+    "ad_id": "ad-76229af005",
+    "product_id": "prod-75f6e41d05",
+    "video": "../example/ad-76229af005.mp4",
+    "video_facts": {
+      "container_duration_s": 15.033,
+      "video_stream_s": 15.033,
+      "size": "640x360",
+      "codecs": "H.264 + AAC",
+      "sha256": "00cd752a03e03298561dc3185cbc2534404ca7afd9a9cfe2d842d26941de4368"
+    },
+    "duration_s": 15.0,
+    "judged_axes": [
+      "product",
+      "scene",
+      "script",
+      "sound"
+    ],
+    "sound_judge_status": "pass",
+    "axis_notes": {
+      "pronunciation": "The round's pronunciation findings are not in this release."
+    },
+    "scenes": [
+      {
+        "scene_id": "ad-76229af005-s1",
+        "scene_index": 1,
+        "position": "first",
+        "start_s": 0.0,
+        "duration_s": 4.1121,
+        "has_caption": 1
+      },
+      {
+        "scene_id": "ad-76229af005-s2",
+        "scene_index": 2,
+        "position": "middle",
+        "start_s": 4.1121,
+        "duration_s": 4.1121,
+        "has_caption": 1
+      },
+      {
+        "scene_id": "ad-76229af005-s3",
+        "scene_index": 3,
+        "position": "middle",
+        "start_s": 8.2242,
+        "duration_s": 2.9372,
+        "has_caption": 1
+      },
+      {
+        "scene_id": "ad-76229af005-s4",
+        "scene_index": 4,
+        "position": "last",
+        "start_s": 11.1614,
+        "duration_s": 3.8386,
+        "has_caption": 1
+      }
+    ],
+    "findings": [
+      {
+        "finding_id": "f-44d24b536b3a",
+        "ad_id": "ad-76229af005",
+        "scene_id": "ad-76229af005-s1",
+        "axis": "product",
+        "judge": "product_clip_judge",
+        "kind": [
+          "product_text_broken"
+        ],
+        "description": "Text reads 'HEALTHT LOOKING SKIN' instead of 'HEALTHY LOOKING SKIN' before morphing",
+        "location": "bottom of front label",
+        "time_s": 0.0,
+        "span_start_s": 0.0,
+        "span_end_s": 1.8,
+        "evidence_ref": "gallery-1",
+        "evidence_photo_sha256": "d84b235a841ae0b8383ab8263f2775bfb78fea678f8a63fa599f0041dd807752"
+      },
+      {
+        "finding_id": "f-cfa7bcb15c45",
+        "ad_id": "ad-76229af005",
+        "scene_id": "ad-76229af005-s2",
+        "axis": "product",
+        "judge": "product_clip_judge",
+        "kind": [
+          "product_text_broken"
+        ],
+        "description": "On-pack text duplicates and ghosts into garbled double layers around 00:01 before shifting under liquid distortion.",
+        "location": "front bottle label typography",
+        "time_s": 5.112,
+        "span_start_s": 1.0,
+        "span_end_s": 2.5,
+        "evidence_ref": "gallery-1",
+        "evidence_photo_sha256": "d84b235a841ae0b8383ab8263f2775bfb78fea678f8a63fa599f0041dd807752"
+      },
+      {
+        "finding_id": "f-8b0e0f8214c2",
+        "ad_id": "ad-76229af005",
+        "scene_id": "ad-76229af005-s2",
+        "axis": "scene",
+        "judge": "scene_frames_judge",
+        "kind": [
+          "impossible_motion"
+        ],
+        "description": "The golden liquid expands into a rigid, shape-changing sheet across the bottle rather than flowing naturally.",
+        "location": null,
+        "time_s": 4.112,
+        "span_start_s": null,
+        "span_end_s": null,
+        "evidence_ref": null,
+        "evidence_photo_sha256": null
+      },
+      {
+        "finding_id": "f-ddd480b93083",
+        "ad_id": "ad-76229af005",
+        "scene_id": "ad-76229af005-s2",
+        "axis": "scene",
+        "judge": "scene_clip_judge",
+        "kind": [
+          "impossible_motion"
+        ],
+        "description": "Liquid oil unnaturally morphs and warps over the bottle surface.",
+        "location": null,
+        "time_s": 4.112,
+        "span_start_s": null,
+        "span_end_s": null,
+        "evidence_ref": null,
+        "evidence_photo_sha256": null
+      },
+      {
+        "finding_id": "f-4105fc8178d7",
+        "ad_id": "ad-76229af005",
+        "scene_id": "ad-76229af005-s3",
+        "axis": "product",
+        "judge": "product_clip_judge",
+        "kind": [
+          "product_text_broken"
+        ],
+        "description": "Text reads 'HEALTH LOCAING SAIN' rather than 'HEALTHY LOOKING SKIN'.",
+        "location": "lower front label under 'Hyaluronic Acid'",
+        "time_s": 8.224,
+        "span_start_s": 0.0,
+        "span_end_s": 2.9,
+        "evidence_ref": "gallery-1",
+        "evidence_photo_sha256": "d84b235a841ae0b8383ab8263f2775bfb78fea678f8a63fa599f0041dd807752"
+      },
+      {
+        "finding_id": "f-877262000ab6",
+        "ad_id": "ad-76229af005",
+        "scene_id": "ad-76229af005-s3",
+        "axis": "script",
+        "judge": "script_judge",
+        "kind": [
+          "unsupported_claim"
+        ],
+        "description": "Step 4/5: source says dryness is noticeably reduced 'just after one application' and image text says 'FROM 1ST USE', but neither supports an instant/immediate softening effect; 'instantly' overstates the timing beyond the source's hedge.",
+        "location": null,
+        "time_s": null,
+        "span_start_s": null,
+        "span_end_s": null,
+        "evidence_ref": null,
+        "evidence_photo_sha256": null
+      },
+      {
+        "finding_id": "f-ed2a7fe152f8",
+        "ad_id": "ad-76229af005",
+        "scene_id": "ad-76229af005-s4",
+        "axis": "product",
+        "judge": "product_clip_judge",
+        "kind": [
+          "product_text_broken"
+        ],
+        "description": "Secondary text 'CLINICALLY PROVEN' and 'HEALTHY LOOKING SKIN WITH EVERY USE' is distorted and illegible compared to ground truth.",
+        "location": "shoulder sticker and lower label text box",
+        "time_s": 11.161,
+        "span_start_s": 0.0,
+        "span_end_s": 3.8,
+        "evidence_ref": "hero",
+        "evidence_photo_sha256": "a1f8a5b136ca01216b7a492482323aab026e829dd6a9f0b41a5ae332dd08c4ce"
+      },
+      {
+        "finding_id": "f-86da6e467925",
+        "ad_id": "ad-76229af005",
+        "scene_id": "ad-76229af005-s4",
+        "axis": "scene",
+        "judge": "scene_frames_judge",
+        "kind": [
+          "underwhelming"
+        ],
+        "description": "The closing repeats the opening's centered bottle-on-seamless setup and holds without adding a new visual beat.",
+        "location": null,
+        "time_s": 11.161,
+        "span_start_s": null,
+        "span_end_s": null,
+        "evidence_ref": null,
+        "evidence_photo_sha256": null
+      },
+      {
+        "finding_id": "f-a3bdfc283cb4",
+        "ad_id": "ad-76229af005",
+        "scene_id": "ad-76229af005-s4",
+        "axis": "scene",
+        "judge": "scene_clip_judge",
+        "kind": [
+          "underwhelming"
+        ],
+        "description": "Repetitive studio shot mirroring the opening scene framing.",
+        "location": null,
+        "time_s": 11.161,
+        "span_start_s": null,
+        "span_end_s": null,
+        "evidence_ref": null,
+        "evidence_photo_sha256": null
+      }
+    ],
+    "reference_photos": [],
+    "text_edits": []
+  }
+];
+
 /* ===================================================================================== */
 (function () {
   // The script removes its own element from the page once it has run, so the finding text in
@@ -880,7 +1544,7 @@ const DEMO = {
   if (document.currentScript) document.currentScript.remove();
 
   const PAGE_VERSION = '1.0.0';
-  const HONESTY = "This page is a template of the review protocol in the paper Scene by Scene. You watch one ad, answer six questions scene by scene, and accept or reject the judge findings that come with the ad. The page does not run any judge: the findings are read from the ad package, and for the example ad they are the ten findings this release holds for it. It has no edit tools. It is not the production review portal. Your answers stay in this browser until you download them.";
+  const HONESTY = "This page is a template of the review protocol in the paper Scene by Scene. You watch one ad, answer six questions scene by scene, and accept or reject the judge findings that come with the ad. The page does not run any judge: the findings are read from the ad package, and for the example ads they are the findings this release holds for them. It has no edit tools. It is not the production review portal. Your answers stay in this browser until you download them.";
   const KEY_PREFIX = 'sbs-review/1:';
   const SETTINGS_KEY = KEY_PREFIX + 'settings';
   const SEEK_JUMP_S = 2.0;
@@ -1001,10 +1665,12 @@ const DEMO = {
     ui: {},                // ad_id -> {collapsed: {card: true}}: which cards are folded, kept in storage per ad
     openF: {}              // finding_id -> true: findings whose details are open (this tab only)
   };
-  const demoEntry = () => ({ pkg: normalizePackage(DEMO), videoUrl: DEMO.video, videoName: baseName(DEMO.video), photos: {}, demo: true });
+  const EXAMPLES = [DEMO].concat(EXTRA_EXAMPLES);
+  const demoEntries = () => EXAMPLES.map(d => ({ pkg: normalizePackage(d), videoUrl: d.video, videoName: baseName(d.video), photos: {}, demo: true }));
   function buildQueue() {
     const q = [];
-    if (S.useDemo) q.push(S.demoEntry || (S.demoEntry = demoEntry()));
+    // a loaded package with an example's ad_id takes that example's place
+    if (S.useDemo) (S.demoEntries || (S.demoEntries = demoEntries())).forEach(d => { if (!S.loaded.some(e => e.pkg.ad_id === d.pkg.ad_id)) q.push(d); });
     S.loaded.forEach(e => { if (!q.some(x => x.pkg.ad_id === e.pkg.ad_id)) q.push(e); });
     const curId = S.queue[S.cur] && S.queue[S.cur].pkg.ad_id;
     S.queue = q;
@@ -1041,7 +1707,9 @@ const DEMO = {
   function uiOf(adId) {
     if (!S.ui[adId]) {
       const saved = store.get(uiKey(adId));
-      const c = saved && saved.collapsed && typeof saved.collapsed === 'object' ? saved.collapsed : {};
+      // every question starts folded; a reviewer's own folding is kept per ad
+      const c = saved && saved.collapsed && typeof saved.collapsed === 'object' ? saved.collapsed
+        : Object.fromEntries(RUBRIC.questions.map(q => [q.card, true]));
       S.ui[adId] = { collapsed: Object.assign({}, c) };
     }
     return S.ui[adId];
@@ -1572,7 +2240,7 @@ const DEMO = {
         h('span', { class: 'hint', text: statusOf(r, e.pkg) }),
         e.demo ? null : h('button', { class: 'btn small quiet', type: 'button', 'aria-label': 'Remove ' + e.pkg.ad_id + ' from the queue', onclick: () => { S.loaded = S.loaded.filter(x => x !== e); renderStart(); } }, 'Remove')));
     });
-    if (!S.queue.length) list.append(h('li', { class: 'hint', text: 'No ads yet. Tick the example ad or load a package.' }));
+    if (!S.queue.length) list.append(h('li', { class: 'hint', text: 'No ads yet. Tick the example ads or load a package.' }));
     $('start-btn').textContent = Object.values(S.reviews).some(r => r.started) ? 'Continue reviewing' : 'Start reviewing';
     $('start-btn').disabled = !S.queue.length;
     $('storage-note').hidden = store.ok;
@@ -2116,7 +2784,6 @@ const DEMO = {
       (np.reference_photos || []).forEach(ph => { const im = images[baseName(ph.file || '')]; if (im && ph.label) photos[ph.label] = URL.createObjectURL(im); });
       const e = { pkg: np, videoUrl: vf ? URL.createObjectURL(vf) : (np.video || ''), videoName: vf ? vf.name : vname, photos };
       S.loaded = S.loaded.filter(x => x.pkg.ad_id !== np.ad_id).concat([e]);
-      if (S.demoEntry && np.ad_id === S.demoEntry.pkg.ad_id) S.useDemo = false;
       msgs.push({ text: np.ad_id + ': loaded, ' + plural(np.scenes.length, 'scene', 'scenes') + ', ' + (S.mode === 'shown' ? plural(np.findings.length, 'finding', 'findings') : 'findings kept hidden') +
         (vf ? ', video ' + vf.name : (np.video ? ', video from ' + np.video : ', no video yet')) + (Object.keys(photos).length ? ', ' + plural(Object.keys(photos).length, 'photo', 'photos') : '') + '.' });
     }
@@ -2132,7 +2799,7 @@ const DEMO = {
       if (!j || j.format !== 'sbs-review/1' || !j.resume || j.resume.format !== 'sbs-review-state/1') { msgs.push({ bad: true, text: f.name + ': not a review exported by this page.' }); continue; }
       buildQueue();
       if (!S.queue.some(e => e.pkg.ad_id === j.ad_id)) {
-        if (S.demoEntry && j.ad_id === S.demoEntry.pkg.ad_id || j.ad_id === DEMO.ad_id) { S.useDemo = true; buildQueue(); }
+        if (EXAMPLES.some(d => d.ad_id === j.ad_id)) { S.useDemo = true; buildQueue(); }
         else { msgs.push({ bad: true, text: f.name + ': load the package of ' + j.ad_id + ' first.' }); continue; }
       }
       const others = Object.values(S.reviews).filter(r => r.started && r.ad_id !== j.ad_id);
