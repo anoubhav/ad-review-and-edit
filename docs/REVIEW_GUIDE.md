@@ -1,6 +1,6 @@
 # Review guide
 
-This guide shows how to run the review from the paper *Scene by Scene: Assessing AI-Generated Product Video Ads with Multimodal Judges and Human Review* on your own ads. A reviewer watches one ad and answers six questions. Each question points to one place in the ad: a scene, a narrated line, a caption or the whole ad. So a problem is marked, and later fixed, where it sits. AI judges can add findings for the reviewer to accept or reject. The question names, answers and options below are those of the review page, [`review/review.html`](../review/review.html), whose manual is [REVIEW_PAGE.md](REVIEW_PAGE.md).
+This guide shows how to run the review from the paper *Multimodal Judges Flag, Humans Decide: A Review-and-Edit Framework for AI-Generated Product Video Ads* on your own ads. A reviewer watches one ad and answers six questions. Each question points to one place in the ad: a scene, a narrated line, a caption or the whole ad. So a problem is marked, and later fixed, where it sits. AI judges can add findings for the reviewer to accept or reject. The question names, answers and options below are those of the review page, [`review/review.html`](../review/review.html), whose manual is [REVIEW_PAGE.md](REVIEW_PAGE.md).
 
 ## Before you start
 

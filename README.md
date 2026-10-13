@@ -1,6 +1,6 @@
-# Scene by Scene
+# Multimodal Judges Flag, Humans Decide
 
-Data and a review template for checking AI-generated product video ads scene by scene. This is the public release of the WVAQ @ WACV 2027 paper **"Scene by Scene: Assessing AI-Generated Product Video Ads with Multimodal Judges and Human Review"**.
+Data and a review template for checking AI-generated product video ads scene by scene. This is the public release of the WVAQ @ WACV 2027 paper **"Multimodal Judges Flag, Humans Decide: A Review-and-Edit Framework for AI-Generated Product Video Ads"**.
 
 It holds three things: the data from the paper's 120-ad review round, a blind-labeled set for measuring judge accuracy, and a simple template of our review page. Use them to study how the 120 ads were reviewed, to test a product judge, or to run the same review on your own ads.
 
@@ -100,8 +100,8 @@ The products shown in the clips and the example ads, the catalog photos behind t
 Authors: Anoubhav Agarwaal, Sukesh Perla, Karthikeyan Mohanraj, Susmita Ghose (Anoki Inc.)
 
 ```
-@misc{agarwaal2027scenebyscene,
-  title  = {Scene by Scene: Assessing AI-Generated Product Video Ads with Multimodal Judges and Human Review},
+@misc{agarwaal2027judgesflag,
+  title  = {Multimodal Judges Flag, Humans Decide: A Review-and-Edit Framework for AI-Generated Product Video Ads},
   author = {Agarwaal, Anoubhav and Perla, Sukesh and Mohanraj, Karthikeyan and Ghose, Susmita},
   year   = {2027},
   note   = {Submitted to the WVAQ workshop at WACV 2027}
