@@ -29,7 +29,7 @@ The reviewer code and the mode are fixed once you answer anything. "Clear all re
 | page mode | paper condition | what you see |
 |---|---|---|
 | Findings shown | the 120-ad round (Sec. 4, "Judges and people together") | each question shows its findings at the scene or line they point to, signed "Agent", with kind, description, place on the product, span and a button that jumps the video to the finding. Each needs a thumb: Agree (thumbs up) means the finding is right, Disagree (thumbs down) means it is wrong. A question with findings carries an "Auto-flagged" pill. |
-| Findings hidden | close to the judges-hidden pass (Sec. 4 and Supp. B, "The same ads with judges hidden") | the questions and the video only. No finding, flag, marker or thumb is on screen. That pass differed in two ways: sound was optional, with a blank answer counted as no issue, and marking a product wrong did not pre-fill Swap out. The page keeps the round's rules for both. |
+| Findings hidden | close to the judges-hidden pass (Sec. 4 and Supp. A, "The same ads with judges hidden") | the questions and the video only. No finding, flag, marker or thumb is on screen. That pass differed in two ways: sound was optional, with a blank answer counted as no issue, and marking a product wrong did not pre-fill Swap out. The page keeps the round's rules for both. |
 
 For a real judges-hidden pass, give reviewers packages without findings: the example ads' findings sit in the page's source, where anyone who opens the file can read them.
 
