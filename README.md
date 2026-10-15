@@ -9,9 +9,9 @@ It holds three things: the data from the paper's 120-ad review round, a blind-la
 | Paper contribution | Where it is here |
 |---|---|
 | Ad review as six questions asked scene by scene (Sec. 3) | [`review/review.html`](review/review.html): a simple, one-file template of our review page, with the six questions, the decision rules, and the judges' findings shown or hidden; [`docs/REVIEW_GUIDE.md`](docs/REVIEW_GUIDE.md): what each question covers and where one ends and the next begins |
-| Judges and people review each ad together (Sec. 4) | [`data/round/`](data/round): the 120-ad review round. 562 scenes from 20 products, every reviewer's marks (5 reviewers, 278 reviews), 717 judge findings and the 1,664 votes reviewers gave them |
+| Judges and people review each ad together (Sec. 4) | [`data/round/`](data/round): the 120-ad review round. 562 scenes from 20 products, every reviewer's marks (5 reviewers, 278 reviews), 717 judge findings and the 1,664 votes reviewers gave them; [`marks_judges_hidden.csv`](data/round/marks_judges_hidden.csv): 60 of these ads reviewed again by two reviewers with the judges hidden (Supp. B) |
 | Generic scores cannot judge product fidelity (Sec. 6) | [`data/blind_product_set/`](data/blind_product_set): 120 blind-labeled scenes from 35 ads, 29 with a defective product, with every baseline's and judge's score |
-| Each confirmed finding becomes a targeted edit (Sec. 5) | Not in this release |
+| Each confirmed finding becomes a targeted edit (Sec. 5) | [`gallery/`](gallery/README.md): an example of each kind of problem the review catches, with the fix, shown before and after where one was made (Supp. A). The edit tools are not in this release |
 
 Also included: [`code/reproduce.py`](code/reproduce.py) and [`code/summarize_reviews.py`](code/summarize_reviews.py), the paper's [`supplementary.pdf`](supplementary.pdf), the list of all 802 videos in [`data/clips_manifest.csv`](data/clips_manifest.csv), and five example ads in [`example/`](example): the ad annotated in the paper's Figure 2 and four more from the round, re-encoded at 640x360. They are the only videos in the repository. [`code/make_ad_package.py`](code/make_ad_package.py) builds the review-page package of any of the 120 round ads.
 
@@ -36,7 +36,7 @@ Also included: [`code/reproduce.py`](code/reproduce.py) and [`code/summarize_rev
 |---|---|---|---|---|
 | 0.84 | 0.69 | 0.73 | 0.57 | 0.48 |
 
-Generic video-quality scores stay near chance. The clip judge watches the clip with the catalog photos. Its prompt, inputs and model were chosen on these same labels, so its 0.84 is optimistic (see Sec. 6 of the paper and Table S2 of the supplementary). `scores.csv` holds more baselines, among them DINOv2, CLIP, OCR, VideoScore v1.1 and Qwen2.5-VL.
+Generic video-quality scores stay near chance. The clip judge watches the clip with the catalog photos. Its prompt, inputs and model were chosen on these same labels, so its 0.84 is optimistic (see Sec. 6 of the paper and Table S3 of the supplementary). `scores.csv` holds more baselines, among them DINOv2, CLIP, OCR, VideoScore v1.1 and Qwen2.5-VL.
 
 ## The review in four steps
 
@@ -51,7 +51,7 @@ The template covers Review and a preview of Decide. It shows the judge findings 
 
 **Open the review template.** Open [`review/review.html`](review/review.html) from disk in a current browser. Keep `review/` and `example/` side by side so the five example ads play. There is nothing to install or build, and the page makes no network request. We tested it in Google Chrome; Firefox and Safari are untested.
 
-- **Reviewer code.** The release uses R1 to R5, so pick another code if you will pool your reviews with `data/round`.
+- **Reviewer code.** The release uses R1 to R6, so pick another code if you will pool your reviews with `data/round`.
 - **Findings shown or hidden.** Findings shown matches the 120-ad round. Findings hidden is close to the paper's judges-hidden pass.
 - **Questions.** Each of the six questions starts folded; open one by its title.
 - **More of the round.** `python3 code/make_ad_package.py <ad_id>` writes the package of any round ad. Load it with that ad's video from `data/clips_manifest.csv`.
@@ -79,21 +79,21 @@ They need Python 3 and its standard library only. `reproduce.py` recomputes the 
 
 ## Privacy
 
-- All ids are pseudonyms. Reviewers appear only as R1..R5, and blind-set annotators only as vote counts.
+- All ids are pseudonyms. Reviewers appear only as R1..R6, and blind-set annotators only as vote counts.
 - The clip links are the public addresses of the files on our CDN; their paths contain our internal asset ids, which carry no personal data.
 - No text written by a person is included. The only free text is model output from the judges.
 - Pronunciation is released as flags and counts only, with no word, note or transcript.
-- In the data files, products appear as a pseudonym and the hashes of their reference images. The clips show the products themselves. No retailer, listing URL, catalog photo or listing text is included, except where a judge description quotes listing text.
-- The example ads are not blurred: they show the products, their packaging and, in some, generated people.
+- In the data files, products appear as a pseudonym and the hashes of their reference images. The clips show the products themselves, and the gallery shows some catalog photos beside the scenes made from them. No retailer, listing URL or listing text is included, except where a judge description quotes listing text.
+- The example ads and the clips are not blurred: they show the products, their packaging and, in some, generated people. In the gallery images, faces are blurred.
 
 The full statements are under [Privacy](docs/DATA.md#privacy) and [Exclusions](docs/DATA.md#exclusions).
 
 ## License
 
 - Code (`code/` and the review page `review/review.html`): MIT, see [`LICENSE`](LICENSE).
-- Data (`data/`), documentation (this README, the files in `docs/` and `supplementary.pdf`) and images and video (`example/`): [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+- Data (`data/`), documentation (this README, the files in `docs/` and `supplementary.pdf`) and images, audio and video (`example/` and `gallery/`): [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
-The products shown in the clips and the example ads, the catalog photos behind the reference-photo hashes, and any listing text quoted in judge descriptions are third-party content that these licenses do not cover.
+The products shown in the clips, the example ads and the gallery, the catalog photos in the gallery and behind the reference-photo hashes, and any listing text quoted in judge descriptions are third-party content that these licenses do not cover. The defects shown are errors of our generation pipeline, not of the products, and no brand shown is affiliated with this work or endorses it. To ask for an item to be removed, open an issue.
 
 ## Citation
 

@@ -30,6 +30,7 @@ example/ad-76229af005.mp4
 data/round/ads.csv
 data/round/scenes.csv
 data/round/marks.csv
+data/round/marks_judges_hidden.csv
 data/round/ad_marks.csv
 data/round/findings.jsonl
 data/round/products.csv
@@ -52,7 +53,7 @@ All ids are pseudonyms: salted SHA-256, truncated. The salt is not released.
 | `ad_id` | `ad-xxxxxxxxxx` (round), `g1ad-xxxxxxxxxx` (blind set) | one generated ad |
 | `scene_id` | `<ad_id>-s<k>` | scene k of that ad, counted from 1 in play order |
 | `finding_id` | `f-xxxxxxxxxxxx` | one judge finding |
-| `reviewer` | `R1`..`R5` | one round reviewer, numbered by their first submitted review |
+| `reviewer` | `R1`..`R6` | one reviewer. `R1`..`R5` are the round's reviewers, numbered by their first submitted review; `R6` reviewed only with judges hidden (`marks_judges_hidden.csv`) |
 
 ## Review round files
 
@@ -112,6 +113,19 @@ One row per reviewer × scene × axis that the reviewer was asked about. Scenes 
 #### Pronunciation
 
 As on the other judged axes, reviewers saw the pronunciation judge's findings next to each scene, and accepting one wrote it into their marks. The judge flagged 187 of the 562 scenes. Its verdicts are released only as structured flags: `judge_flagged` and the reviewer's `thumbs_up` / `thumbs_down` counts (37 up and 398 down in all). No finding text is released: no quoted word, judge note or speech-recognizer transcript, and not the word a reviewer marked.
+
+### data/round/marks_judges_hidden.csv (3,260 rows)
+
+60 of the round's ads (280 scenes) reviewed again later with every judge hidden: no finding was on screen, so there was nothing to accept or reject. Two reviewers reviewed all 60 ads, 120 reviews in all, each on the round's own cut of the ad. `R2` is the round's `R2`, who had reviewed the same ads with judge findings on screen about two weeks earlier; `R6` did not take part in the round.
+
+The columns, ids and the rules for asked and marked scenes are those of `marks.csv`, with these differences:
+
+- `thumbs_up`, `thumbs_down` and `mark_from_accepted_finding` are blank.
+- `judge_flagged` is filled as in `marks.csv`: 1 if the round's judges flagged the scene on this axis. The reviewer did not see it.
+- `scene_grid_every_scene` is 1 on every row: all 120 reviews used the newer scene grid.
+- Rows are in order of reviewer, then review; the 560 pronunciation rows come after the rows of the other axes.
+
+These labels are not assisted, but they are not blind labels like the blind product set's either: two reviewers, no majority, and `R2`'s pass was a second look at the same ads. `code/reproduce.py` uses this file for the paper's comparison of the same ads with judges hidden.
 
 ### data/round/ad_marks.csv (278 rows)
 
@@ -217,7 +231,7 @@ The 120 rendered round ads, the 562 round scene clips and the 120 blind-set clip
 - The clips were rated in a separate annotation round. Annotators never saw judge output.
 - Each scene's label is the majority of the annotator accounts that rated it. Ties ("splits", 26 scenes) were dropped, as were scenes that were not motion clips.
 - 5 of the 120 scenes rest on a single account's vote (see `n_votes`).
-- The paper's caveat (Tab. S4): the four annotator accounts missed subtle defects, so these labels likely under-count wrong scenes.
+- The paper's caveat (Tab. S5): the four annotator accounts missed subtle defects, so these labels likely under-count wrong scenes.
 
 ## Secondary options
 
@@ -235,7 +249,7 @@ Four more ads of the round, `ad-3eb518b6e3`, `ad-b68fbb7151`, `ad-fcb5d2fe86` an
 
 ## Privacy
 
-- **Reviewers.** They appear only as R1..R5. No names, e-mail addresses, account ids or roles are included.
+- **Reviewers.** They appear only as R1..R6. No names, e-mail addresses, account ids or roles are included.
 - **Annotators.** Blind-set annotators appear only as vote counts.
 - **Free text.** No text written by a person is included: no reviewer notes, no reasons for thumbs-down votes, no comments. The only free text is model output (the judges' `description` and `location`). Pronunciation is released as flags and counts only, with no word, note or transcript.
 - **Internal data.** The clip links are the public addresses of the files on our CDN; their paths contain our internal asset ids, which carry no personal data. No other internal ids, private storage paths or signed links are included, and a scan run at build time checks the data files for them.
@@ -268,6 +282,7 @@ python3 code/reproduce.py
 
 - **Round:** 562 scenes; 120 ads; product scenes marked by any reviewer 391, by a majority 335; judge-flagged 396; 354 of the 391 flagged; people-only 37 (any) and 11 (majority); scene swap 177 of 459 asked (any), 153 (majority); script 17 of 91.
 - **Pronunciation (Figure 4):** 53 scenes marked by any reviewer, 45 of them judge-flagged and 8 people-only; the judge flagged 187 of the 562 scenes, so the chance mark is 33.3%.
+- **Judges hidden (60 ads, 280 scenes):** product marked wrong on 58% of scenes by the round's majority with judge findings, against 26% with judges hidden (mean of `R2` and `R6`); `R2`, who reviewed the ads both ways, 57% with findings and 19% without. Shares are exact fractions, rounded half up.
 - **Blind set AUCs:** clip judge 0.84, frame judge 0.69, DOVER 0.48, VideoScore2 0.57, best Qwen3 0.73.
 
 For per-axis counts of the round, or of reviews you made with the review page, use `code/summarize_reviews.py` (see [REVIEW_PAGE.md](REVIEW_PAGE.md#summarize-reviews)).

@@ -5,7 +5,7 @@ This guide shows how to run the review from the paper *Multimodal Judges Flag, H
 ## Before you start
 
 - Open `review/review.html` in a current browser. Keep `review/` and `example/` side by side so the example ads play.
-- Enter a reviewer code such as R6. R1 to R5 are the round's reviewers. Give each reviewer their own code, and do not type a name.
+- Enter a reviewer code such as R7. R1 to R6 are the release's reviewers. Give each reviewer their own code, and do not type a name.
 - Choose Findings shown or Findings hidden. The code and this choice are fixed once you answer anything. To change them, press "Clear all reviews", which clears every review in this browser.
 - Press "Load ad packages" and choose your packages (.json), their videos and any reference photos, all together. Files are matched by name. A findings.jsonl file adds judge findings. The package format is in [REVIEW_PAGE.md](REVIEW_PAGE.md). The five example ads are ticked by default, so untick them to review only your own ads.
 - Turn the sound on. Keep the product information at hand for Script quality. The page shows the reference photos when a package has them, and no product listing.
