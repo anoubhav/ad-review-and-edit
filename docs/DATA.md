@@ -53,7 +53,7 @@ All ids are pseudonyms: salted SHA-256, truncated. The salt is not released.
 | `ad_id` | `ad-xxxxxxxxxx` (round), `g1ad-xxxxxxxxxx` (blind set) | one generated ad |
 | `scene_id` | `<ad_id>-s<k>` | scene k of that ad, counted from 1 in play order |
 | `finding_id` | `f-xxxxxxxxxxxx` | one judge finding |
-| `reviewer` | `R1`..`R6` | one reviewer. `R1`..`R5` are the round's reviewers, numbered by their first submitted review; `R6` reviewed only with judges hidden (`marks_judges_hidden.csv`) |
+| `reviewer` | `R1`..`R6` | one reviewer. `R2`..`R6` are the round's reviewers: `R2` also reviewed 60 of the ads with judges hidden, and `R3`..`R6` are numbered by their first submitted review; `R1` reviewed only with judges hidden (`marks_judges_hidden.csv`). The codes match the paper |
 
 ## Review round files
 
@@ -282,7 +282,7 @@ python3 code/reproduce.py
 
 - **Round:** 562 scenes; 120 ads; product scenes marked by any reviewer 391, by a majority 335; judge-flagged 396; 354 of the 391 flagged; people-only 37 (any) and 11 (majority); scene swap 177 of 459 asked (any), 153 (majority); script 17 of 91.
 - **Pronunciation (Figure 4):** 53 scenes marked by any reviewer, 45 of them judge-flagged and 8 people-only; the judge flagged 187 of the 562 scenes, so the chance mark is 33.3%.
-- **Judges hidden (60 ads, 280 scenes):** product marked wrong on 58% of scenes by the round's majority with judge findings, against 26% with judges hidden (mean of `R2` and `R6`); `R2`, who reviewed the ads both ways, 57% with findings and 19% without. Shares are exact fractions, rounded half up.
+- **Judges hidden (60 ads, 280 scenes):** product marked wrong on 58% of scenes by the round's majority with judge findings, against 26% with judges hidden (mean of `R1` and `R2`); `R2`, who reviewed the ads both ways, 57% with findings and 19% without. Shares are exact fractions, rounded half up.
 - **Blind set AUCs:** clip judge 0.84, frame judge 0.69, DOVER 0.48, VideoScore2 0.57, best Qwen3 0.73.
 
 For per-axis counts of the round, or of reviews you made with the review page, use `code/summarize_reviews.py` (see [REVIEW_PAGE.md](REVIEW_PAGE.md#summarize-reviews)).
