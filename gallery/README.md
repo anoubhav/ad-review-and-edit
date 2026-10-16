@@ -2,7 +2,7 @@
 
 Real examples of every axis the review asks about and every kind of problem but the music, from the paper's supplement (Supp. A). Frames come from the 120-ad round and, where the round has no clear case, from production runs or our studies. A product defect is shown beside the product's catalog photo; where a fix exists, the scene is shown before and after. Each caption says who caught the problem; in the round, reviewers saw the judges' findings, so a judge flag and the marks of reviewers who accepted it count as one agreement. Faces in the images are blurred; the linked clips are the published ads as rendered, and the people in them are generated.
 
-The defects shown are errors of our generation pipeline, not of the products. No brand shown is affiliated with this work or endorses it.
+The defects shown come from our generation pipeline and are not in the real products. No brand shown is affiliated with this work or endorses it.
 
 Products, catalog photos and on-pack text are third-party content shown for research; see the licence note in the main README.
 
@@ -34,9 +34,9 @@ Products, catalog photos and on-pack text are third-party content shown for rese
 **Color wrong.** Smartwatch. The strap buckle is bright silver, where the real watch's is dark blue (0:00-0:01); judge flagged, 1 of 1 reviewer marked.
 
 <img src="g04_a.jpg" alt="catalog photo" width="320"> 
-<img src="g04_b.jpg" alt="before, frame 0:00" width="320"> 
+<img src="g04_b.jpg" alt="frame 0:00" width="320"> 
 
-<sub>catalog photo · before, frame 0:00</sub>
+<sub>catalog photo · frame 0:00</sub>
 
 [clip](https://d2xx1th8aoijk.cloudfront.net/assets/local_ads_studio/lacomp_4a49c3852347/scene_0_motion-1fb2a36ed900.mp4)
 
@@ -71,30 +71,6 @@ Products, catalog photos and on-pack text are third-party content shown for rese
 <img src="g08_c.jpg" alt="after, Repair (crop)" width="320"> 
 
 <sub>catalog photo (crop) · before, 0:11 (crop) · after, Repair (crop)</sub>
-
-### g10
-
-**Logo upside down.** Portable speaker. The badge on the front is rotated 180 degrees for under a second at the start of the scene (0:07), then a cut-in shows it the right way up. Judge flagged, 1 of 1 reviewer marked.
-
-<img src="g10_a.jpg" alt="catalog photo (crop)" width="320"> 
-<img src="g10_b.jpg" alt="frame 0:07" width="320"> 
-<img src="g10_c.jpg" alt="badge close-up, 0:07 (crop)" width="320"> 
-
-<sub>catalog photo (crop) · frame 0:07 · badge close-up, 0:07 (crop)</sub>
-
-[clip](https://d2xx1th8aoijk.cloudfront.net/assets/local_ads_studio/lacomp_7b47b9c95621/scene_2_motion-702d2ac5b282.mp4)
-
-### g11
-
-**Logo upside down.** Beard trimmer. The brand name on the handle is upside down and warped for the first second, then morphs into upright text in the same scene (0:00-0:02). Judge flagged, 2 of 3 reviewers marked.
-
-<img src="g11_a.jpg" alt="catalog photo (crop)" width="320"> 
-<img src="g11_b.jpg" alt="frame 0:00 (crop)" width="320"> 
-<img src="g11_c.jpg" alt="frame 0:01, same scene (crop)" width="320"> 
-
-<sub>catalog photo (crop) · frame 0:00 (crop) · frame 0:01, same scene (crop)</sub>
-
-[clip](https://d2xx1th8aoijk.cloudfront.net/assets/local_ads_studio/lacomp_1fc30699058f/scene_0_motion-07f78f48f8ef.mp4)
 
 ### g05
 
