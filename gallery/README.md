@@ -42,15 +42,13 @@ Products, catalog photos and on-pack text are third-party content shown for rese
 
 ### g06
 
-**Text slightly garbled (low).** Inkjet printer. The small print under the model name, which reads PRINT FAX SCAN COPY WEB in the catalog photo, is garbled (the judge read 'COPY' as 'CCPP') while the model name stays mostly legible (0:10). Judge flagged it as low severity; 1 of 1 reviewer also marked it low.
+**Text slightly garbled (low), Repair at higher resolution.** Inkjet printer. Before: the model name and the small print under it, PRINT FAX SCAN COPY WEB in the catalog photo, are smeared but readable (0:05); judge flagged, 1 of 1 reviewer marked. After: Repair re-rendered the scene from its original inputs at higher resolution, and both lines read correctly; this pair is from our repair study and is judged here by eye only.
 
 <img src="g06_a.jpg" alt="catalog photo" width="320"> 
-<img src="g06_b.jpg" alt="frame 0:10 (crop)" width="320"> 
-<img src="g06_c.jpg" alt="catalog photo, same text (crop, upscaled)" width="320"> 
+<img src="g06_b.jpg" alt="before, 0:05 (crop)" width="320"> 
+<img src="g06_c.jpg" alt="after, Repair (crop)" width="320"> 
 
-<sub>catalog photo · frame 0:10 (crop) · catalog photo, same text (crop, upscaled)</sub>
-
-[clip](https://d2xx1th8aoijk.cloudfront.net/assets/local_ads_studio/lacomp_bf57afc98297/scene_2_motion-13ba39313d03.mp4)
+<sub>catalog photo · before, 0:05 (crop) · after, Repair (crop)</sub>
 
 ### g07
 
